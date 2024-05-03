@@ -102,7 +102,6 @@ dist
 
 # vuepress v2.x temp and cache directory
 .temp
-.cache
 
 # Docusaurus cache and generated files
 .docusaurus
@@ -128,3 +127,49 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Typescript v1 declaration files
+typings/
+
+# Optional npm cache directory
+.env.*.local
+
+/build
+
+# /public
+/widgets
+/.idea
+/.vscode
+/package
+
+# 编译后的源码后缀 #
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# 最好是解压这些压缩包，
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+*.sql
+*.sqlite
+
+# 操作系统生成的文件#
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+build*.png
