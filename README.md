@@ -2,7 +2,7 @@
 
 F Word React + TypeScript diagram library that uses SVG and HTML for rendering
 
-![fiagram-logo.png](docs/images/fiagram-logo.png)
+![fiagram-logo.png](docs/public/fiagram-logo.png)
 
 ### Installation
 
