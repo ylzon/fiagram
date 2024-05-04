@@ -3,12 +3,13 @@ import { defineConfig } from 'dumi'
 
 export default defineConfig({
   outputPath: 'docs-dist',
+  publicPath: '/fiagram/',
   favicons: [
-    '/logo.png',
+    '/fiagram/logo.png',
   ],
   themeConfig: {
     name: 'Fiagram',
-    logo: '/logo.png',
+    logo: '/fiagram/logo.png',
     hd: { rules: [] },
     rtl: false,
     footer: `Open-source MIT Licensed | Copyright © 2024-present
@@ -27,4 +28,5 @@ Powered by Allenyan`,
   alias: {
     '@fiagram/react': path.resolve(__dirname, '../packages/react'),
   },
+  sitemap: { hostname: 'https://ylzon.github.io/fiagram/' },
 })
