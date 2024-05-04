@@ -139,7 +139,7 @@ typings/
 # /public
 /widgets
 /.idea
-/.vscode
+# /.vscode
 /package
 
 # 编译后的源码后缀 #
