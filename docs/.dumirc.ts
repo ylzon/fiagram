@@ -2,6 +2,7 @@ import path from 'node:path'
 import { defineConfig } from 'dumi'
 
 export default defineConfig({
+  base: '/fiagram/',
   outputPath: 'docs-dist',
   publicPath: '/fiagram/',
   favicons: [
