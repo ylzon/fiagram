@@ -1,1 +1,1 @@
-export { default as App } from './Example'
+export { default as App } from './Example/Base'

@@ -1,6 +1,5 @@
 import React, { type FC } from 'react'
-
-import { Diagram } from '@fiagram/react';
+import { Diagram } from '@fiagram/react'
 
 const NodeShape: FC = ({ x, y, width, height, name }: any) => {
   return (
@@ -13,7 +12,7 @@ const NodeShape: FC = ({ x, y, width, height, name }: any) => {
 
 const App: FC = () => {
   return (
-    <div
+    <Diagram
       shapes={[
         { name: 'node1', shape: NodeShape },
       ]}
@@ -22,7 +21,7 @@ const App: FC = () => {
         { id: '2', x: 300, y: 100, shape: 'node1', width: 100, height: 100, name: 'Node 2' },
         { id: '3', x: 500, y: 100, shape: 'node1', width: 100, height: 100, name: 'Node 3' },
       ]}
-      links={[
+      edges={[
         { id: '1', type: 'BROKEN_ROUNDED', source: '1', sourceDirection: 'BOTTOM', target: '2', targetDirection: 'TOP', name: 'Link 1' },
         { id: '2', type: 'BROKEN_ROUNDED', source: '2', sourceDirection: 'BOTTOM', target: '3', targetDirection: 'TOP', name: 'Link 2' },
       ]}

@@ -1,5 +1,5 @@
 {
-  "name": "fiagram",
+  "name": "@fiagram/docs",
   "version": "0.0.1",
   "description": "F Word React + TypeScript diagram library that uses SVG and HTML for rendering",
   "license": "MIT",
@@ -33,6 +33,9 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
+  },
+  "dependencies": {
+    "@fiagram/react": "workspace: *"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

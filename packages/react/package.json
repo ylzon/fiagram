@@ -3,6 +3,9 @@
   "type": "module",
   "version": "1.0.0",
   "author": "allenyan",
+  "exports": "./index.ts",
+  "main": "./index.ts",
+  "module": "index.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
