@@ -5,6 +5,7 @@
   "keywords": [],
   "scripts": {
     "start": "cd docs && npm run dev",
+    "build": "cd packages/react && npm run build",
     "docs:build": "cd docs && npm run docs:build",
     "lint": "eslint ./packages",
     "lint:fix": "eslint ./packages --fix"
