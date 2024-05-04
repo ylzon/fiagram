@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "author": "allenyan",
+  "license": "MIT",
+  "keywords": [],
+  "scripts": {
+    "lint": "eslint ./packages",
+    "lint:fix": "eslint ./packages --fix"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.16.1",
+    "@eslint/eslintrc": "^3.0.2",
+    "eslint": "^8.57.0",
+    "typescript": "^5.2.2"
+  }
+}
