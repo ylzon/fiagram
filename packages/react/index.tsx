@@ -1,5 +1,1 @@
-import { Diagram } from './src'
-
-export {
-  Diagram,
-}
+export * from './src/index'

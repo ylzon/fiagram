@@ -1,11 +1,10 @@
-export interface DiagramProps {
-  shapes: any[]
-  nodes: any[]
-  edges: any[]
-}
+import { Diagram } from './components/diagram'
 
-export const Diagram: React.FC<DiagramProps> = () => {
-  return (
-    <div>App </div>
-  )
-}
+// TypeScript
+export type { DiagramProps } from './types/diagram'
+export type { NodeConfig, Nodes } from './types/nodes'
+export type { EdgeConfig, Edges } from './types/edges'
+
+// JavaScript
+export { Diagram }
+export default { Diagram }
