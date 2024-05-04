@@ -27,7 +27,7 @@ Powered by Allenyan`,
     { id: 'en-US', name: 'EN' },
   ],
   alias: {
-    '@fiagram/react': path.resolve(__dirname, '../packages/react'),
+    '@fiagram/react': path.resolve(__dirname, '../packages/react/dist'),
   },
   sitemap: { hostname: 'https://ylzon.github.io/fiagram/' },
 })

@@ -5,7 +5,7 @@
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "fiagram": ["src"],
-      "fiagram/*": ["src/*", "*"]
+      "fiagram/*": ["src/*", "*"],
     },
     "strict": true,
     "declaration": true,

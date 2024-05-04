@@ -12,7 +12,7 @@ interface DiagramProps {
   wheelZoomDisabled?: boolean // 禁止鼠标滚轮缩放
   dragZoomDisabled?: boolean // 禁止鼠标拖动缩放
   copyNodeDisabled?: boolean // 禁止 `ctrl+c/v` 拷贝/复制节点
-  noGrid?: boolean // 不显示网格
+  hideGrid?: boolean // 不显示网格
   withoutCenter?: boolean // 不自动居中图形
   style?: any // 画布样式
   className?: string // 画布 class 名称
@@ -20,7 +20,7 @@ interface DiagramProps {
   canvasClassName?: string // svg class 名称
   gaussianBlur?: number // 高亮时背景模糊度
   onDelete?: () => void // 删除节点/连线时回调
-  noLoad?: () => void // 画布加载结束时回调
+  onLoad?: () => void // 画布加载结束时回调
   mode?: string // 控制组件的功能范围
   theme?: any // 定制主题
 }

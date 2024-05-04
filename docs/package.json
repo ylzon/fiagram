@@ -34,7 +34,7 @@
     "react-dom": ">=16.9.0"
   },
   "dependencies": {
-    "@fiagram/react": "workspace: *"
+    "@fiagram/react": "workspace:^"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",

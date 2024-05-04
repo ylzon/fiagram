@@ -1,16 +1,16 @@
-export interface NodeLabelConfig {
+interface NodeLabelConfig {
   text?: string
   chunkLen?: number
   fontSize?: number
 }
 
-export interface NodeStyle {
+interface NodeStyle {
   fill: string
   stroke: string
   strokeWidth: number
 }
 
-export interface Node {
+interface Node {
   id: string
   x: number
   y: number
@@ -25,7 +25,7 @@ export interface Node {
 
 export type Nodes = Node[]
 
-export interface NodeConfig {
+interface NodeConfig {
   resizeDisabled?: boolean // 禁止修改节点大小
   connectDisabled?: boolean // 禁止节点连线
   dragDisabled?: boolean // 禁止节点拖动

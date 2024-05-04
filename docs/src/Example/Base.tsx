@@ -17,7 +17,7 @@ const App: FC = () => {
         { name: 'node1', shape: NodeShape },
       ]}
       nodes={[
-        { id: '1', x: 100, y: 100, shape: 'node1', width: 100, height: 100, label: 'Node 1' },
+        { id: '1', x: 100, y: 10, shape: 'node1', width: 100, height: 100, label: 'Node 1' },
         { id: '2', x: 300, y: 100, shape: 'node1', width: 100, height: 100, label: 'Node 2' },
         { id: '3', x: 500, y: 100, shape: 'node1', width: 100, height: 100, label: 'Node 3' },
       ]}
