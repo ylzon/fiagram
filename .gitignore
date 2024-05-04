@@ -173,3 +173,7 @@ typings/
 ehthumbs.db
 Thumbs.db
 build*.png
+
+.dumi/tmp
+.dumi/tmp-test
+.dumi/tmp-production
