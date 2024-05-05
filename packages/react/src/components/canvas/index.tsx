@@ -1,6 +1,7 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
 import cls from 'classnames'
 import type { DiagramProps } from '../../types/diagram'
+import './index.scss'
 
 interface IProps extends DiagramProps {
 }

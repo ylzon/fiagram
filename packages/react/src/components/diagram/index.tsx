@@ -4,8 +4,8 @@ import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { Canvas } from '../canvas'
 import { Tools } from '../tools'
-import './index.scss'
 import type { DiagramProps } from '../../types/diagram'
+import './index.scss'
 
 export const Diagram: React.FC<DiagramProps> = (props) => {
   const {
