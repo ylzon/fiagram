@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cd docs && npm run dev",
     "build": "cd packages/react && npm run build",
-    "build:watch": "cd packages/react && npm run build:watch",
+    "build:watch1": "cd packages/react && npm run build:watch1",
+    "build:watch2": "cd packages/react && npm run build:watch2",
     "docs:build": "cd docs && npm run docs:build",
     "lint": "eslint ./packages",
     "lint:fix": "eslint ./packages --fix"

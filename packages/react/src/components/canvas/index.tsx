@@ -1,7 +1,6 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
 import cls from 'classnames'
 import type { DiagramProps } from '../../types/diagram'
-import '@fiagram/core/styles/components/canvas.scss'
 
 interface IProps extends DiagramProps {
   restChilds?: React.ReactNode[]

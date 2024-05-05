@@ -22,7 +22,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc",
-    "build:watch": "vite build --watch && tsc --watch",
+    "build:watch1": "vite build --watch",
+    "build:watch2": "tsc --noEmit --watch",
     "preview": "vite preview"
   },
   "peerDependencies": {

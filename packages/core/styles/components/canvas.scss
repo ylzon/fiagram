@@ -1,6 +1,12 @@
 .fiagram {
   &-canvas {
-    background-color: var(--canvas-bg-color);
     min-height: 400px;
+    background-color: var(--canvas-bg-color);
+    background-image: linear-gradient(90deg,#ffffff 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(#ffffff 10%, rgba(0, 0, 0, 0) 10%);
+    background-size: 10px 10px;
+    &.hideGrid {
+      background-image: none;
+      background-size: 0;
+    }
   }
 }
