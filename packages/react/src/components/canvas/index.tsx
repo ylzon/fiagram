@@ -4,21 +4,22 @@ import type { DiagramProps } from '../../types/diagram'
 import './index.scss'
 
 interface IProps extends DiagramProps {
+  restChilds?: React.ReactNode[]
 }
 
 interface IRef {
   // someMethod: () => void
 }
 
-// export const Canvas:  = forwardRef((props, ref) => {
 const Canvas = forwardRef<IRef, IProps>((props, ref) => {
-  const { hideGrid } = props
+  const { hideGrid, restChilds } = props
   useImperativeHandle(ref, () => ({
     // someMethod
   }))
 
   return (
     <div className={cls('fiagram-canvas', { hideGrid })}>
+      {restChilds?.map(restChild => restChild)}
     </div>
   )
 })
