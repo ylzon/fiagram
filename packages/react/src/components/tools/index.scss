@@ -1,14 +1,41 @@
 .fiagram {
   position: relative;
   &-tools {
+    //width: calc(100% - 20px);
     position: absolute;
     background-color: var(--tools-bg-color);
     top: 10px;
     left: 10px;
-    padding: 10px;
-    font-size: 12px;
+    padding: 6px 8px;
+    font-size: 16px;
     border-radius: var(--border-radius);
     box-shadow: var(--canvas-box-shadow);
     color: var(--tools-font-color);
+    display: flex;
+    vertical-align: center;
+    &-group {
+      margin-right: 8px;
+      padding-right: 8px;
+      border-right: 1px solid var(--tools-divider-color);
+      &:last-child {
+        margin-right: 0;
+        padding-right: 0;
+        border-right: none;
+      }
+    }
+    &-item {
+      padding: 4px;
+      margin-right: 4px;
+      transition: all .3s;
+      cursor: pointer;
+      border-radius: var(--border-radius);
+      &:hover {
+        color: var(--tools-font-hover-color);
+        background-color: var(--tools-item-hover-bg-color);
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 }

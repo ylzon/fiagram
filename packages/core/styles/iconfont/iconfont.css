@@ -9,7 +9,7 @@
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 16px;
+  font-size: inherit;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,27 +31,27 @@
   content: "\e61a";
 }
 
-.iconduiqi_duiqi_zongxiangfenbu:before {
+.iconvertical-aligned:before {
   content: "\e64f";
 }
 
-.iconduiqi_duiqi_hengxiangfenbu:before {
+.iconhorizontal-aligned:before {
   content: "\e651";
 }
 
-.iconzuoduiqi1:before {
+.iconleft-aligned:before {
   content: "\e631";
 }
 
-.iconxiaduiqi:before {
+.iconbottom-aligned:before {
   content: "\e63b";
 }
 
-.iconyouduiqi1:before {
+.iconright-aligned:before {
   content: "\e63c";
 }
 
-.iconshangduiqi:before {
+.icontop-aligned:before {
   content: "\e63d";
 }
 
@@ -187,15 +187,15 @@
   content: "\e609";
 }
 
-.iconfenbutujiaocheng:before {
+.icondistributions-centered:before {
   content: "\e934";
 }
 
-.iconshuipingjuzhongfenbuweixuanzhong:before {
+.iconhorizontal-centered:before {
   content: "\e7bb";
 }
 
-.iconchuizhijuzhongfenbuweixuanzhong:before {
+.iconvertically-centered:before {
   content: "\e7bc";
 }
 
@@ -203,7 +203,7 @@
   content: "\e659";
 }
 
-.iconquanpingfanhui:before {
+.iconexit-fullscreen-icon:before {
   content: "\e725";
 }
 
@@ -223,7 +223,7 @@
   content: "\e604";
 }
 
-.iconquanping:before {
+.iconfullscreen-icon:before {
   content: "\e606";
 }
 
