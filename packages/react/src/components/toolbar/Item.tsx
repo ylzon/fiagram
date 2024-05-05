@@ -1,12 +1,12 @@
 import React from 'react'
-import { Icon } from '../../icon'
+import { Icon } from '../icon'
 
-export interface ToolsItemProps {
+export interface ToolBarItemProps {
   icon: IconFontType
   onClick?: (e: React.MouseEvent<HTMLElement>) => void
 }
 
-export const ToolsItem: React.FC<ToolsItemProps> = ({ icon, onClick }) => {
+export const ToolbarItem: React.FC<ToolBarItemProps> = ({ icon, onClick }) => {
   return (
     <Icon
       type={icon}

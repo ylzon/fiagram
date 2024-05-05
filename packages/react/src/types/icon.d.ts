@@ -13,7 +13,6 @@ type IconFontType =
   | 'rotate'
   | 'rotate_n-copy-copy'
   | 'rocket'
-  | 'uyunlogo'
   | 'fuzaijunheng2'
   | 'diandian'
   | 'yingyongmokuai1'

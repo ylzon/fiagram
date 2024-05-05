@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 import { DirectionAlign } from './direction-align.tsx'
 import { Align } from './align.tsx'
 import { FullScreen } from './full-screen.tsx'
-import './index.scss'
 
 interface IProps {
   children?: ReactNode[]

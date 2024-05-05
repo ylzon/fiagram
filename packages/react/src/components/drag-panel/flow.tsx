@@ -5,11 +5,11 @@ import type { ToolBarItemProps } from '../toolbar/Item.tsx'
 
 interface IProps {}
 
-export const Align: FC<IProps> = () => {
+export const Flow: FC<IProps> = () => {
   const toolsGroup: ToolBarItemProps[] = [
-    { icon: 'vertically-centered' },
-    { icon: 'distributions-centered' },
-    { icon: 'horizontal-centered' },
+    { icon: 'tuoputu' },
+    { icon: 'fuwuqi' },
+    { icon: 'diandian' },
   ]
 
   return (

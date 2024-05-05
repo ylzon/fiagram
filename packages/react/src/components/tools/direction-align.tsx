@@ -1,12 +1,12 @@
 import React from 'react'
 import type { FC } from 'react'
-import { ToolsGroup } from './utils/tools-group.tsx'
-import type { ToolsItemProps } from './utils/tools-item.tsx'
+import { ToolbarGroup } from '../toolbar/group.tsx'
+import type { ToolBarItemProps } from '../toolbar/Item.tsx'
 
 interface IProps {}
 
 export const DirectionAlign: FC<IProps> = () => {
-  const toolsGroup: ToolsItemProps[] = [
+  const toolsGroup: ToolBarItemProps[] = [
     { icon: 'top-aligned' },
     { icon: 'bottom-aligned' },
     { icon: 'left-aligned' },
@@ -16,6 +16,6 @@ export const DirectionAlign: FC<IProps> = () => {
   ]
 
   return (
-    <ToolsGroup group={toolsGroup} />
+    <ToolbarGroup group={toolsGroup} />
   )
 }
