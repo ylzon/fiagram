@@ -1,0 +1,30 @@
+{
+  "translation": {
+    "bottomAlign": "下对齐",
+    "center": "居中",
+    "cutPic": "截图",
+    "delete": "删除",
+    "deleteDataTopic": "删除该节点会把子节点一并删除!",
+    "edge": "连线",
+    "exitFullScreen": "退出全屏",
+    "fullScreen": "全屏",
+    "horizonAlign": "水平居中对齐",
+    "horizonCenter": "水平居中",
+    "horizonLayout": "横向布局",
+    "leftAlign": "左对齐",
+    "locationEle": "定位元素",
+    "marquee": "框选(shift+drag)",
+    "node": "节点",
+    "rightAlign": "右对齐",
+    "starLayout": "星型布局",
+    "sureDelete": "确定要删除该节点或连线吗?",
+    "tileCenter": "平铺居中",
+    "topAlign": "上对齐",
+    "verticalAlign": "垂直居中对齐",
+    "verticalCenter": "垂直居中",
+    "verticalLayout": "纵向布局",
+    "withdrawn": "撤回(ctrl+z)",
+    "zoomIn": "缩小",
+    "zoomOut": "放大"
+  }
+}

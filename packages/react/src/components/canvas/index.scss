@@ -1,5 +1,7 @@
 .fiagram {
-  &-grid {
-    background-color: blue;
+  &-canvas {
+    background-color: var(--canvas-bg-color);
+    min-height: 400px;
+
   }
 }

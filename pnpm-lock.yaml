@@ -83,9 +83,15 @@ importers:
 
   packages/react:
     dependencies:
+      '@fiagram/core':
+        specifier: workspace:^
+        version: link:../core
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
+      i18next:
+        specifier: ^23.11.3
+        version: 23.11.3
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -98,10 +104,10 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.3.1(react@18.3.1)
+      react-i18next:
+        specifier: ^14.1.1
+        version: 14.1.1(i18next@23.11.3)(react@18.3.1)
     devDependencies:
-      '@rollup/plugin-typescript':
-        specifier: ^11.1.6
-        version: 11.1.6(rollup@4.17.2)(tslib@2.6.2)(typescript@5.4.5)
       '@types/node':
         specifier: ^20.12.8
         version: 20.12.8
@@ -1209,19 +1215,6 @@ packages:
 
   '@react-dnd/shallowequal@4.0.2':
     resolution: {integrity: sha512-/RVXdLvJxLg4QKvMoM5WlwNR9ViO9z8B/qPcc+C0Sa/teJY7QG7kJ441DwzOjMYEY7GmU4dj5EcGHIkKZiQZCA==}
-
-  '@rollup/plugin-typescript@11.1.6':
-    resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^2.14.0||^3.0.0||^4.0.0
-      tslib: '*'
-      typescript: '>=3.7.0'
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-      tslib:
-        optional: true
 
   '@rollup/pluginutils@5.1.0':
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
@@ -4134,6 +4127,9 @@ packages:
     engines: {node: '>=12'}
     hasBin: true
 
+  html-parse-stringify@3.0.1:
+    resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
+
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
@@ -4196,6 +4192,9 @@ packages:
     resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
     engines: {node: '>=14'}
     hasBin: true
+
+  i18next@23.11.3:
+    resolution: {integrity: sha512-Pq/aSKowir7JM0rj+Wa23Kb6KKDUGno/HjG+wRQu0PxoTbpQ4N89MAT0rFGvXmLkRLNMb1BbBOKGozl01dabzg==}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -6216,6 +6215,19 @@ packages:
       react: ^16.6.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
 
+  react-i18next@14.1.1:
+    resolution: {integrity: sha512-QSiKw+ihzJ/CIeIYWrarCmXJUySHDwQr5y8uaNIkbxoGRm/5DukkxZs+RPla79IKyyDPzC/DRlgQCABHtrQuQQ==}
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
   react-intl@6.6.5:
     resolution: {integrity: sha512-OErDPbGqus0QKVj77MGCC9Plbnys3CDQrq6Lw41c60pmeTdn41AhoS1SIzXG6SUlyF7qNN2AVqfrrIvHUgSyLQ==}
     peerDependencies:
@@ -7430,6 +7442,10 @@ packages:
 
   vm-browserify@1.1.2:
     resolution: {integrity: sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==}
+
+  void-elements@3.1.0:
+    resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
+    engines: {node: '>=0.10.0'}
 
   vue-eslint-parser@9.4.2:
     resolution: {integrity: sha512-Ry9oiGmCAK91HrKMtCrKFWmSFWvYkpGglCeFAIqDdr9zdXmMMpJOmUJS7WWsW7fX81h6mwHmUZCQQ1E0PkSwYQ==}
@@ -8732,15 +8748,6 @@ snapshots:
   '@react-dnd/invariant@4.0.2': {}
 
   '@react-dnd/shallowequal@4.0.2': {}
-
-  '@rollup/plugin-typescript@11.1.6(rollup@4.17.2)(tslib@2.6.2)(typescript@5.4.5)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@4.17.2)
-      resolve: 1.22.8
-      typescript: 5.4.5
-    optionalDependencies:
-      rollup: 4.17.2
-      tslib: 2.6.2
 
   '@rollup/pluginutils@5.1.0(rollup@4.17.2)':
     dependencies:
@@ -12593,6 +12600,10 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.31.0
 
+  html-parse-stringify@3.0.1:
+    dependencies:
+      void-elements: 3.1.0
+
   html-tags@3.3.1: {}
 
   html-to-text@9.0.5:
@@ -12670,6 +12681,10 @@ snapshots:
   humps@2.0.1: {}
 
   husky@8.0.3: {}
+
+  i18next@23.11.3:
+    dependencies:
+      '@babel/runtime': 7.24.5
 
   iconv-lite@0.4.24:
     dependencies:
@@ -15012,6 +15027,13 @@ snapshots:
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
 
+  react-i18next@14.1.1(i18next@23.11.3)(react@18.3.1):
+    dependencies:
+      '@babel/runtime': 7.24.5
+      html-parse-stringify: 3.0.1
+      i18next: 23.11.3
+      react: 18.3.1
+
   react-intl@6.6.5(react@18.3.1)(typescript@5.3.3):
     dependencies:
       '@formatjs/ecma402-abstract': 1.18.2
@@ -16452,6 +16474,8 @@ snapshots:
       terser: 5.31.0
 
   vm-browserify@1.1.2: {}
+
+  void-elements@3.1.0: {}
 
   vue-eslint-parser@9.4.2(eslint@8.57.0):
     dependencies:

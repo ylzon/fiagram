@@ -18,8 +18,7 @@ const Canvas = forwardRef<IRef, IProps>((props, ref) => {
   }))
 
   return (
-    <div className={cls('fiagram-grid', { hideGrid })}>
-      画布
+    <div className={cls('fiagram-canvas', { hideGrid })}>
     </div>
   )
 })

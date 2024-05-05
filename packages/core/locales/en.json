@@ -1,0 +1,30 @@
+{
+  "translation": {
+    "bottomAlign": "Bottom Align",
+    "center": "Center",
+    "cutPic": "Capture",
+    "delete": "Delete",
+    "deleteDataTopic": "Deleting this node removes the child nodes along with it!",
+    "edge": "Edge",
+    "exitFullScreen": "Exit Full Screen",
+    "fullScreen": "Full Screen",
+    "horizonAlign": "Horizon center Align",
+    "horizonCenter": "Horizon center",
+    "horizonLayout": "Horizon Layout",
+    "leftAlign": "Left Align",
+    "locationEle": "Location Element",
+    "marquee": "Marquee(shift+drag)",
+    "node": "Node",
+    "rightAlign": "Right Align",
+    "starLayout": "Star Layout",
+    "sureDelete": "Sure delete node or edges?",
+    "tileCenter": "Tile Center",
+    "topAlign": "Top Align",
+    "verticalAlign": "Vertical Center Align",
+    "verticalCenter": "Vertical Center",
+    "verticalLayout": "Vertical Layout",
+    "withdrawn": "withdrawn(ctrl+z)",
+    "zoomIn": "zoom in",
+    "zoomOut": "zoom out"
+  }
+}

@@ -1,5 +1,7 @@
-.fiagram {
-  &-wrapper {
-    background-color: red;
-  }
+:root {
+  --border-radius: 5px;
+  --tools-bg-color: #fff;
+  --tools-font-color: #333;
+  --canvas-bg-color: #f5f5f5;
+  --canvas-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }

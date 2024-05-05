@@ -9,6 +9,11 @@ function resolve(str: string) {
 }
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@fiagram/core': resolve('../core'),
+    },
+  },
   plugins: [
     react(),
     dts({

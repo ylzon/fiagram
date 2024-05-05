@@ -11,7 +11,6 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
-
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
     { "rule": "style/*", "severity": "off" },
@@ -41,5 +40,14 @@
     "toml",
     "gql",
     "graphql"
-  ]
+  ],
+  "i18n-ally.localesPaths": ["packages/core/locales"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.sortKeys": true,
+  // "i18n-ally.namespace": true,
+  // "i18n-ally.pathMatcher": "{locale}/{namespaces}.{ext}",
+  "i18n-ally.enabledParsers": ["ts", "json", "vue", "js"],
+  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.displayLanguage": "zh",
+  "i18n-ally.enabledFrameworks": ["vue", "react"]
 }

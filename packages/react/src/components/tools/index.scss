@@ -1,5 +1,14 @@
 .fiagram {
+  position: relative;
   &-tools {
-    background-color: deepskyblue;
+    position: absolute;
+    background-color: var(--tools-bg-color);
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--canvas-box-shadow);
+    color: var(--tools-font-color);
   }
 }
