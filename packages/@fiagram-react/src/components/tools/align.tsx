@@ -10,9 +10,9 @@ export const Align: FC<IProps> = () => {
   const { t } = useTranslation()
 
   const toolsGroup: ToolBarItemProps[] = [
-    { key: '1', title: t('translation:horizonAlign'), icon: 'vertically-centered' },
-    { key: '2', title: t('translation:horizonCenter'), icon: 'distributions-centered' },
-    { key: '3', title: t('translation:horizonLayout'), icon: 'horizontal-centered' },
+    { key: '1', title: t('translation:horizonAlign'), icon: 'icon-vertically-centered' },
+    { key: '2', title: t('translation:horizonCenter'), icon: 'icon-distributions-centered' },
+    { key: '3', title: t('translation:horizonLayout'), icon: 'icon-horizontal-centered' },
   ]
 
   return (

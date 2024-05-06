@@ -21,7 +21,7 @@ export const Icon: React.FC<IProps> = (props) => {
     <i
       title={title}
       style={style}
-      className={cls('iconfont', `icon${type}`, className)}
+      className={cls('iconfont', type, className)}
       {...rest}
     />
   )

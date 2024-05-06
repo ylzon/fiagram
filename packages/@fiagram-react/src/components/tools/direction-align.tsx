@@ -10,12 +10,12 @@ export const DirectionAlign: FC<IProps> = () => {
   const { t } = useTranslation()
 
   const toolsGroup: ToolBarItemProps[] = [
-    { key: '1', title: t('translation:topAlign'), icon: 'top-aligned' },
-    { key: '2', title: t('translation:bottomAlign'), icon: 'bottom-aligned' },
-    { key: '3', title: t('translation:leftAlign'), icon: 'left-aligned' },
-    { key: '4', title: t('translation:rightAlign'), icon: 'right-aligned' },
-    { key: '5', title: t('translation:verticalAlign'), icon: 'vertical-aligned' },
-    { key: '6', title: t('translation:horizonAlign'), icon: 'horizontal-aligned' },
+    { key: '1', title: t('translation:topAlign'), icon: 'icon-top-aligned' },
+    { key: '2', title: t('translation:bottomAlign'), icon: 'icon-bottom-aligned' },
+    { key: '3', title: t('translation:leftAlign'), icon: 'icon-left-aligned' },
+    { key: '4', title: t('translation:rightAlign'), icon: 'icon-right-aligned' },
+    { key: '5', title: t('translation:verticalAlign'), icon: 'icon-vertical-aligned' },
+    { key: '6', title: t('translation:horizonAlign'), icon: 'icon-horizontal-aligned' },
   ]
 
   return (

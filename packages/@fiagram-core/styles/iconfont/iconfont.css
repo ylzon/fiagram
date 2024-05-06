@@ -15,219 +15,219 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.iconLocation:before {
+.Location:before {
   content: "\e699";
 }
 
-.iconLocation1:before {
+.Location1:before {
   content: "\e608";
 }
 
-.iconsearch:before {
+.search:before {
   content: "\e60a";
 }
 
-.iconxuanzhuan1:before {
+.xuanzhuan1:before {
   content: "\e61a";
 }
 
-.iconvertical-aligned:before {
+.icon-vertical-aligned:before {
   content: "\e64f";
 }
 
-.iconhorizontal-aligned:before {
+.icon-horizontal-aligned:before {
   content: "\e651";
 }
 
-.iconleft-aligned:before {
+.icon-left-aligned:before {
   content: "\e631";
 }
 
-.iconbottom-aligned:before {
+.icon-bottom-aligned:before {
   content: "\e63b";
 }
 
-.iconright-aligned:before {
+.icon-right-aligned:before {
   content: "\e63c";
 }
 
-.icontop-aligned:before {
+.icon-top-aligned:before {
   content: "\e63d";
 }
 
-.iconrotate_n:before {
+.rotate_n:before {
   content: "\e6d4";
 }
 
-.iconrotate:before {
+.rotate:before {
   content: "\e718";
 }
 
-.iconrotate_n-copy-copy:before {
+.rotate_n-copy-copy:before {
   content: "\eb1f";
 }
 
-.iconrocket:before {
+.rocket:before {
   content: "\e641";
 }
 
-.iconfuzaijunheng2:before {
+.fuzaijunheng2:before {
   content: "\eb1c";
 }
 
-.icondiandian:before {
+.icon-more:before {
   content: "\eb19";
 }
 
-.iconyingyongmokuai1:before {
+.yingyongmokuai1:before {
   content: "\eb1a";
 }
 
-.iconwangluo:before {
+.wangluo:before {
   content: "\e605";
 }
 
-.iconneiwang:before {
+.neiwang:before {
   content: "\eb17";
 }
 
-.iconcunchushebei:before {
+.cunchushebei:before {
   content: "\ea5f";
 }
 
-.iconluyouqi:before {
+.luyouqi:before {
   content: "\e838";
 }
 
-.iconyingyong:before {
+.yingyong:before {
   content: "\e67e";
 }
 
-.iconhexinjiaohuanji:before {
+.hexinjiaohuanji:before {
   content: "\e67a";
 }
 
-.iconfuwuqi:before {
+.icon-server:before {
   content: "\e607";
 }
 
-.icondaichuli:before {
+.daichuli:before {
   content: "\e9ab";
 }
 
-.iconchulizhong:before {
+.chulizhong:before {
   content: "\e9ac";
 }
 
-.iconyiguaqi:before {
+.yiguaqi:before {
   content: "\e9af";
 }
 
-.iconfanghuoqiang:before {
+.fanghuoqiang:before {
   content: "\e668";
 }
 
-.iconjietu1:before {
+.jietu1:before {
   content: "\e795";
 }
 
-.iconyingyongmokuai:before {
+.yingyongmokuai:before {
   content: "\e61c";
 }
 
-.iconjump:before {
+.jump:before {
   content: "\eacd";
 }
 
-.iconwenjiancangku:before {
+.wenjiancangku:before {
   content: "\ead3";
 }
 
-.iconxingzhuang:before {
+.xingzhuang:before {
   content: "\eb12";
 }
 
-.iconssl:before {
+.ssl:before {
   content: "\eb16";
 }
 
-.iconexpand:before {
+.expand:before {
   content: "\e601";
 }
 
-.iconoutdent2:before {
+.outdent2:before {
   content: "\e657";
 }
 
-.iconjuzhong:before {
+.juzhong:before {
   content: "\e66b";
 }
 
-.iconjietu:before {
+.jietu:before {
   content: "\e687";
 }
 
-.iconziyuan:before {
+.ziyuan:before {
   content: "\e620";
 }
 
-.iconmoban:before {
+.moban:before {
   content: "\e600";
 }
 
-.iconxiaz:before {
+.xiaz:before {
   content: "\e698";
 }
 
-.iconshanchu:before {
+.shanchu:before {
   content: "\e609";
 }
 
-.icondistributions-centered:before {
+.icon-distributions-centered:before {
   content: "\e934";
 }
 
-.iconhorizontal-centered:before {
+.icon-horizontal-centered:before {
   content: "\e7bb";
 }
 
-.iconvertically-centered:before {
+.icon-vertically-centered:before {
   content: "\e7bc";
 }
 
-.iconxingxingfenbu:before {
+.xingxingfenbu:before {
   content: "\e659";
 }
 
-.iconexit-fullscreen-icon:before {
+.icon-exit-fullscreen:before {
   content: "\e725";
 }
 
-.icontuoputu:before {
+.icon-topology:before {
   content: "\e994";
 }
 
-.iconkuangxuan:before {
+.kuangxuan:before {
   content: "\e625";
 }
 
-.iconfangda1:before {
+.fangda1:before {
   content: "\e603";
 }
 
-.iconsuoxiao:before {
+.suoxiao:before {
   content: "\e604";
 }
 
-.iconfullscreen-icon:before {
+.icon-fullscreen:before {
   content: "\e606";
 }
 
-.icontuopu:before {
+.tuopu:before {
   content: "\e63e";
 }
 
-.iconchexiao:before {
+.chexiao:before {
   content: "\e602";
 }
 

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
-import { Flow } from './flow.tsx'
+import { DragList } from './drag-list.tsx'
 
 interface IProps {
   children?: ReactNode[]
@@ -12,7 +12,7 @@ interface ITools extends React.FC<IProps> {
 const DragPanel: ITools = ({ children }) => {
   const defaultTools = (
     <Fragment>
-      <Flow />
+      <DragList />
     </Fragment>
   )
   return (
