@@ -1,14 +1,29 @@
-# Fiagram
-
-F Word React + TypeScript diagram library that uses SVG and HTML for rendering
-
 ![fiagram-logo.png](docs/public/fiagram-logo.png)
+
+
+基于 SVG + D3.js，可快速构建出拓扑图、流程图等可视化图形组件
+
+> WIP 项目，目前仅支持 React
 
 ### Installation
 
 ```bash
 npm install @fiagram/react
 ```
+
+```bash
+pnpm add @fiagram/react
+```
+
+### Todo
+React 
+* [x] 支持 i18n 多语言
+* [x] 支持 CSS var
+* [ ] 支持黑白主题
+* [ ] 预置FlowChart、Topology等常用图形
+
+Vue
+* [ ] WIP
 
 ### React Usage
 
@@ -46,6 +61,4 @@ const App = () => {
 export default App;
 ```
 
-### Todo
 
-* [ ] TODO
