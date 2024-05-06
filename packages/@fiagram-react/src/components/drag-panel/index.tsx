@@ -26,7 +26,7 @@ const DragPanel: ITools = ({ children }) => {
     <Fragment>
       <ToolbarGroup
         group={toolsGroup}
-        trigger={['hover', 'click']}
+        trigger="click"
         placement="rightTop"
       />
     </Fragment>

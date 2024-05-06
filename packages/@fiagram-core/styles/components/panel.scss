@@ -12,24 +12,26 @@
   }
   &-content {
     display: grid;
-    grid-template-columns: repeat(4, 50px);
-    grid-gap: 0 6px;
+    grid-template-columns: repeat(4, 52px);
+    grid-gap: 4px 6px;
     margin-top: 4px;
     min-height: 50px;
     overflow-y: auto;
+    overflow-x: hidden;
   }
   &-drag-item {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 4px;
+    background-color: transparent;
     &-icon {
       width: 30px;
       height: 30px;
       padding: 10px;
       border-radius: var(--border-radius);
       background-color: var(--drag-item-bg-color);
+      border: 1px solid var(--drag-item-border-color);
     }
     &-name {
       text-align: center;
