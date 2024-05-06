@@ -1,8 +1,5 @@
-import React from 'react'
-import type { FC } from 'react'
+import { Begin } from './begin'
 
-export const FlowShapes: FC = () => {
-  return (
-    <></>
-  )
+export const FlowIcons = {
+  Begin,
 }

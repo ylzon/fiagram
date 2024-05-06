@@ -1,0 +1,44 @@
+.fiagram-panel-view {
+  min-height: 50%;
+  min-width: 150px;
+  user-select: none;
+  &-header {
+    margin: 0 -10px;
+    padding: 0 10px 6px;
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+  }
+  &-content {
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-gap: 0 6px;
+    margin-top: 4px;
+    min-height: 50px;
+    overflow-y: auto;
+  }
+  &-drag-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    &-icon {
+      width: 30px;
+      height: 30px;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      background-color: var(--drag-item-bg-color);
+    }
+    &-name {
+      text-align: center;
+      width: 110%;
+      font-size: 12px;
+      color: var(--black-color);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

@@ -12,9 +12,9 @@ export interface ToolBarItemProps {
   key?: string | number
   icon: IconFontType
   title?: string
-  trigger?: PopoverProps['trigger']
   placement?: keyof typeof alignMap
-  overlay?: React.ReactNode | string
+  trigger?: PopoverProps['trigger']
+  overlay?: PopoverProps['overlay']
   onClick?: (e: React.MouseEvent<HTMLElement>) => void
 }
 
@@ -31,6 +31,7 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
   return (
     <Popover
       trigger={trigger}
+      // visible={icon === 'icon-topology'}
       overlay={overlay || title || ''}
       align={alignMap[placement]}
       placement={placement}

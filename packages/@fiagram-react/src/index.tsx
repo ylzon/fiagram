@@ -8,13 +8,14 @@ import { Canvas } from './components/canvas'
 import { Tools } from './components/tools'
 import { DragPanel } from './components/drag-panel'
 import { useFilterChildren } from './hooks/useFilterChildren.tsx'
+import { useSize } from './hooks/ahooks/useSize.tsx'
+import { GlobalContext } from './context/global.ts'
 import '@fiagram/core/styles/fiagram.scss'
 import './utils/i18n'
 
 interface IProps extends DiagramProps {
   children?: ReactNode[] | ReactNode
 }
-
 const Diagram: FC<IProps> = (props) => {
   const {
     style,
@@ -28,25 +29,28 @@ const Diagram: FC<IProps> = (props) => {
     children,
   } = props
   const canvasRef = useRef(null)
+  const canvasSize = useSize(canvasRef) || { width: 0, height: 0 }
   const { toolsChild, dragBoxChild, restChilds } = useFilterChildren(children)
 
-  const ConditionTools: any = () => !hideTools && (toolsChild || <Tools />)
-  const ConditionDragPanel: any = () => !hideDragBox && (dragBoxChild || <DragPanel />)
+  const ConditionTools = () => !hideTools && (toolsChild || <Tools />)
+  const ConditionDragPanel = () => !hideDragBox && (dragBoxChild || <DragPanel />)
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={style} className={cls('fiagram', className, { hideTools })}>
-        <ConditionTools />
-        <ConditionDragPanel />
-        <Canvas
-          ref={canvasRef}
-          className={canvasClassName}
-          style={canvasStyle}
-          onLoad={onLoad}
-          hideGrid={hideGrid}
-          restChilds={restChilds}
-        />
-      </div>
+      <GlobalContext.Provider value={canvasSize}>
+        <div style={style} className={cls('fiagram', className, { hideTools })}>
+          <ConditionTools />
+          <ConditionDragPanel />
+          <Canvas
+            ref={canvasRef}
+            className={canvasClassName}
+            style={canvasStyle}
+            onLoad={onLoad}
+            hideGrid={hideGrid}
+            restChilds={restChilds}
+          />
+        </div>
+      </GlobalContext.Provider>
     </DndProvider>
   )
 }
