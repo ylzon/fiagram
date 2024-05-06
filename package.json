@@ -5,9 +5,8 @@
   "keywords": [],
   "scripts": {
     "start": "cd docs && npm run dev",
-    "build": "cd packages/react && npm run build",
-    "build:watch1": "cd packages/react && npm run build:watch1",
-    "build:watch2": "cd packages/react && npm run build:watch2",
+    "build": "cd packages/@fiagram-react && npm run build",
+    "build:watch": "cd packages/@fiagram-react && npm run build:watch",
     "docs:build": "cd docs && npm run docs:build",
     "lint": "eslint ./packages",
     "lint:fix": "eslint ./packages --fix"

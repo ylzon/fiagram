@@ -3,6 +3,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import libCss from 'vite-plugin-libcss'
+import { tscWatch } from 'vite-plugin-tsc-watch'
 
 function resolve(str: string) {
   return path.resolve(__dirname, str)
@@ -11,7 +12,7 @@ function resolve(str: string) {
 export default defineConfig({
   resolve: {
     alias: {
-      '@fiagram/core': resolve('../core'),
+      '@fiagram/core': resolve('../@fiagram-core'),
     },
   },
   plugins: [
@@ -22,12 +23,13 @@ export default defineConfig({
       copyDtsFiles: true,
     }),
     libCss(),
+    tscWatch(),
   ],
   css: {
     preprocessorOptions: {
       scss: {
         javascriptEnabled: true,
-        additionalData: `@import "${resolve('../core/styles/vars.scss')}";`,
+        additionalData: `@import "${resolve('../@fiagram-core/styles/vars.scss')}";`,
       },
     },
   },

@@ -1,13 +1,13 @@
-import type { ReactNode } from 'react'
 import React, { useRef } from 'react'
 import cls from 'classnames'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import type { FC, ReactNode } from 'react'
+import type { DiagramProps } from './types/diagram'
 import { Canvas } from './components/canvas'
 import { Tools } from './components/tools'
 import { DragPanel } from './components/drag-panel'
 import { useFilterChildren } from './hooks/useFilterChildren.tsx'
-import type { DiagramProps } from './types/diagram'
 import '@fiagram/core/styles/fiagram.scss'
 import './utils/i18n'
 
@@ -15,7 +15,7 @@ interface IProps extends DiagramProps {
   children?: ReactNode[] | ReactNode
 }
 
-const Diagram: React.FC<IProps> = (props) => {
+const Diagram: FC<IProps> = (props) => {
   const {
     style,
     className,
@@ -30,8 +30,8 @@ const Diagram: React.FC<IProps> = (props) => {
   const canvasRef = useRef(null)
   const { toolsChild, dragBoxChild, restChilds } = useFilterChildren(children)
 
-  const ConditionTools = () => !hideTools && (toolsChild || <Tools />)
-  const ConditionDragPanel = () => !hideDragBox && (dragBoxChild || <DragPanel />)
+  const ConditionTools: any = () => !hideTools && (toolsChild || <Tools />)
+  const ConditionDragPanel: any = () => !hideDragBox && (dragBoxChild || <DragPanel />)
 
   return (
     <DndProvider backend={HTML5Backend}>
