@@ -7,12 +7,14 @@
     "deleteDataTopic": "Deleting this node removes the child nodes along with it!",
     "edge": "Edge",
     "exitFullScreen": "Exit Full Screen",
+    "flow-chart": "flow-chart",
     "fullScreen": "Full Screen",
     "horizonAlign": "Horizon center Align",
     "horizonCenter": "Horizon center",
     "horizonLayout": "Horizon Layout",
     "leftAlign": "Left Align",
     "locationEle": "Location Element",
+    "more": "more",
     "marquee": "Marquee(shift+drag)",
     "node": "Node",
     "rightAlign": "Right Align",
@@ -25,6 +27,7 @@
     "verticalLayout": "Vertical Layout",
     "withdrawn": "withdrawn(ctrl+z)",
     "zoomIn": "zoom in",
-    "zoomOut": "zoom out"
+    "zoomOut": "zoom out",
+    "resource": "resource"
   }
 }

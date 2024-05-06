@@ -7,12 +7,14 @@
     "deleteDataTopic": "删除该节点会把子节点一并删除!",
     "edge": "连线",
     "exitFullScreen": "退出全屏",
+    "flow-chart": "流程图",
     "fullScreen": "全屏",
     "horizonAlign": "水平居中对齐",
     "horizonCenter": "水平居中",
     "horizonLayout": "横向布局",
     "leftAlign": "左对齐",
     "locationEle": "定位元素",
+    "more": "更多",
     "marquee": "框选(shift+drag)",
     "node": "节点",
     "rightAlign": "右对齐",
@@ -25,6 +27,7 @@
     "verticalLayout": "纵向布局",
     "withdrawn": "撤回(ctrl+z)",
     "zoomIn": "缩小",
-    "zoomOut": "放大"
+    "zoomOut": "放大",
+    "resource": "资源"
   }
 }

@@ -1,0 +1,203 @@
+.fiagram-tooltip {
+  position: absolute;
+  z-index: 1070;
+  display: block;
+  visibility: visible;
+  //line-height: 1.5;
+  font-size: 12px;
+  padding: 1px;
+}
+.fiagram-tooltip-hidden {
+  display: none;
+}
+.fiagram-tooltip-inner {
+  padding: 8px 10px;
+  color: var(--popover-font-color);
+  text-align: left;
+  text-decoration: none;
+  background-color: var(--popover-bg-color);
+  border-radius: var(--border-radius);
+  min-height: 20px;
+  box-shadow: var(--popover-box-shadow);
+}
+.fiagram-tooltip-arrow,
+.fiagram-tooltip-arrow-inner {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.fiagram-tooltip-placement-top .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-topLeft .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-topRight .fiagram-tooltip-arrow {
+  transform: translate(-50%,5px);
+  margin-left: -6px;
+  border-width: 6px 6px 0;
+  border-top-color: var(--popover-bg-color);
+}
+.fiagram-tooltip-placement-top .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-topLeft .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-topRight .fiagram-tooltip-arrow-inner {
+  bottom: 1px;
+  margin-left: -6px;
+  border-width: 6px 6px 0;
+  border-top-color: var(--popover-bg-shadow-color);
+}
+.fiagram-tooltip-placement-top {
+  .fiagram-tooltip-arrow {
+    left: 50%;
+  }
+}
+.fiagram-tooltip-placement-topLeft {
+  .fiagram-tooltip-arrow {
+    left: 15%;
+  }
+}
+.fiagram-tooltip-placement-topRight {
+  .fiagram-tooltip-arrow {
+    right: 15%;
+  }
+}
+.fiagram-tooltip-placement-right .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-rightTop .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-rightBottom .fiagram-tooltip-arrow {
+  left: -5px;
+  margin-top: -6px;
+  border-width: 6px 6px 6px 0;
+  border-right-color: var(--popover-bg-color);
+  transform: translateX(-85%);
+}
+.fiagram-tooltip-placement-right .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-rightTop .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-rightBottom .fiagram-tooltip-arrow-inner {
+  left: 1px;
+  margin-top: -6px;
+  border-width: 6px 6px 6px 0;
+  border-right-color: var(--popover-bg-shadow-color);
+}
+.fiagram-tooltip-placement-right {
+  .fiagram-tooltip-arrow {
+    top: 50%;
+  }
+}
+.fiagram-tooltip-placement-rightTop {
+  .fiagram-tooltip-arrow {
+    top: 15%;
+    margin-top: 0;
+  }
+}
+.fiagram-tooltip-placement-rightBottom {
+  .fiagram-tooltip-arrow {
+    bottom: 15%;
+  }
+}
+.fiagram-tooltip-placement-left .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-leftTop .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-leftBottom .fiagram-tooltip-arrow {
+  right: -5px;
+  margin-top: -6px;
+  border-width: 6px 0 6px 6px;
+  border-left-color: var(--popover-bg-color);
+  transform: translateX(calc(85%));
+}
+.fiagram-tooltip-placement-left .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-leftTop .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-leftBottom .fiagram-tooltip-arrow-inner {
+  right: 1px;
+  margin-top: -6px;
+  border-width: 6px 0 6px 6px;
+  border-left-color: var(--popover-bg-shadow-color);
+}
+.fiagram-tooltip-placement-left {
+  .fiagram-tooltip-arrow {
+    top: 50%;
+  }
+}
+.fiagram-tooltip-placement-leftTop {
+  .fiagram-tooltip-arrow {
+    top: 15%;
+    margin-top: 0;
+  }
+}
+.fiagram-tooltip-placement-leftBottom {
+  .fiagram-tooltip-arrow {
+    bottom: 15%;
+  }
+}
+.fiagram-tooltip-placement-bottom .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-bottomLeft .fiagram-tooltip-arrow,
+.fiagram-tooltip-placement-bottomRight .fiagram-tooltip-arrow {
+  transform: translate(-50%,-5px);
+  margin-left: -6px;
+  border-width: 0 6px 6px;
+  border-bottom-color: var(--popover-bg-color);
+}
+.fiagram-tooltip-placement-bottom .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-bottomLeft .fiagram-tooltip-arrow-inner,
+.fiagram-tooltip-placement-bottomRight .fiagram-tooltip-arrow-inner {
+  top: 1px;
+  margin-left: -6px;
+  border-width: 0 6px 6px;
+  border-bottom-color: var(--popover-bg-shadow-color);
+}
+.fiagram-tooltip-placement-bottom {
+  .fiagram-tooltip-arrow {
+    left: 50%;
+  }
+}
+.fiagram-tooltip-placement-bottomLeft {
+  .fiagram-tooltip-arrow {
+    left: 15%;
+  }
+}
+.fiagram-tooltip-placement-bottomRight {
+  .fiagram-tooltip-arrow {
+    right: 15%;
+  }
+}
+
+
+.fiagram-tooltip-fade-enter,
+.fiagram-tooltip-fade-leave {
+  display: block;
+}
+.fiagram-tooltip.fiagram-tooltip-fade-enter,
+.fiagram-tooltip.fiagram-tooltip-fade-appear {
+  opacity: 0;
+  animation-duration: 0.2s;
+  animation-play-state: paused;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+.fiagram-tooltip.fiagram-tooltip-fade-leave {
+  animation-duration: 0.2s;
+  animation-play-state: paused;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+.fiagram-tooltip.fiagram-tooltip-fade-enter.fiagram-tooltip-fade-enter-active,
+.fiagram-tooltip.fiagram-tooltip-fade-appear.fiagram-tooltip-fade-appear-active {
+  animation-name: fiagramToolTipFadeIn;
+  animation-play-state: running;
+}
+.fiagram-tooltip.fiagram-tooltip-fade-leave.fiagram-tooltip-fade-leave-active {
+  animation-name: fiagramToolTipFadeOut;
+  animation-play-state: running;
+}
+@keyframes fiagramToolTipFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fiagramToolTipFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

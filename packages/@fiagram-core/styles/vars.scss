@@ -1,10 +1,24 @@
 :root {
+  // color vars
+  --primary-color: #2363CB;
+  --black-color: #333;
+  --white-color: #fff;
+  --grey-color: #f5f5f5;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  // common vars
   --border-radius: 5px;
-  --tools-bg-color: #fff;
-  --tools-font-color: #333;
+
+  // tools vars
+  --tools-bg-color: var(--white-color);
+  --tools-font-color: var(--black-color);
   --tools-divider-color: #eaecf4;
-  --tools-font-hover-color: #2363CB;
-  --tools-item-hover-bg-color: #f5f5f5;
-  --canvas-bg-color: #f5f5f5;
-  --canvas-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --tools-font-hover-color: var(--primary-color);
+  --tools-item-hover-bg-color: var(--grey-color);
+  --tools-box-shadow: 0 4px 6px var(--shadow-color);
+  --canvas-bg-color: var(--grey-color);
+  --popover-bg-color: var(--white-color);
+  --popover-bg-shadow-color: var(--shadow-color);
+  --popover-font-color: var(--black-color);
+  --popover-box-shadow: var(--tools-box-shadow);
 }

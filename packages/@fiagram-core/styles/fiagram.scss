@@ -1,9 +1,11 @@
 @import './iconfont/iconfont.css';
-@import "./components/tools";
-@import "./components/canvas";
 
 .fiagram {
   * {
     box-sizing: border-box;
   }
 }
+
+@import "./components/tools";
+@import "./components/canvas";
+@import "./components/popover";

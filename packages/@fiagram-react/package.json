@@ -33,6 +33,7 @@
     "@fiagram/core": "workspace:^",
     "classnames": "^2.5.1",
     "i18next": "^23.11.3",
+    "rc-tooltip": "^6.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-i18next": "^14.1.1"
