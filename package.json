@@ -4,10 +4,11 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "start": "cd docs && npm run dev",
-    "build": "cd packages/@fiagram-react && npm run build",
-    "build:watch": "cd packages/@fiagram-react && npm run build:watch",
-    "docs:build": "cd docs && npm run docs:build",
+    "start": "pnpm -F @fiagram/react dev",
+    "build": "pnpm -F @fiagram/react build",
+    "build:watch": "pnpm -F @fiagram/react build:watch",
+    "docs:start": "pnpm -F @fiagram/docs dev",
+    "docs:build": "pnpm -F @fiagram/docs docs:build",
     "lint": "eslint ./packages",
     "lint:fix": "eslint ./packages --fix"
   },
