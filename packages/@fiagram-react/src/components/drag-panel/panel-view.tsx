@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import type { FC } from 'react'
-import { GlobalContext } from '../../context/global.ts'
-import { DragList } from './drag-list.tsx'
+import { useDiagramStore } from '../../hooks/useDiagramStore.ts'
+import { DragList } from '../drag-list/drag-list.tsx'
 
 interface IProps extends Pick<React.HTMLAttributes<HTMLElement>, 'children'> {
   title?: string
@@ -13,7 +13,7 @@ export const PanelView: FC<IProps> = (props) => {
     title,
     dragList = [],
   } = props
-  const { height } = useContext(GlobalContext)
+  const { state: { height } } = useDiagramStore(state => state)
   const maxHeight = height > 0 ? height - 120 : 'auto'
 
   return (

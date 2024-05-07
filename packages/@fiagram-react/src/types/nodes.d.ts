@@ -21,8 +21,8 @@ interface Node {
   width: number
   height: number
   shape: string
-  relativeX: number
-  relativeY: number
+  relativeX?: number
+  relativeY?: number
   label?: string | NodeLabelConfig
   style?: NodeStyle
   children?: Nodes

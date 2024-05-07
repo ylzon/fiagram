@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import React from 'react'
 import { useDragLayer } from 'react-dnd'
-import { getItemStyles } from '../../utils/drag-help.ts'
+import { getItemStyles } from '../../utils/drag-drop.ts'
 
 interface IProps {
   children: React.ReactNode | React.ReactNode[]

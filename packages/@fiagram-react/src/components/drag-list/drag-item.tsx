@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import type { FC } from 'react'
 import { useDrag } from 'react-dnd'
 import { getEmptyImage } from 'react-dnd-html5-backend'
+import { DRAG_DROP_KEY } from '@fiagram/core/constant'
 import { CustomDragLayer } from './drag-layer.tsx'
 
 export interface DragItemProps {
@@ -13,7 +14,7 @@ export interface DragItemProps {
 
 export const DragItem: FC<DragItemProps> = ({ component, name, node }) => {
   const [{ isDragging }, dragRef, preview] = useDrag({
-    type: `DragDropBox`,
+    type: DRAG_DROP_KEY,
     item: node,
     collect: monitor => ({
       isDragging: monitor.isDragging(),
@@ -40,7 +41,7 @@ export const DragItem: FC<DragItemProps> = ({ component, name, node }) => {
     <>
       <div
         ref={dragRef}
-        style={{ opacity: isDragging ? 0 : 1 }}
+        // style={{ opacity: isDragging ? 0 : 1 }}
       >
         <ItemContent key="source" />
       </div>

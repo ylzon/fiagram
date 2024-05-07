@@ -1,3 +1,4 @@
+import type { Size } from '../hooks/ahooks/useSize.tsx'
 import type { EdgeConfig, Edges } from './edges'
 import type { NodeConfig, Nodes } from './nodes'
 
@@ -10,6 +11,28 @@ interface Shape {
 
 type Shapes = Shape[]
 
+/**
+ * 本地存储的画布内部全局状态
+ */
+interface DiagramState {
+  width: Size['width'] // 画布宽度
+  height: Size['height'] // 画布高度
+  nodes: Nodes // 画布上的节点
+  edges: Edges // 画布上的连线
+  history: { nodes: Nodes, edges: Edges }[] // 用于撤销操作时，记录上次图数据
+  svgInfo: Element | null // svg dom相关记录
+  selectedNodes: Nodes // 点中节点
+  selectedEdges: Edges // 点中连线
+  marqueeNodes: Nodes // 框选中节点
+  copyNode: Node | null // 拷贝的节点
+  targetInfo: Node | null // 建立连线标记目标节点
+  gaussianBlur: number
+  centroidTick: number // 自动居中图行触发器
+}
+
+/**
+ * Diagram 组件的参数
+ */
 interface DiagramProps {
   nodes?: Nodes // 图中的节点数据
   edges?: Edges // 图中的连线数据

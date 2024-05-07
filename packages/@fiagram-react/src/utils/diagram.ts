@@ -1,29 +1,9 @@
 import _ from 'lodash'
-import type { XYCoord } from 'react-dnd'
+import * as d3 from 'd3'
+import type { RefObject } from 'react'
 import type { Node, Nodes } from '../types/nodes'
-
-/**
- * 获取拖动节点的样式
- * @param initialOffset
- * @param currentOffset
- */
-export function getItemStyles(
-  initialOffset: XYCoord | null,
-  currentOffset: XYCoord | null,
-) {
-  if (!initialOffset || !currentOffset) {
-    return {
-      display: 'none',
-    }
-  }
-
-  const { x, y } = currentOffset
-  const transform = `translate(${x}px, ${y}px)`
-  return {
-    transform,
-    WebkitTransform: transform,
-  }
-}
+import type { DiagramState } from '../types/diagram'
+import { uuid } from './uuid.ts'
 
 /**
  * 角度转弧度
@@ -163,8 +143,8 @@ function insideBox(node: Node, currentNode: Node, relativeX: number, relativeY: 
   let currentNodeWidth = currentNode.width
   let currentNodeHeight = currentNode.height
   if (currentNode.expand === false) {
-    currentNodeX = currentNode.relativeX + (currentNode.width - unExpandWidth) / 2
-    currentNodeY = currentNode.relativeY + (currentNode.height - unExpandHeight) / 2
+    currentNodeX = (currentNode?.relativeX || 0) + (currentNode.width - unExpandWidth) / 2
+    currentNodeY = (currentNode?.relativeY || 0) + (currentNode.height - unExpandHeight) / 2
     currentNodeWidth = unExpandWidth
     currentNodeHeight = unExpandHeight
   }
@@ -172,9 +152,65 @@ function insideBox(node: Node, currentNode: Node, relativeX: number, relativeY: 
     node.expand !== false
     && node.id !== currentNode.id
     && node.draginDisabled !== true
-    && currentNodeX >= node.x + relativeX
-    && currentNodeX + currentNodeWidth <= node.x + relativeX + node.width
-    && currentNodeY >= node.y + relativeY
-    && currentNodeY + currentNodeHeight <= node.y + relativeY + node.height
+    && (currentNodeX || 0) >= node.x + relativeX
+    && (currentNodeX || 0) + currentNodeWidth <= node.x + relativeX + node.width
+    && (currentNodeY || 0) >= node.y + relativeY
+    && (currentNodeY || 0) + currentNodeHeight <= node.y + relativeY + node.height
   )
+}
+
+/**
+ * 处理拖放节点
+ */
+interface HandleDropNodeProps {
+  item: any
+  monitor: any
+  svgRef: RefObject<SVGSVGElement>
+  svgInfo: DiagramState['svgInfo']
+  nodes: Nodes
+}
+export function handleDropNode({ item, monitor, svgRef, svgInfo, nodes }: HandleDropNodeProps) {
+  const { left, top } = svgRef?.current?.getBoundingClientRect() || { left: 0, top: 0 }
+  const { x: sourceOffsetX, y: sourceOffsetY } = monitor.getSourceClientOffset()
+  const transition = svgInfo ? d3.zoomTransform(svgInfo) : { x: 0, y: 0, k: 1 }
+
+  const x = (sourceOffsetX - left - transition.x) / transition.k
+  const y = (sourceOffsetY - top - transition.y) / transition.k
+
+  const newNode: Node = {
+    ...item,
+    id: uuid(),
+    width: 140,
+    height: 50,
+    x,
+    y,
+  }
+  const newNodes = [...nodes]
+  const newParent = checkInsideWhichBox(newNodes, {
+    ...newNode,
+    relativeX: x,
+    relativeY: y,
+  })
+
+  if (newParent) {
+    const { relativeX: parentNodeRelativeX, relativeY: parentNodeRelativeY } = findNodeFromTree(
+      newNodes,
+      newParent.id,
+    ) || { relativeX: 0, relativeY: 0 }
+    newParent.children = (newParent.children || []).concat({
+      ...newNode,
+      x: newNode.x - parentNodeRelativeX,
+      y: newNode.y - parentNodeRelativeY,
+    })
+  } else {
+    newNodes.push(newNode)
+  }
+
+  delete newNode.component
+  delete newNode.type
+
+  return {
+    newNodes,
+    newNode,
+  }
 }

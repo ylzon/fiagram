@@ -1,8 +1,8 @@
 import React from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PanelView } from '../panel-view'
 import { FlowIcons } from '../../shapes'
+import { PanelView } from './panel-view.tsx'
 
 const { Begin } = FlowIcons
 
