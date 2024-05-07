@@ -143,8 +143,8 @@ function insideBox(node: Node, currentNode: Node, relativeX: number, relativeY: 
   let currentNodeWidth = currentNode.width
   let currentNodeHeight = currentNode.height
   if (currentNode.expand === false) {
-    currentNodeX = (currentNode?.relativeX || 0) + (currentNode.width - unExpandWidth) / 2
-    currentNodeY = (currentNode?.relativeY || 0) + (currentNode.height - unExpandHeight) / 2
+    currentNodeX = (currentNode?.relativeX || 0) + ((currentNode.width || 0) - unExpandWidth) / 2
+    currentNodeY = (currentNode?.relativeY || 0) + ((currentNode.height || 0) - unExpandHeight) / 2
     currentNodeWidth = unExpandWidth
     currentNodeHeight = unExpandHeight
   }
@@ -180,8 +180,8 @@ export function handleDropNode({ item, monitor, svgRef, svgInfo, nodes }: Handle
   const newNode: Node = {
     ...item,
     id: uuid(),
-    width: 140,
-    height: 50,
+    width: item.width || 50,
+    height: item.height || 50,
     x,
     y,
   }
@@ -195,12 +195,12 @@ export function handleDropNode({ item, monitor, svgRef, svgInfo, nodes }: Handle
   if (newParent) {
     const { relativeX: parentNodeRelativeX, relativeY: parentNodeRelativeY } = findNodeFromTree(
       newNodes,
-      newParent.id,
+      newParent?.id || uuid(),
     ) || { relativeX: 0, relativeY: 0 }
     newParent.children = (newParent.children || []).concat({
       ...newNode,
-      x: newNode.x - parentNodeRelativeX,
-      y: newNode.y - parentNodeRelativeY,
+      x: (newNode?.x || 0) - parentNodeRelativeX,
+      y: (newNode?.y || 0) - parentNodeRelativeY,
     })
   } else {
     newNodes.push(newNode)

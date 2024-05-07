@@ -1,7 +1,8 @@
 import React from 'react'
 import type { FC } from 'react'
+import type { Node } from '../../types/nodes'
 
-export const Begin: FC = () => {
+export const Begin: FC<Node | undefined> = () => {
   return (
     <svg
       width="100%"

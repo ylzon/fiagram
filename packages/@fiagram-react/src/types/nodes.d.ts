@@ -23,7 +23,8 @@ interface Node {
   shape: string
   relativeX?: number
   relativeY?: number
-  label?: string | NodeLabelConfig
+  // label?: string | NodeLabelConfig
+  label?: string
   style?: NodeStyle
   children?: Nodes
   [key: string]: unknown

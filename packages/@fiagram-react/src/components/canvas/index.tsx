@@ -28,6 +28,7 @@ const Canvas = forwardRef<IRef, IProps>((props) => {
       const { newNodes } = handleDropNode(
         { item, monitor, svgRef, svgInfo, nodes },
       )
+      console.log(newNodes)
       setNodes(newNodes)
     },
   })

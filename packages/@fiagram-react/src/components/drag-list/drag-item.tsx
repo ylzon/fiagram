@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react'
+import cls from 'classnames'
 import type { FC } from 'react'
 import { useDrag } from 'react-dnd'
 import { getEmptyImage } from 'react-dnd-html5-backend'
 import { DRAG_DROP_KEY } from '@fiagram/core/constant'
+import type { Shape } from '../../types/diagram'
+import type { Node } from '../../types/nodes'
 import { CustomDragLayer } from './drag-layer.tsx'
 
-export interface DragItemProps {
-  key?: string
-  name?: string
-  component?: () => JSX.Element
-  node?: Node
-}
-
-export const DragItem: FC<DragItemProps> = ({ component, name, node }) => {
+export const DragItem: FC<Shape> = ({ component, label, nodeInfo }) => {
   const [{ isDragging }, dragRef, preview] = useDrag({
     type: DRAG_DROP_KEY,
-    item: node,
+    item: { label, ...nodeInfo },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -27,13 +23,13 @@ export const DragItem: FC<DragItemProps> = ({ component, name, node }) => {
   }, [])
 
   const ItemContent = () => (
-    <div className="fiagram-panel-view-drag-item">
+    <div className={cls('fiagram-panel-view-drag-item')}>
       <span className="fiagram-panel-view-drag-item-icon">
-        {component?.()}
+        {component?.({ label, ...nodeInfo } as Node)}
       </span>
-      <span className="fiagram-panel-view-drag-item-name" title={name}>
-        {name}
-      </span>
+      {/* <span className="fiagram-panel-view-drag-item-name" title={label}> */}
+      {/*  {label} */}
+      {/* </span> */}
     </div>
   )
 

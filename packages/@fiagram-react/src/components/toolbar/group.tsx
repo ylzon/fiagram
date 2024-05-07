@@ -19,9 +19,9 @@ export const ToolbarGroup: FC<IProps> = (props) => {
 
   return (
     <div className="fiagram-tools-group">
-      {group.map(item => (
+      {group.map(({ key, ...item }) => (
         <ToolbarItem
-          key={item.key}
+          key={key}
           trigger={trigger}
           placement={placement}
           {...item}

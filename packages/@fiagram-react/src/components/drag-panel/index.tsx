@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
 import type { ToolBarItemProps } from '../toolbar/Item.tsx'
 import { ToolbarGroup } from '../toolbar/group.tsx'
-import { FlowPanelOverlay } from './flow.tsx'
-import { ResourcePanelOverlay } from './resource.tsx'
+import { flowList } from '../../shapes'
+import { PanelView } from './panel-view.tsx'
 
 interface IProps {
   children?: ReactNode[]
@@ -17,8 +17,19 @@ const DragPanel: ITools = ({ children }) => {
   const { t } = useTranslation()
 
   const toolsGroup: ToolBarItemProps[] = [
-    { key: '1', title: t('translation:flow-chart'), icon: 'icon-topology', overlay: <FlowPanelOverlay /> },
-    { key: '2', title: t('translation:resource'), icon: 'icon-server', overlay: <ResourcePanelOverlay /> },
+    {
+      key: '1',
+      title: t('translation:flow-chart'),
+      icon: 'icon-topology',
+      overlay: (
+        <PanelView
+          title={t('translation:flow-chart')}
+          dragList={flowList}
+          mode="flow"
+        />
+      ),
+    },
+    { key: '2', title: t('translation:resource'), icon: 'icon-server', overlay: <div>123</div> },
     { key: '3', title: t('translation:more'), icon: 'icon-more' },
   ]
 

@@ -1,12 +1,13 @@
 import type { Size } from '../hooks/ahooks/useSize.tsx'
 import type { EdgeConfig, Edges } from './edges'
-import type { NodeConfig, Nodes } from './nodes'
+import type { Node, NodeConfig, Nodes } from './nodes'
 
 interface Shape {
   key?: string
-  name?: string
+  label?: string
   style?: Node['style']
-  component?: (data) => JSX.Element
+  component?: (data: Node) => JSX.Element
+  nodeInfo?: Node
 }
 
 type Shapes = Shape[]
