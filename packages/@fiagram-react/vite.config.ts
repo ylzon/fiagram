@@ -39,7 +39,7 @@ export default defineConfig({
     cssCodeSplit: true,
     lib: {
       // 组件库源码的入口文件
-      entry: resolve('src/panel-view.tsx'),
+      entry: resolve('src/index.tsx'),
       // 组件库名称
       name: 'fiagram',
       // 文件名称, 打包结果举例: index.cjs
