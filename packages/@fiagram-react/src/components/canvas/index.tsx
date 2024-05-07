@@ -20,15 +20,13 @@ const Canvas = forwardRef<IRef, IProps>((props) => {
   const auxiliaryRef = useRef<SVGGElement>(null)
   const { state, setNodes, setSvgInfo } = useDiagramStore(state => state)
   const { nodes: nodeData = [], shapes = [], hideGrid, className } = props
-  const { nodes, svgInfo } = state
-  const uniqId = Math.random().toString(36).slice(2)
+  const { nodes, svgInfo, uniqId } = state
   const [, drop] = useDrop({
-    accept: DRAG_DROP_KEY,
+    accept: `${DRAG_DROP_KEY}-${uniqId}`,
     drop: (item, monitor) => {
       const { newNodes } = handleDropNode(
         { item, monitor, svgRef, svgInfo, nodes },
       )
-      console.log(newNodes)
       setNodes(newNodes)
     },
   })
@@ -36,7 +34,6 @@ const Canvas = forwardRef<IRef, IProps>((props) => {
   useEffect(() => {
     const svg = d3.select(svgRef.current)
     setSvgInfo(svg as unknown as Element)
-    console.log(nodeData)
     setNodes(nodeData)
   }, [])
 

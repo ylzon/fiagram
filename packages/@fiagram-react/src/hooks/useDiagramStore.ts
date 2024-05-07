@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { produce } from 'immer'
 import type { DiagramState } from '../types/diagram'
 import type { Nodes } from '../types/nodes'
+import { uuid } from '../utils/uuid.ts'
 import type { Size } from './ahooks/useSize.tsx'
 
 interface IProps {
@@ -27,6 +28,7 @@ export const useDiagramStore = create<IProps>(set => ({
     targetInfo: null,
     gaussianBlur: 26,
     centroidTick: 0,
+    uniqId: uuid(),
   },
   setState: (props) => {
     set(state => ({

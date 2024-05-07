@@ -6,11 +6,13 @@ import { getEmptyImage } from 'react-dnd-html5-backend'
 import { DRAG_DROP_KEY } from '@fiagram/core/constant'
 import type { Shape } from '../../types/diagram'
 import type { Node } from '../../types/nodes'
+import { useDiagramStore } from '../../hooks/useDiagramStore.ts'
 import { CustomDragLayer } from './drag-layer.tsx'
 
 export const DragItem: FC<Shape> = ({ component, label, nodeInfo }) => {
+  const { state: { uniqId } } = useDiagramStore(state => state)
   const [{ isDragging }, dragRef, preview] = useDrag({
-    type: DRAG_DROP_KEY,
+    type: `${DRAG_DROP_KEY}-${uniqId}`,
     item: { label, ...nodeInfo },
     collect: monitor => ({
       isDragging: monitor.isDragging(),

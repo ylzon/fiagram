@@ -29,6 +29,7 @@ interface DiagramState {
   targetInfo: Node | null // 建立连线标记目标节点
   gaussianBlur: number
   centroidTick: number // 自动居中图行触发器
+  uniqId: string // 用于生成拖拽区域的唯一id
 }
 
 /**
