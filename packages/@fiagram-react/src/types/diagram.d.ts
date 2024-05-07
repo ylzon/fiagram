@@ -1,12 +1,21 @@
 import type { EdgeConfig, Edges } from './edges'
 import type { NodeConfig, Nodes } from './nodes'
 
+interface Shape {
+  key?: string
+  name?: string
+  style?: Node['style']
+  component?: (data) => JSX.Element
+}
+
+type Shapes = Shape[]
+
 interface DiagramProps {
   nodes?: Nodes // 图中的节点数据
   edges?: Edges // 图中的连线数据
   nodeProps?: NodeConfig // 图中节点数据的属性信息，用于控制如何展示，事件绑定等
   edgeProps?: EdgeConfig // 图中连线数据的属性信息，用于控制如何展示，事件绑定等
-  shapes?: any // 用于传入自定义的渲染图形
+  shapes?: Shapes // 用于传入自定义的渲染图形
   hideDragBox?: boolean // 隐藏拖动栏
   hideTools?: boolean // 隐藏工具栏
   wheelZoomDisabled?: boolean // 禁止鼠标滚轮缩放

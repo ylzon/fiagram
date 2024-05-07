@@ -32,13 +32,16 @@
   "dependencies": {
     "@fiagram/core": "workspace:^",
     "classnames": "^2.5.1",
+    "d3": "^7.9.0",
     "i18next": "^23.11.3",
+    "lodash": "^4.17.21",
     "rc-tooltip": "^6.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-i18next": "^14.1.1"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
     "@types/node": "^20.12.8",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

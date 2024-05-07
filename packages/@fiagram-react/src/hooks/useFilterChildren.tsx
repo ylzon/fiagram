@@ -28,18 +28,15 @@ export const useFilterChildren: IUseFilterChildrenProps = (children): IUseFilter
           toolsChild = child
         else
           restChilds.push(child)
-      }
-      else { restChilds.push(child) }
-    }
-    else { restChilds.push(child) }
+      } else { restChilds.push(child) }
+    } else { restChilds.push(child) }
   }
 
   if (Array.isArray(children)) {
     children.forEach((child) => {
       handleChild(child)
     })
-  }
-  else {
+  } else {
     handleChild(children)
   }
 

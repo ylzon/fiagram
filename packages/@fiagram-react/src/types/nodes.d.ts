@@ -1,3 +1,5 @@
+import type { ReactElement } from 'react'
+
 interface NodeLabelConfig {
   text?: string
   chunkLen?: number
@@ -8,6 +10,8 @@ interface NodeStyle {
   fill: string
   stroke: string
   strokeWidth: number
+  fillColor: string
+  strokeColor: string
 }
 
 interface Node {
@@ -17,13 +21,15 @@ interface Node {
   width: number
   height: number
   shape: string
+  relativeX: number
+  relativeY: number
   label?: string | NodeLabelConfig
   style?: NodeStyle
   children?: Nodes
   [key: string]: unknown
 }
 
-export type Nodes = Node[]
+type Nodes = Node[]
 
 interface NodeConfig {
   resizeDisabled?: boolean // 禁止修改节点大小

@@ -1,12 +1,201 @@
 .fiagram {
   &-canvas {
-    min-height: 400px;
+    height: 100%;
     background-color: var(--canvas-bg-color);
-    background-image: linear-gradient(90deg,#ffffff 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(#ffffff 10%, rgba(0, 0, 0, 0) 10%);
+    background-image: linear-gradient(90deg, #ffffff 10%, rgba(0, 0, 0, 0) 10%), linear-gradient(#ffffff 10%, rgba(0, 0, 0, 0) 10%);
     background-size: 10px 10px;
     &.hideGrid {
+      height: 100%;
       background-image: none;
       background-size: 0;
+    }
+    svg {
+      fill: transparent;
+      height: 100%;
+      width: 100%;
+      cursor: grab;
+      background-color: red;
+      &:not(.draging-node):not(.resizing-node) {
+        .node {
+          cursor: pointer;
+          &:not(.node-selected):not(.node-marquee) {
+            .node-shape:not(.node-shape-connect-disabled) {
+              &:hover {
+                & > .connect-anchors {
+                  visibility: visible;
+                }
+              }
+              .connect-anchors-hide {
+                visibility: hidden !important;
+              }
+            }
+          }
+          &-marquee {
+            pointer-events: none;
+            & > .node-shape {
+              rect:not(.node-shape-bg),
+              path,
+              ellipse,
+              polygon {
+                //stroke: @highlight;
+              }
+              text {
+                //fill: @highlight;
+              }
+            }
+          }
+          &-selected {
+            & > .node-shape {
+              & > .rotate-anchor,
+              & > .resize-anchors {
+                visibility: visible;
+                &-disabled {
+                  & > rect {
+                    cursor: default !important;
+                  }
+                }
+              }
+              &-resize-disabled .resize-anchors {
+                cursor: inherit !important;
+              }
+              &:hover {
+                &:not(.node-shape-connect-disabled) > .connect-anchors:not(.connect-anchors-hide) {
+                  visibility: visible;
+                }
+                & g.node-shape-text ~ .connect-anchors {
+                  visibility: hidden;
+                }
+                // &:not(.node-shape-resize-diabled) > .resize-anchors {
+                //   & > rect.middle-resize {
+                //     pointer-events: none;
+                //     visibility: hidden;
+                //   }
+                // }
+              }
+            }
+            & > .node-shape-rotate-disabled {
+              .rotate-anchor {
+                visibility: hidden;
+              }
+            }
+            & > .node-rotate {
+              .connect-anchors {
+                pointer-events: none;
+                visibility: hidden !important;
+              }
+              &:hover {
+                .connect-anchors {
+                  pointer-events: none;
+                  visibility: hidden !important;
+                }
+              }
+            }
+            .linking-source-node {
+              .resize-anchors > rect.middle-resize {
+                pointer-events: none;
+                visibility: hidden;
+              }
+            }
+          }
+        }
+        .drag-align {
+          opacity: 0;
+        }
+      }
+      .resize-rect {
+        //stroke: @svg-box-body-border;
+        //fill: @svg-box-body-bg;
+        opacity: 0.2;
+      }
+      rect.draging-node,
+      rect.multi-draging-node,
+      .multi-rotate-node {
+        //stroke: @draging-node;
+        fill: none;
+        stroke-dasharray: 4px, 4px;
+        opacity: 0.8;
+        stroke-width: 2px;
+        cursor: move;
+      }
+      .multi-rotate-node {
+        text {
+          //fill: @draging-node;
+        }
+        path {
+          //stroke: @draging-node;
+          fill: none;
+          stroke-dasharray: 4px, 4px;
+          opacity: 0.8;
+          stroke-width: 2px;
+        }
+      }
+      .marquee-select,
+      .marquee-select-copy {
+        opacity: 0;
+        //stroke: @marquee-border;
+        stroke-width: 1px;
+        stroke-opacity: 0.7;
+        //fill: @marquee-bg;
+      }
+      .marquee-select-copy {
+        stroke-dasharray: 2px, 2px;
+        cursor: move;
+      }
+      &.marquee,
+      &.marquee-finished {
+        cursor: crosshair;
+        .node {
+          pointer-events: none;
+        }
+        .marquee-select {
+          opacity: 0.2;
+        }
+        .marquee-select-copy {
+          opacity: 0.1;
+        }
+      }
+      &.marquee-finished {
+        cursor: default;
+      }
+      &.draging-edgelabel {
+        cursor: move;
+      }
+      &.move-edge-anchor {
+        cursor: crosshair;
+      }
+      &.linking {
+        cursor: crosshair;
+        .linking-source-node {
+          // .connect-anchors-pointer {
+          //   visibility: hidden;
+          // }
+          .connect-anchors-pointer-source {
+            visibility: visible;
+          }
+        }
+        .nodes-container .node {
+          cursor: crosshair;
+        }
+        .edges-container .edge {
+          pointer-events: none;
+        }
+      }
+      &.highlight {
+        //background: @blur-bg;
+        filter: blur(0.2px);
+        .edges-container .paths-group g.text-wrap > rect {
+          fill: transparent;
+        }
+      }
+      &.layout-animating {
+        .edges-container,
+        .edge-highlight-group {
+          visibility: hidden !important;
+          .edge .edge-side-anchors {
+            visibility: hidden !important;
+          }
+        }
+      }
     }
   }
 }

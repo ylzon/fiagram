@@ -13,6 +13,7 @@ const NodeShape: FC = ({ x, y, width, height, name }: any) => {
 const App: FC = () => {
   return (
     <Diagram
+      canvasStyle={{ height: 500 }}
       shapes={[
         { name: 'node1', shape: NodeShape },
       ]}
