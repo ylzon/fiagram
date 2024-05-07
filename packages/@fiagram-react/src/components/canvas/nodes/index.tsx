@@ -2,7 +2,8 @@ import React from 'react'
 import _ from 'lodash'
 import type { FC } from 'react'
 import type { Shape, Shapes } from '../../../types/diagram'
-import type { Node, NodeStyle } from '../../../types/nodes'
+import type { Node } from '../../../types/nodes'
+import { flowShapes } from '../../../shapes'
 import { NodeItem } from './node.tsx'
 
 interface IProps {
@@ -21,10 +22,16 @@ export const Nodes: FC<IProps> = ({ data, shapes }) => {
     return _.mergeWith({}, originStyle, (a, b) => a || b)
   }
   const renderShape = (node: Node) => {
-    const shape = _.find(shapes, shape => shape.key === node.shape)
+    const shapeList: Shapes = [
+      ...flowShapes,
+      ...shapes,
+    ]
+    const shape = _.find(shapeList, shape => shape.shape === node.shape)
     if (shape) {
-      const style: NodeStyle = formatStyle(node?.style || shape.style)
+      const style: Shape['style'] = formatStyle(node?.style || shape.style)
       const data: Node = { ...node, style }
+      console.log('12', data)
+
       return (
         <NodeItem key={node.id} shapes={shapes} data={data}>
           {shape?.component?.(data)}

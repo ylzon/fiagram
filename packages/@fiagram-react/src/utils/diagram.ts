@@ -66,8 +66,8 @@ export function findNodeFromTree(originNodes: Nodes, id: string) {
       const { relativeX, relativeY, absRotateDeg } = _.reduce(
         chain,
         (item, node, index) => {
-          item.relativeX += node.x
-          item.relativeY += node.y
+          item.relativeX += (node.x || 0)
+          item.relativeY += (node.y || 0)
 
           item.absRotateDeg += +(node.rotateDeg || 0)
 
@@ -77,14 +77,14 @@ export function findNodeFromTree(originNodes: Nodes, id: string) {
             if (parentNode.rotateDeg)
               currentRotateDeg += +parentNode.rotateDeg
 
-            const parentNodeRelativeX = item.relativeX - node.x
-            const parentNodeRelativeY = item.relativeY - node.y
+            const parentNodeRelativeX = item.relativeX - (node.x || 0)
+            const parentNodeRelativeY = item.relativeY - (node.y || 0)
             const coord = calcCoordAfterRotate({
               node: parentNode,
               deg: currentRotateDeg,
               coord: {
-                x: node.x + node.width / 2 - parentNode.width / 2,
-                y: node.y + node.height / 2 - parentNode.height / 2,
+                x: (node.x || 0) + node.width / 2 - parentNode.width / 2,
+                y: (node.y || 0) + node.height / 2 - parentNode.height / 2,
               },
             })
             const rotateCenterX = parentNodeRelativeX + coord.x
@@ -120,8 +120,8 @@ export function checkInsideWhichBox(nodes: Nodes, currentNode: Node, relativeX =
       checkInsideWhichBox(
         parentNode.children || [],
         currentNode,
-        parentNode.x + relativeX,
-        parentNode.y + relativeY,
+        (parentNode.x || 0) + relativeX,
+        (parentNode.y || 0) + relativeY,
       ) || parentNode
     )
   }
@@ -152,10 +152,10 @@ function insideBox(node: Node, currentNode: Node, relativeX: number, relativeY: 
     node.expand !== false
     && node.id !== currentNode.id
     && node.draginDisabled !== true
-    && (currentNodeX || 0) >= node.x + relativeX
-    && (currentNodeX || 0) + currentNodeWidth <= node.x + relativeX + node.width
-    && (currentNodeY || 0) >= node.y + relativeY
-    && (currentNodeY || 0) + currentNodeHeight <= node.y + relativeY + node.height
+    && (currentNodeX || 0) >= (node.x || 0) + relativeX
+    && (currentNodeX || 0) + currentNodeWidth <= (node.x || 0) + relativeX + node.width
+    && (currentNodeY || 0) >= (node.y || 0) + relativeY
+    && (currentNodeY || 0) + currentNodeHeight <= (node.y || 0) + relativeY + node.height
   )
 }
 

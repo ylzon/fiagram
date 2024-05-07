@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export const DragList: FC<IProps> = ({ dragList }) => {
-  return dragList?.map(({ key, ...item }) => (
-    <DragItem key={key} {...item} />
+  return dragList?.map(({ shape, ...item }) => (
+    <DragItem shape={shape} {...item} />
   ))
 }

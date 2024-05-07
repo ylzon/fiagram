@@ -8,14 +8,14 @@ interface TextCenterProps {
   label?: string
 }
 
-const nodeInfo: Node = {
+const getNodeInfo: (shape: string) => Node = shape => ({
   id: 'flow-id',
   x: 0,
   y: 0,
-  width: 150,
-  height: 40,
-  shape: 'flow',
-}
+  width: 130,
+  height: 35,
+  shape: `flow-${shape}`,
+})
 
 const TextCenter: React.FC<TextCenterProps> = ({ color, y, label }) => (
   <text
@@ -32,11 +32,11 @@ const TextCenter: React.FC<TextCenterProps> = ({ color, y, label }) => (
   </text>
 )
 
-export const flowList: Shapes = [
+export const flowShapes: Shapes = [
   {
-    key: 'start',
+    shape: 'flow-start',
     label: 'Start',
-    nodeInfo,
+    nodeInfo: getNodeInfo('start'),
     component: ({ width, height, label }) => (
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} fill="none">
         <rect width={width} height={height} rx={height / 2} fill="#3A3D87" />
@@ -45,9 +45,9 @@ export const flowList: Shapes = [
     ),
   },
   {
-    key: 'process',
+    shape: 'flow-process',
     label: 'Process',
-    nodeInfo,
+    nodeInfo: getNodeInfo('process'),
     component: ({ width, height, label }) => (
       <svg width={width + 2} height={height + 3} viewBox={`0 0 ${width} ${height}`} fill="none">
         <rect x={1.5} y={0} width={width - 3} height={height} rx="6" fill="#DB9730" fillOpacity="0.2" />
@@ -57,9 +57,9 @@ export const flowList: Shapes = [
     ),
   },
   {
-    key: 'decision',
-    label: 'Decision',
-    nodeInfo,
+    shape: 'flow-condition',
+    label: 'Condition',
+    nodeInfo: getNodeInfo('condition'),
     component: ({ width, height: H, label }) => {
       const height = H * 1.3
       const widthRatio = width / 350
@@ -74,16 +74,16 @@ export const flowList: Shapes = [
               stroke="#888DFF"
               strokeWidth={2}
             />
-            <TextCenter label={label} color="#856285" />
+            <TextCenter label={label} color="#888DFF" />
           </svg>
         )
       )
     },
   },
   {
-    key: 'database',
+    shape: 'flow-database',
     label: 'Database',
-    nodeInfo,
+    nodeInfo: getNodeInfo('database'),
     component: ({ width, height: H, label }) => {
       const height = H * 1.3
       const widthRatio = width / 234
@@ -107,9 +107,21 @@ export const flowList: Shapes = [
     },
   },
   {
-    key: 'decision',
+    shape: 'flow-exegesis',
+    label: 'Exegesis',
+    nodeInfo: getNodeInfo('exegesis'),
+    component: ({ width, height, label }) => (
+      <svg width={width + 2} height={height + 3} viewBox={`0 0 ${width} ${height}`} fill="none">
+        <rect x={1.5} y={0} width={width - 3} height={height} rx="6" fill="#30C687" fillOpacity="0.2" />
+        <rect x={1.5} y={0} width={width - 3} height={height} rx="6" stroke="#30C687" strokeWidth="2" strokeDasharray="8 2" />
+        <TextCenter label={label} color="#30C687" />
+      </svg>
+    ),
+  },
+  {
+    shape: 'flow-decision',
     label: 'Decision',
-    nodeInfo,
+    nodeInfo: getNodeInfo('decision'),
     component: ({ width, height, label }) => {
       const widthRatio = width / 350
       const heightRatio = height / 104
@@ -130,9 +142,9 @@ export const flowList: Shapes = [
     },
   },
   {
-    key: 'end',
+    shape: 'flow-end',
     label: 'End',
-    nodeInfo,
+    nodeInfo: getNodeInfo('end'),
     component: ({ width, height, label }) => (
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} fill="none">
         <rect width={width} height={height} rx={height / 2} fill="#1CB273" />

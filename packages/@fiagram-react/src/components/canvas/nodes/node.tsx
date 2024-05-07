@@ -12,43 +12,50 @@ interface IProps {
 
 export const NodeItem: FC<IProps> = (props) => {
   const dragTargetRef = useRef(null)
+  const { x = 0, y = 0 } = props?.data || {}
+  const getTransform = () => {
+    const translate = `translate(${x}, ${y})`
+    if (props?.data?.rotateDeg) {
+      return `${translate} rotate(${props.data.rotateDeg} ${props.data.width / 2} ${props.data.height / 2})`
+    }
+    return translate
+  }
   return (
-    <div>
+    <g
+      className={cls('fiagram-node', {
+        // 'node-selected': isSelected,
+        // 'node-marquee': isMarquee,
+      })}
+      transform={getTransform()}
+    >
       <g
-        className={cls('fiagram-node', {
-          // 'node-selected': isSelected,
-          // 'node-marquee': isMarquee,
+        className={cls('fiagram-node-shape', {
+          // 'node-shape-connect-disabled': connectDisabled,
+          // 'node-shape-resize-disabled': resizeDisabled,
+          // 'node-shape-rotate-disabled': rotateDisabled,
         })}
+        // onClick={handleClick}
+        // onDoubleClick={handleDblClick}
+        // onContextMenu={handleContextMenu}
+        // onMouseEnter={handleMouseEnter}
+        // onMouseLeave={handleMouseLeave}
       >
-        <g
-          className={cls('fiagram-node-shape', {
-            // 'node-shape-connect-disabled': connectDisabled,
-            // 'node-shape-resize-disabled': resizeDisabled,
-            // 'node-shape-rotate-disabled': rotateDisabled,
-          })}
-          // onClick={handleClick}
-          // onDoubleClick={handleDblClick}
-          // onContextMenu={handleContextMenu}
-          // onMouseEnter={handleMouseEnter}
-          // onMouseLeave={handleMouseLeave}
-        >
-          <rect
-            x="0"
-            y="0"
-            className="fiagram-node-shape-bg"
-            width={props.data?.width}
-            height={props.data?.height}
-          />
-          <g ref={dragTargetRef}>{props.children}</g>
-          {/* <ConnectAnchors node={props.data} disabled={connectDisabled} /> */}
-          {/* <NodeTitle */}
-          {/*   defaultTextColor={defaultTextColor} */}
-          {/*   node={props.data} */}
-          {/*   nameProps={nameProps} */}
-          {/*   onExpand={onExpand} */}
-          {/* /> */}
-        </g>
+        <rect
+          x="0"
+          y="0"
+          className="fiagram-node-shape-bg"
+          width={props.data?.width}
+          height={props.data?.height}
+        />
+        <g ref={dragTargetRef}>{props.children}</g>
+        {/* <ConnectAnchors node={props.data} disabled={connectDisabled} /> */}
+        {/* <NodeTitle */}
+        {/*   defaultTextColor={defaultTextColor} */}
+        {/*   node={props.data} */}
+        {/*   nameProps={nameProps} */}
+        {/*   onExpand={onExpand} */}
+        {/* /> */}
       </g>
-    </div>
+    </g>
   )
 }

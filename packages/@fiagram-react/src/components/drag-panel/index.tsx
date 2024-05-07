@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
 import type { ToolBarItemProps } from '../toolbar/Item.tsx'
 import { ToolbarGroup } from '../toolbar/group.tsx'
-import { flowList } from '../../shapes'
+import { flowShapes } from '../../shapes'
 import { PanelView } from './panel-view.tsx'
 
 interface IProps {
@@ -24,7 +24,7 @@ const DragPanel: ITools = ({ children }) => {
       overlay: (
         <PanelView
           title={t('translation:flow-chart')}
-          dragList={flowList}
+          dragList={flowShapes}
           mode="flow"
         />
       ),
@@ -37,7 +37,7 @@ const DragPanel: ITools = ({ children }) => {
     <Fragment>
       <ToolbarGroup
         group={toolsGroup}
-        trigger="click"
+        trigger={['click']}
         placement="rightTop"
       />
     </Fragment>

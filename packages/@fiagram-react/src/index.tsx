@@ -42,6 +42,7 @@ const Diagram: FC<IProps> = (props) => {
           restChilds={restChilds}
           canvasStyle={canvasStyle}
           className={canvasClassName}
+          {...props}
         />
       </div>
     </DndProvider>

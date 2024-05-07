@@ -31,7 +31,7 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
   return (
     <Popover
       trigger={trigger}
-      visible={icon === 'icon-topology'}
+      // visible={icon === 'icon-topology'}
       overlay={overlay || title || ''}
       align={alignMap[placement]}
       placement={placement}

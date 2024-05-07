@@ -3,7 +3,7 @@ import type { EdgeConfig, Edges } from './edges'
 import type { Node, NodeConfig, Nodes } from './nodes'
 
 interface Shape {
-  key?: string
+  shape?: string
   label?: string
   style?: Node['style']
   component?: (data: Node) => JSX.Element

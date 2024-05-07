@@ -7,20 +7,20 @@ interface NodeLabelConfig {
 }
 
 interface NodeStyle {
-  fill: string
-  stroke: string
-  strokeWidth: number
-  fillColor: string
-  strokeColor: string
+  fill?: string
+  stroke?: string
+  strokeWidth?: number
+  fillColor?: string
+  strokeColor?: string
 }
 
 interface Node {
-  id: string
-  x: number
-  y: number
+  id?: string
+  x?: number
+  y?: number
   width: number
   height: number
-  shape: string
+  shape?: string
   relativeX?: number
   relativeY?: number
   // label?: string | NodeLabelConfig
