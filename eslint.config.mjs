@@ -24,5 +24,6 @@ export default antfu({}, {
     ],
     '@typescript-eslint/comma-dangle': 'off', // 要求或禁止末尾逗号
     'style/brace-style': ['error', '1tbs', { allowSingleLine: true }], // 强制在代码块中使用一致的大括号风格
+    'antfu/if-newline': 'off', // 要求 if 语句的每个块都需要包括一个换行符
   },
 })

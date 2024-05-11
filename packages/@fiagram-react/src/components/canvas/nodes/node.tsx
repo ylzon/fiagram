@@ -1,8 +1,12 @@
 import React, { useRef } from 'react'
-import type { FC } from 'react'
+import type { FC, MouseEventHandler } from 'react'
 import cls from 'classnames'
+import _ from 'lodash'
+import { findNodeFromTree, getNodeTransform } from '@fiagram/core/src/utils/diagram'
 import type { Shapes } from '../../../types/diagram'
-import type { Node } from '../../../types/nodes'
+import type { Node, Nodes } from '../../../types/nodes'
+import { useDiagramStore } from '../../../hooks/useDiagramStore'
+import { ConnectAnchors } from './anchors/connect'
 
 interface IProps {
   data?: Node
@@ -12,29 +16,63 @@ interface IProps {
 
 export const NodeItem: FC<IProps> = (props) => {
   const dragTargetRef = useRef(null)
-  const { x = 0, y = 0 } = props?.data || {}
-  const getTransform = () => {
-    const translate = `translate(${x}, ${y})`
-    if (props?.data?.rotateDeg) {
-      return `${translate} rotate(${props.data.rotateDeg} ${props.data.width / 2} ${props.data.height / 2})`
+  const nodeInfo = props?.data
+  const { connectDisabled } = nodeInfo || {}
+  const { state, setSelectedNodes } = useDiagramStore(state => state)
+  const { selectedNodes, nodes } = state
+  const isSelected = _.some(selectedNodes, node => node.id === nodeInfo?.id)
+
+  let isDblClick = false
+
+  function addNodeToSelectedNodes() {
+    const newSelectedNodes: Nodes = [...selectedNodes]
+
+    const idx = _.findIndex(newSelectedNodes, sn => sn.id === nodeInfo?.id)
+    if (idx > -1) {
+      newSelectedNodes.splice(idx, 1)
+    } else if (nodeInfo) {
+      newSelectedNodes.push(nodeInfo)
     }
-    return translate
+    setSelectedNodes(newSelectedNodes)
+  }
+
+  // 延时区分单机/双击事件
+  const delayDetectClick = _.debounce((e) => {
+    if (e.ctrlKey) {
+      addNodeToSelectedNodes()
+    } else if (!isDblClick) {
+      // const { nodes } = store.getState()
+      const currentNode = findNodeFromTree(nodes, nodeInfo?.id || '')
+      const onClick = currentNode?.onClick
+      if (typeof onClick === 'function') {
+        return onClick(nodeInfo, state)
+      }
+      if (nodeInfo) {
+        setSelectedNodes([nodeInfo])
+      }
+    }
+    isDblClick = false
+  }, 200)
+
+  const handleClick: MouseEventHandler = (event) => {
+    event.persist()
+    delayDetectClick(event)
   }
   return (
     <g
-      className={cls('fiagram-node', {
-        // 'node-selected': isSelected,
+      className={cls('node', nodeInfo?.className, {
+        'node-selected': isSelected,
         // 'node-marquee': isMarquee,
       })}
-      transform={getTransform()}
+      transform={getNodeTransform(nodeInfo)}
     >
       <g
-        className={cls('fiagram-node-shape', {
-          // 'node-shape-connect-disabled': connectDisabled,
+        className={cls('node-shape', {
+          'node-shape-connect-disabled': connectDisabled,
           // 'node-shape-resize-disabled': resizeDisabled,
           // 'node-shape-rotate-disabled': rotateDisabled,
         })}
-        // onClick={handleClick}
+        onClick={handleClick}
         // onDoubleClick={handleDblClick}
         // onContextMenu={handleContextMenu}
         // onMouseEnter={handleMouseEnter}
@@ -43,15 +81,15 @@ export const NodeItem: FC<IProps> = (props) => {
         <rect
           x="0"
           y="0"
-          className="fiagram-node-shape-bg"
-          width={props.data?.width}
-          height={props.data?.height}
+          className="node-shape-bg"
+          width={nodeInfo?.width}
+          height={nodeInfo?.height}
         />
         <g ref={dragTargetRef}>{props.children}</g>
-        {/* <ConnectAnchors node={props.data} disabled={connectDisabled} /> */}
+        <ConnectAnchors node={nodeInfo as Node} disabled={connectDisabled || false} />
         {/* <NodeTitle */}
         {/*   defaultTextColor={defaultTextColor} */}
-        {/*   node={props.data} */}
+        {/*   node={node} */}
         {/*   nameProps={nameProps} */}
         {/*   onExpand={onExpand} */}
         {/* /> */}

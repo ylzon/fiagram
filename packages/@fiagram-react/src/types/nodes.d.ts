@@ -23,10 +23,13 @@ interface Node {
   shape?: string
   relativeX?: number
   relativeY?: number
+  rotateDeg?: number
   // label?: string | NodeLabelConfig
   label?: string
+  className?: string
   style?: NodeStyle
   children?: Nodes
+  connectDisabled?: boolean
   [key: string]: unknown
 }
 

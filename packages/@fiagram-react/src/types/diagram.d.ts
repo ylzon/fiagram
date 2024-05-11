@@ -12,6 +12,18 @@ interface Shape {
 
 type Shapes = Shape[]
 
+export interface SvgInfo {
+  svg?: Selection<SVGElement, undefined, HTMLElement, any>
+  svgDOM?: SVGSVGElement | null
+  svgZoomArea?: Selection<SVGElement, undefined, HTMLElement, any>
+  auxiliary?: Selection<SVGElement, undefined, HTMLElement, any>
+  zoom?: Selection<SVGElement, undefined, HTMLElement, any>
+  marqueeSelect?: Selection<SVGElement, undefined, HTMLElement, any>
+  marqueeSelectCopy?: Selection<SVGElement, undefined, HTMLElement, any>
+  newLine?: Selection<SVGPathElement, undefined, HTMLElement, any>
+  [key: string]: any
+}
+
 /**
  * 本地存储的画布内部全局状态
  */
@@ -20,8 +32,8 @@ interface DiagramState {
   height: Size['height'] // 画布高度
   nodes: Nodes // 画布上的节点
   edges: Edges // 画布上的连线
-  history: { nodes: Nodes, edges: Edges }[] // 用于撤销操作时，记录上次图数据
-  svgInfo: Element | null // svg dom相关记录
+  backupData: { nodes: Nodes, edges: Edges }[] // 用于撤销操作时，记录上次图数据
+  svgInfo: SvgInfo // svg dom相关记录
   selectedNodes: Nodes // 点中节点
   selectedEdges: Edges // 点中连线
   marqueeNodes: Nodes // 框选中节点
@@ -30,6 +42,8 @@ interface DiagramState {
   gaussianBlur: number
   centroidTick: number // 自动居中图行触发器
   uniqId: string // 用于生成拖拽区域的唯一id
+  edgeProps: EdgeConfig // 连线属性
+  zoomConfig?: (zoomAreaEl: Selection<SVGElement, undefined, HTMLElement, any>) => any // 缩放配置
 }
 
 /**

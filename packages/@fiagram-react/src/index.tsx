@@ -8,7 +8,7 @@ import { Canvas } from './components/canvas'
 import { Tools } from './components/tools'
 import { DragPanel } from './components/drag-panel'
 import { useFilterChildren } from './hooks/useFilterChildren.tsx'
-import '@fiagram/core/styles/fiagram.scss'
+import '@fiagram/core/src/styles/fiagram.scss'
 import './utils/i18n'
 
 interface IProps extends DiagramProps {

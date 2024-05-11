@@ -2,10 +2,8 @@
   "name": "@fiagram/core",
   "type": "module",
   "version": "1.0.0",
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
-  },
-  "devDependencies": {
+    "mathjs": "^12.4.2"
   }
 }

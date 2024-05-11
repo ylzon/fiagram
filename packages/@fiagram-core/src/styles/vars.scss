@@ -27,4 +27,14 @@
   --drag-item-bg-color: var(--grey-color);
   --drag-item-border-color: var(--border-color);
 
+  // node vars
+  --node-anchor-color: var(--primary-color);
+  --node-anchor-core-color: var(--white-color);
+  --node-anchor-surround-color: var(--primary-color);
+
+  // edge vars
+  --edge-selected-color: var(--primary-color);
+  --edge-hover-color: var(--primary-color);
+  --edge-color: #A1A2BB;
+  --edge-bg-color: transparent;
 }

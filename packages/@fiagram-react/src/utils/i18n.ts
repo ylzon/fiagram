@@ -1,7 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import zh from '@fiagram/core/locales/zh.json'
-import en from '@fiagram/core/locales/en.json'
+import zh from '@fiagram/core/src/locales/zh.json'
+import en from '@fiagram/core/src/locales/en.json'
 
 const resources = {
   zh,

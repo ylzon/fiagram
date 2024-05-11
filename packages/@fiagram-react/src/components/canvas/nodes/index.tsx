@@ -30,8 +30,6 @@ export const Nodes: FC<IProps> = ({ data, shapes }) => {
     if (shape) {
       const style: Shape['style'] = formatStyle(node?.style || shape.style)
       const data: Node = { ...node, style }
-      console.log('12', data)
-
       return (
         <NodeItem key={node.id} shapes={shapes} data={data}>
           {shape?.component?.(data)}

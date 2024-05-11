@@ -1,16 +1,23 @@
 import { create } from 'zustand'
 import { produce } from 'immer'
-import type { DiagramState } from '../types/diagram'
+import _ from 'lodash'
+import { checkEffectEdges } from '@fiagram/core/src/utils/edge'
+import type { DiagramState, SvgInfo } from '../types/diagram'
 import type { Nodes } from '../types/nodes'
 import { uuid } from '../utils/uuid.ts'
+import type { Edge, Edges } from '../types/edges'
 import type { Size } from './ahooks/useSize.tsx'
 
 interface IProps {
   state: DiagramState
   setState: (state: DiagramState) => void
   setNodes: (nodes: Nodes) => void
-  setSvgInfo: (svgInfo: Element) => void
-  setCanvasSize: (size: Size) => void
+  setEdges: (edges: Edges) => void
+  insertEdge: (edge: Edge) => void
+  setSvgInfo: (svgInfo: SvgInfo) => void
+  setCanvasSize: (size?: Size) => void
+  setSelectedNodes: (nodes: Nodes) => void
+  updateNodesAndEdges: (nodes: Nodes, edges: Edges, type: 'all' | 'patch') => void
 }
 
 export const useDiagramStore = create<IProps>(set => ({
@@ -19,8 +26,8 @@ export const useDiagramStore = create<IProps>(set => ({
     height: 0,
     nodes: [],
     edges: [],
-    history: [],
-    svgInfo: null,
+    backupData: [],
+    svgInfo: {},
     selectedNodes: [],
     selectedEdges: [],
     marqueeNodes: [],
@@ -29,6 +36,7 @@ export const useDiagramStore = create<IProps>(set => ({
     gaussianBlur: 26,
     centroidTick: 0,
     uniqId: uuid(),
+    edgeProps: {},
   },
   setState: (props) => {
     set(state => ({
@@ -43,6 +51,17 @@ export const useDiagramStore = create<IProps>(set => ({
       state.nodes = nodes
     }))
   },
+  setEdges: (edges) => {
+    set(produce(({ state }) => {
+      state.edges = edges
+    }))
+  },
+  insertEdge: (edge) => {
+    set(produce(({ state }) => {
+      const newEdges = checkEffectEdges([edge], state)
+      state.edges = state.edges.concat(newEdges)
+    }))
+  },
   setSvgInfo: (svgInfo) => {
     set(produce(({ state }) => {
       state.svgInfo = svgInfo
@@ -50,8 +69,25 @@ export const useDiagramStore = create<IProps>(set => ({
   },
   setCanvasSize: (size) => {
     set(produce(({ state }) => {
-      state.width = size.width
-      state.height = size.height
+      state.width = size?.width || 0
+      state.height = size?.height || 0
+    }))
+  },
+  setSelectedNodes: (nodes) => {
+    set(produce(({ state }) => {
+      state.selectedNodes = nodes
+    }))
+  },
+  updateNodesAndEdges: (nodes, edges, type = 'patch') => {
+    set(produce(({ state }) => {
+      if (type === 'patch') {
+        state.backupData = state.backupData.concat({
+          nodes: _.cloneDeep(state.nodes),
+          edges: _.cloneDeep(state.edges),
+        })
+      }
+      state.nodes = nodes
+      state.edges = edges
     }))
   },
 }))

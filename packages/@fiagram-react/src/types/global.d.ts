@@ -3,3 +3,8 @@ declare module '*.scss' {
   const content: { [className: string]: string }
   export default content
 }
+
+// algebra.js
+declare module 'algebra.js' {
+  export const parse: (expression: string) => any
+}

@@ -1,0 +1,97 @@
+
+.resize-anchors {
+  visibility: hidden;
+  & > rect {
+    fill: var(--node-anchor-core-color);
+    stroke: var(--node-anchor-surround-color);
+    &.ft {
+      pointer-events: none;
+    }
+    &.bg {
+      opacity: 0;
+    }
+  }
+}
+
+.connect-anchors {
+  visibility: hidden;
+
+  .connect-anchors-hide {
+    visibility: hidden !important;
+  }
+
+  &-pointer {
+    cursor: crosshair;
+    .core {
+      fill: var(--node-anchor-core-color);
+      stroke: var(--node-anchor-color);
+      pointer-events: none;
+    }
+    .surround {
+      pointer-events: none;
+      fill: var(--node-anchor-surround-color);
+      stroke-width: 0;
+      opacity: 0;
+    }
+    .outside {
+      opacity: 0;
+    }
+
+    &-advance,
+    &:hover {
+      .surround {
+        opacity: 0.6;
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+
+.rotate-anchor {
+  visibility: hidden;
+  text {
+    cursor: move;
+    fill: var(--node-anchor-surround-color);
+  }
+  path {
+    stroke: var(--node-anchor-surround-color);
+  }
+}
+
+.advance-anchor {
+  visibility: hidden;
+  cursor: crosshair;
+  circle {
+    fill: var(--node-anchor-core-color);
+    cursor: crosshair;
+    stroke: var(--node-anchor-color);
+    pointer-events: none;
+  }
+  &-show {
+    visibility: visible;
+  }
+}
+
+.edge-side-anchors {
+  visibility: hidden;
+  cursor: move;
+  &-pointer {
+    circle {
+      fill: var(--node-anchor-core-color);
+      cursor: crosshair;
+      stroke: var(--node-anchor-color);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    rect {
+      fill: var(--node-anchor-surround-color);
+      stroke-width: 0;
+      opacity: 0;
+    }
+    &:hover {
+      rect {
+        opacity: 0.6;
+      }
+    }
+  }
+}

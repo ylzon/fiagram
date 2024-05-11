@@ -29,7 +29,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         javascriptEnabled: true,
-        additionalData: `@import "${resolve('../@fiagram-core/styles/vars.scss')}";`,
+        additionalData: `@import "${resolve('../@fiagram-core/src/styles/vars.scss')}";`,
       },
     },
   },

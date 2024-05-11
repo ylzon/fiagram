@@ -1,0 +1,58 @@
+.fiagram-canvas {
+  &:not(.rotating-node) {
+    .edges-container .edge {
+      cursor: pointer;
+      path.ft {
+        fill: none !important;
+        pointer-events: none;
+      }
+      path.bg {
+        stroke-linecap: round;
+        stroke: var(--edge-bg-color);
+        stroke-width: 10px;
+        fill: none !important;
+        &:hover {
+          + .ft {
+            stroke: var(--edge-hover-color);
+          }
+        }
+      }
+
+      g.title {
+        &-draging {
+          cursor: move;
+        }
+        rect.front {
+          fill: transparent;
+        }
+      }
+
+      &-selected,
+      &:hover {
+        path.bg {
+          stroke: var(--edge-bg-color);
+        }
+        path.ft {
+          // stroke: @edge-selected-color;
+          opacity: 0.6;
+          // marker-end: url(#arrow-selected);
+        }
+        // rect.back {
+        //   fill: @edge-selected-color;
+        // }
+        .title text {
+          fill: #fff !important;
+          tspan {
+            pointer-events: none;
+          }
+        }
+        // defs marker path {
+        //   fill: @edge-selected-color;
+        // }
+        .edge-side-anchors {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}

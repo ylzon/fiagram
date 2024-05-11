@@ -1,9 +1,5 @@
 import _ from 'lodash'
-import * as d3 from 'd3'
-import type { RefObject } from 'react'
-import type { Node, Nodes } from '../types/nodes'
-import type { DiagramState } from '../types/diagram'
-import { uuid } from './uuid.ts'
+import type { Node, Nodes } from '../../../@fiagram-react/src/types/nodes'
 
 /**
  * 角度转弧度
@@ -57,7 +53,7 @@ export function findChainOfNode(nodes: Nodes, id: string) {
  * @param originNodes
  * @param id
  */
-export function findNodeFromTree(originNodes: Nodes, id: string) {
+export function findNodeFromTree(originNodes: Nodes, id: string): Node | undefined {
   const chain = findChainOfNode(originNodes, id)
   if (!_.isEmpty(chain)) {
     const node = _.last(chain)
@@ -160,57 +156,33 @@ function insideBox(node: Node, currentNode: Node, relativeX: number, relativeY: 
 }
 
 /**
- * 处理拖放节点
+ * 计算节点的绝对旋转角度
+ * @param nodes
+ * @param node
  */
-interface HandleDropNodeProps {
-  item: any
-  monitor: any
-  svgRef: RefObject<SVGSVGElement>
-  svgInfo: DiagramState['svgInfo']
-  nodes: Nodes
+export function calcAbsRotateDeg(nodes: Nodes, node: Node) {
+  const chain = findChainOfNode(nodes, node?.id || '')
+  return (
+    _.reduce(
+      chain,
+      (deg, node) => {
+        deg += +(node.rotateDeg || 0)
+        return deg
+      },
+      0,
+    ) % 360
+  )
 }
-export function handleDropNode({ item, monitor, svgRef, svgInfo, nodes }: HandleDropNodeProps) {
-  const { left, top } = svgRef?.current?.getBoundingClientRect() || { left: 0, top: 0 }
-  const { x: sourceOffsetX, y: sourceOffsetY } = monitor.getSourceClientOffset()
-  const transition = svgInfo ? d3.zoomTransform(svgInfo) : { x: 0, y: 0, k: 1 }
 
-  const x = (sourceOffsetX - left - transition.x) / transition.k
-  const y = (sourceOffsetY - top - transition.y) / transition.k
-
-  const newNode: Node = {
-    ...item,
-    id: uuid(),
-    width: item.width || 50,
-    height: item.height || 50,
-    x,
-    y,
+/**
+ * 获取节点的transform
+ * @param node
+ */
+export function getNodeTransform(node?: Node) {
+  const { x = 0, y = 0, rotateDeg, width, height } = node || {}
+  const translate = `translate(${x}, ${y})`
+  if (rotateDeg) {
+    return `${translate} rotate(${rotateDeg} ${(width || 0) / 2} ${(height || 0) / 2})`
   }
-  const newNodes = [...nodes]
-  const newParent = checkInsideWhichBox(newNodes, {
-    ...newNode,
-    relativeX: x,
-    relativeY: y,
-  })
-
-  if (newParent) {
-    const { relativeX: parentNodeRelativeX, relativeY: parentNodeRelativeY } = findNodeFromTree(
-      newNodes,
-      newParent?.id || uuid(),
-    ) || { relativeX: 0, relativeY: 0 }
-    newParent.children = (newParent.children || []).concat({
-      ...newNode,
-      x: (newNode?.x || 0) - parentNodeRelativeX,
-      y: (newNode?.y || 0) - parentNodeRelativeY,
-    })
-  } else {
-    newNodes.push(newNode)
-  }
-
-  delete newNode.component
-  delete newNode.type
-
-  return {
-    newNodes,
-    newNode,
-  }
+  return translate
 }
