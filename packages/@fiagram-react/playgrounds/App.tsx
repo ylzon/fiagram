@@ -26,13 +26,13 @@ const App: FC = () => {
         },
       ]}
       nodes={[
-        { id: '1', x: 100, y: 150, shape: 'node1', width: 50, height: 50, label: 'Node 1' },
-        { id: '2', x: 200, y: 250, shape: 'node1', width: 50, height: 50, label: 'Node 2' },
-        { id: '3', x: 300, y: 350, shape: 'node1', width: 50, height: 50, label: 'Node 3' },
+        { id: 'node1', x: 100, y: 150, shape: 'node1', width: 50, height: 50, label: 'Node 1' },
+        { id: 'node2', x: 200, y: 250, shape: 'node1', width: 50, height: 50, label: 'Node 2' },
+        { id: 'node3', x: 300, y: 350, shape: 'node1', width: 50, height: 50, label: 'Node 3' },
       ]}
       edges={[
-        { id: '1', type: 'broken-rounded', source: '1', sourceDirection: 'bottom', target: '2', targetDirection: 'top', label: 'Link 1' },
-        { id: '2', type: 'broken-rounded', source: '2', sourceDirection: 'bottom', target: '3', targetDirection: 'top', label: 'Link 2' },
+        { id: 'link1', type: 'broken-rounded', source: 'node1', sourceDirection: 'bottom', target: 'node2', targetDirection: 'top', label: 'Link 1' },
+        { id: 'link2', type: 'broken-rounded', source: 'node2', sourceDirection: 'bottom', target: 'node3', targetDirection: 'top', label: 'Link 2' },
       ]}
     />
   )

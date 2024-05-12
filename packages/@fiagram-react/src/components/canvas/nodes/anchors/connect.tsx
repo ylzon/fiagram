@@ -237,7 +237,7 @@ export const ConnectAnchors: FC<IProps> = (props) => {
           svgInfo.svg.classed(setTargetInfoClassName(node, d.direct), true)
         }
       })
-      .on('mouseleave', (d) => {
+      .on('mouseleave', (_, d) => {
         svgInfo.svg.classed(setTargetInfoClassName(node, d.direct), false)
       })
 
