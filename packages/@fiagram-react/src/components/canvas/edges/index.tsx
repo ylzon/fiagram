@@ -1,5 +1,5 @@
 import React from 'react'
-import type { Edges as EdgesType } from '../../../types/edges'
+import type { Edges as EdgesType } from '@fiagram/core/types/edges'
 import { EdgeItem } from './edge.tsx'
 
 interface IProps {

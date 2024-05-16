@@ -2,8 +2,8 @@ import type { XYCoord } from 'react-dnd'
 import * as d3 from 'd3'
 import type { RefObject } from 'react'
 import { checkInsideWhichBox, findNodeFromTree } from '@fiagram/core/src/utils/diagram'
-import type { Node, Nodes } from '../types/nodes'
-import type { DiagramState } from '../types/diagram'
+import type { Node, Nodes } from '@fiagram/core/types/nodes'
+import type { DiagramState } from '@fiagram/core/types/diagram'
 import { uuid } from './uuid.ts'
 
 /**

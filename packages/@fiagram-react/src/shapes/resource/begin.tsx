@@ -1,6 +1,6 @@
 import React from 'react'
 import type { FC } from 'react'
-import type { Node } from '../../types/nodes'
+import type { Node } from '@fiagram/core/types/nodes'
 
 export const Begin: FC<Node | undefined> = () => {
   return (

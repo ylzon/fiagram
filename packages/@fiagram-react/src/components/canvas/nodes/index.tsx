@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import type { FC } from 'react'
-import type { Shape, Shapes } from '../../../types/diagram'
-import type { Node } from '../../../types/nodes'
+import type { Shape, Shapes } from '@fiagram/core/types/diagram'
+import type { Node } from '@fiagram/core/types/nodes'
 import { flowShapes } from '../../../shapes'
 import { NodeItem } from './node.tsx'
 

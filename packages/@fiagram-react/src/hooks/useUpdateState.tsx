@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import _ from 'lodash'
 import { calcEdgePath, reCalcMultStraightLineBtwNodes } from '@fiagram/core/src/utils/edge'
+import type { Nodes } from '@fiagram/core/types/nodes'
+import type { Edges } from '@fiagram/core/types/edges'
 import type { CanvasProps } from '../components/canvas'
-import type { Nodes } from '../types/nodes'
-import type { Edges } from '../types/edges'
 import { useDiagramStore } from './useDiagramStore.ts'
 
 export function useUpdateState(props: CanvasProps) {

@@ -1,12 +1,10 @@
-import type { ReactElement } from 'react'
-
-interface NodeLabelConfig {
+export interface NodeLabelConfig {
   text?: string
   chunkLen?: number
   fontSize?: number
 }
 
-interface NodeStyle {
+export interface NodeStyle {
   fill?: string
   stroke?: string
   strokeWidth?: number
@@ -14,7 +12,7 @@ interface NodeStyle {
   strokeColor?: string
 }
 
-interface Node {
+export interface Node {
   id?: string
   x?: number
   y?: number
@@ -33,9 +31,9 @@ interface Node {
   [key: string]: unknown
 }
 
-type Nodes = Node[]
+export type Nodes = Node[]
 
-interface NodeConfig {
+export interface NodeConfig {
   resizeDisabled?: boolean // 禁止修改节点大小
   connectDisabled?: boolean // 禁止节点连线
   dragDisabled?: boolean // 禁止节点拖动
@@ -50,5 +48,5 @@ interface NodeConfig {
   onDblClick?: (node: Node, state: any, dispatch: any) => void // 节点双击时回调
   onContextMenu?: (node: Node, state: any, dispatch: any, options: any) => void // 节点右击时回调
   onDragEnd?: (node: Node, state: any, dispatch: any) => void // 节点拖动后回调，返回节点则更新位置，否则无变化
-  renderUnExpandNode?: ({ ref, node, onExpand, defaultTextColor }: any) => ReactElement // 自定义盒子收起节点
+  renderUnExpandNode?: ({ ref, node, onExpand, defaultTextColor }: any) => any // 自定义盒子收起节点
 }

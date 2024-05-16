@@ -1,8 +1,9 @@
-import type { Size } from '../hooks/ahooks/useSize.tsx'
 import type { EdgeConfig, Edges } from './edges'
 import type { Node, NodeConfig, Nodes } from './nodes'
 
-interface Shape {
+export interface Size { width: number, height: number }
+
+export interface Shape {
   shape?: string
   label?: string
   style?: Node['style']
@@ -10,7 +11,7 @@ interface Shape {
   nodeInfo?: Node
 }
 
-type Shapes = Shape[]
+export type Shapes = Shape[]
 
 export interface SvgInfo {
   svg?: Selection<SVGElement, undefined, HTMLElement, any>
@@ -27,7 +28,7 @@ export interface SvgInfo {
 /**
  * 本地存储的画布内部全局状态
  */
-interface DiagramState {
+export interface DiagramState {
   width: Size['width'] // 画布宽度
   height: Size['height'] // 画布高度
   nodes: Nodes // 画布上的节点
@@ -49,7 +50,7 @@ interface DiagramState {
 /**
  * Diagram 组件的参数
  */
-interface DiagramProps {
+export interface DiagramProps {
   nodes?: Nodes // 图中的节点数据
   edges?: Edges // 图中的连线数据
   nodeProps?: NodeConfig // 图中节点数据的属性信息，用于控制如何展示，事件绑定等

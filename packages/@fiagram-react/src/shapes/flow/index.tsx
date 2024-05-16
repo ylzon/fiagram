@@ -1,6 +1,6 @@
 import React from 'react'
-import type { Node } from '../../types/nodes'
-import type { Shapes } from '../../types/diagram'
+import type { Node } from '@fiagram/core/types/nodes'
+import type { Shapes } from '@fiagram/core/types/diagram'
 
 interface TextCenterProps {
   y?: string

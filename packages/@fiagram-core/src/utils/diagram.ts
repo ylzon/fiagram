@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import type { Node, Nodes } from '../../../@fiagram-react/src/types/nodes'
+import type { Node, Nodes } from '../../types/nodes'
 
 /**
  * 角度转弧度

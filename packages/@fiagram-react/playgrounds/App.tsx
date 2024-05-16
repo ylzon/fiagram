@@ -1,6 +1,6 @@
 import React, { type FC } from 'react'
+import type { Node } from '@fiagram/core/types/nodes'
 import { Diagram } from '../src'
-import type { Node } from '../src/types/nodes'
 
 function NodeShape({ width, height, label }: Node) {
   return (

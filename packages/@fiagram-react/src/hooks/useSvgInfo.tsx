@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import { type RefObject, useEffect } from 'react'
-import type { SvgInfo } from '../types/diagram'
+import type { SvgInfo } from '@fiagram/core/types/diagram'
 import { useDiagramStore } from './useDiagramStore'
 
 export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget: RefObject<SVGGElement>) {

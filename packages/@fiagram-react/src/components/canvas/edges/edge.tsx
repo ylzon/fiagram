@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import cls from 'classnames'
 import type { FC } from 'react'
 import _ from 'lodash'
-import type { Edge } from '../../../types/edges'
+import type { Edge, EdgeStyle } from '@fiagram/core/types/edges'
 import { useDiagramStore } from '../../../hooks/useDiagramStore.ts'
 import { defMarker } from './utils'
 
@@ -61,7 +61,7 @@ export const EdgeItem: FC<IProps> = (props) => {
     )
 
     const { textColor, fontSize, fillColor, strokeColor, ...pathStyle } = style
-    const { textColor: labelTextColor, fontSize: labelFontSize, ...labelStyle } = labelProps || {}
+    const { textColor: labelTextColor, fontSize: labelFontSize, fill, ...labelStyle } = labelProps || {}
 
     const hasLabel = pathD && name
     pathStyle.stroke = strokeColor || pathStyle.stroke
@@ -70,8 +70,8 @@ export const EdgeItem: FC<IProps> = (props) => {
       <g ref={textRef} className="title" {...eventHandlers} transform={labelProps?.transform}>
         <rect
           className="back"
-          fill={pathColor || labelStyle.fill}
-          {..._.pick(labelStyle, ['stroke', 'strokeWidth', 'rx', 'ry'])}
+          fill={pathColor || fill || 'black'}
+          {..._.pick(labelStyle, ['stroke', 'strokeWidth', 'rx', 'ry']) as EdgeStyle}
         />
         <text
           textAnchor="middle"

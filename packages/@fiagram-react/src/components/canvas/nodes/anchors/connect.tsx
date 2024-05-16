@@ -4,10 +4,10 @@ import _ from 'lodash'
 import { DIRECTION, EDGE_TYPE } from '@fiagram/core/src/constant'
 import * as d3 from 'd3'
 import { calcAbsRotateDeg, calcCoordAfterRotate, findNodeFromTree } from '@fiagram/core/src/utils/diagram'
+import type { Node } from '@fiagram/core/types/nodes'
+import type { Edge } from '@fiagram/core/types/edges'
 import { useDiagramStore } from '../../../../hooks/useDiagramStore.ts'
 import { uuid } from '../../../../utils/uuid.ts'
-import type { Node } from '../../../../types/nodes'
-import type { Edge } from '../../../../types/edges'
 
 interface IProps {
   node: Node

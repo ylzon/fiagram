@@ -2,10 +2,10 @@ import { create } from 'zustand'
 import { produce } from 'immer'
 import _ from 'lodash'
 import { checkEffectEdges } from '@fiagram/core/src/utils/edge'
-import type { DiagramState, SvgInfo } from '../types/diagram'
-import type { Nodes } from '../types/nodes'
+import type { DiagramState, SvgInfo } from '@fiagram/core/types/diagram'
+import type { Nodes } from '@fiagram/core/types/nodes'
+import type { Edge, Edges } from '@fiagram/core/types/edges'
 import { uuid } from '../utils/uuid.ts'
-import type { Edge, Edges } from '../types/edges'
 import type { Size } from './ahooks/useSize.tsx'
 
 interface IProps {

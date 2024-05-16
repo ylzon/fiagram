@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useRef } from 'react'
 import cls from 'classnames'
-import type { DiagramProps } from '../../types/diagram'
+import type { DiagramProps } from '@fiagram/core/types/diagram'
 import { useDiagramStore } from '../../hooks/useDiagramStore'
 import { useSize } from '../../hooks/ahooks/useSize'
 import { useSvgInfo } from '../../hooks/useSvgInfo'

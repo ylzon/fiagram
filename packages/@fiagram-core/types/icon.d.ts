@@ -1,4 +1,4 @@
-type IconFontType =
+export type IconFontType =
   'Location'
   | 'Location1'
   | 'search'

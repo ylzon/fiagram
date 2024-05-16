@@ -1,9 +1,9 @@
 import React from 'react'
 import type { FC } from 'react'
 import cls from 'classnames'
+import type { Shapes } from '@fiagram/core/types/diagram'
 import { useDiagramStore } from '../../hooks/useDiagramStore.ts'
 import { DragList } from '../drag-list/drag-list.tsx'
-import type { Shapes } from '../../types/diagram'
 
 interface IProps extends Pick<React.HTMLAttributes<HTMLElement>, 'children'> {
   title?: string
