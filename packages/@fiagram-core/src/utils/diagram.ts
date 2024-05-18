@@ -1,5 +1,8 @@
 import _ from 'lodash'
 import type { Node, Nodes } from '../../types/nodes'
+import { DIRECTION, unexpandHeight, unexpandWidth } from '../constant'
+import type { EdgeDirection } from '../../types/edges'
+import type { XYCoord } from '../../types/diagram'
 
 /**
  * 角度转弧度
@@ -31,7 +34,7 @@ export function calcCoordAfterRotate({ node, deg, coord: { x, y } }: { node: Nod
  * @param nodes
  * @param id
  */
-export function findChainOfNode(nodes: Nodes, id: string) {
+export function findChainOfNode(nodes: Nodes, id: Node['id']) {
   let chain: Nodes = []
   const node = _.find(nodes, node => node.id === id)
   if (node) {
@@ -185,4 +188,150 @@ export function getNodeTransform(node?: Node) {
     return `${translate} rotate(${rotateDeg} ${(width || 0) / 2} ${(height || 0) / 2})`
   }
   return translate
+}
+
+function cutChainFromUnExpandNode(chain: Nodes) {
+  const idx = _.findIndex(chain, node => node.expand === false)
+  if (idx > -1) {
+    return chain.slice(0, idx + 1)
+  }
+  return chain
+}
+
+/**
+ * 根据Id找出容器中的节点及计算出相对坐标
+ * @param nodes
+ * @param nodeId
+ */
+export function findNode(nodes: Nodes, nodeId: Node['id']): Node | null | undefined {
+  const chain = findChainOfNode(nodes, nodeId)
+  if (_.isEmpty(chain)) {
+    return null
+  }
+  const cutChain = cutChainFromUnExpandNode(chain)
+
+  let currentRotateDeg = 0
+  const { relativeX, relativeY } = _.reduce(
+    cutChain,
+    (item, node, index) => {
+      if (node.expand === false) {
+        item.relativeX += (node.x || 0) + (node.width - unexpandWidth) / 2
+        item.relativeY += (node.y || 0) + (node.height - unexpandHeight) / 2
+      } else {
+        item.relativeX += (node.x || 0)
+        item.relativeY += (node.y || 0)
+      }
+      // 父层有旋转则当前绝对坐标需要平移
+      if (index > 0 && (cutChain[index - 1].rotateDeg || currentRotateDeg)) {
+        const parentNode = cutChain[index - 1]
+        if (parentNode.rotateDeg) {
+          currentRotateDeg += +parentNode.rotateDeg
+        }
+        const parentNodeRelativeX = item.relativeX - (node.x || 0)
+        const parentNodeRelativeY = item.relativeY - (node.y || 0)
+        const coord = calcCoordAfterRotate({
+          node: parentNode,
+          deg: currentRotateDeg,
+          coord: {
+            x: (node.x || 0) + node.width / 2 - parentNode.width / 2,
+            y: (node.y || 0) + node.height / 2 - parentNode.height / 2,
+          },
+        })
+        const rotateCenterX = parentNodeRelativeX + coord.x
+        const rotateCenterY = parentNodeRelativeY + coord.y
+        const offsetX = rotateCenterX - (item.relativeX + node.width / 2)
+        const offsetY = rotateCenterY - (item.relativeY + node.height / 2)
+        item.relativeX += offsetX
+        item.relativeY += offsetY
+      }
+      return item
+    },
+    { relativeX: 0, relativeY: 0 },
+  )
+
+  const node: Node | undefined = _.last(cutChain)
+  const absRotateDeg
+    = _.reduce(
+      cutChain,
+      (deg, node) => {
+        deg += +(node.rotateDeg || 0)
+        return deg
+      },
+      0,
+    ) % 360
+
+  const width = node?.expand === false ? unexpandWidth : node?.width
+  const height = node?.expand === false ? unexpandHeight : node?.height
+
+  return {
+    ..._.pick(node, ['id', 'x', 'y', 'expand']),
+    absRotateDeg,
+    relativeX,
+    relativeY,
+    width: width || 50,
+    height: height || 50,
+    originWidth: node?.width,
+    originHeight: node?.height,
+  }
+}
+
+/**
+ * 计算加上偏移量后的坐标
+ * @param direction
+ * @param node
+ * @param rotateDeg
+ */
+export function calcOffset(direction: EdgeDirection, node: Node, rotateDeg?: number): XYCoord {
+  const [direct, offset] = direction?.split('|') || []
+  let directOffset = +offset
+
+  const isInHorizonSide = _.includes([DIRECTION.LEFT, DIRECTION.RIGHT], direct)
+  if (directOffset < 1) {
+    directOffset = isInHorizonSide ? directOffset * node.height : directOffset * node.width
+  }
+
+  if (node.expand === false) {
+    directOffset = isInHorizonSide
+      ? (directOffset * node.height) / node?.originHeight
+      : (directOffset * node.width) / node?.originWidth
+  }
+
+  const { relativeX = 0, relativeY = 0, width, height } = node
+  let offsetX = 0
+  let offsetY = 0
+
+  const centerX = width / 2
+  const centerY = height / 2
+
+  switch (direct) {
+    case DIRECTION.TOP:
+      offsetX = directOffset || centerX
+      break
+    case DIRECTION.RIGHT:
+      offsetX = width
+      offsetY = directOffset || centerY
+      break
+    case DIRECTION.BOTTOM:
+      offsetX = directOffset || centerX
+      offsetY = height
+      break
+    default:
+      offsetY = directOffset || centerY
+      break
+  }
+
+  if (rotateDeg) {
+    const coord = calcCoordAfterRotate({
+      node,
+      deg: rotateDeg,
+      coord: {
+        x: offsetX - centerX,
+        y: offsetY - centerY,
+      },
+    })
+    offsetX = coord.x
+    offsetY = coord.y
+  }
+
+  return { x: relativeX + offsetX, y: relativeY + offsetY }
 }

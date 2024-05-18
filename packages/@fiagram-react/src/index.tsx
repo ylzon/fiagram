@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import cls from 'classnames'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import type { FC, ReactNode } from 'react'
 import type { DiagramProps } from '@fiagram/core/types/diagram'
+import type { CanvasRef } from './components/canvas'
 import { Canvas } from './components/canvas'
 import { Tools } from './components/tools'
 import { DragPanel } from './components/drag-panel'
@@ -14,7 +15,8 @@ import './utils/i18n'
 interface IProps extends DiagramProps {
   children?: ReactNode[] | ReactNode
 }
-const Diagram: FC<IProps> = (props) => {
+
+const Diagram: FC<IProps> = forwardRef<CanvasRef, IProps>((props, ref) => {
   const {
     style,
     className,
@@ -37,6 +39,7 @@ const Diagram: FC<IProps> = (props) => {
         <ConditionTools />
         <ConditionDragPanel />
         <Canvas
+          ref={ref}
           onLoad={onLoad}
           hideGrid={hideGrid}
           restChilds={restChilds}
@@ -47,7 +50,7 @@ const Diagram: FC<IProps> = (props) => {
       </div>
     </DndProvider>
   )
-}
+})
 
 Diagram.displayName = 'Diagram'
 

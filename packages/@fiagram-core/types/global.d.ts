@@ -8,3 +8,5 @@ declare module '*.scss' {
 declare module 'algebra.js' {
   export const parse: (expression: string) => any
 }
+
+export type ValueOf<T> = T[keyof T]

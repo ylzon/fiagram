@@ -5,30 +5,29 @@ export const DIRECTION = {
   BOTTOM: 'bottom',
   LEFT: 'left',
   RIGHT: 'right',
-}
+} as const
 
 export const EDGE_TYPE = {
   STRAIGHT: 'straight',
-  STRAIGHT_AUTO: 'straight_auto',
-  CURVE_AUTO: 'curve_auto',
+  CURVE_AUTO: 'curve-auto',
   BROKEN: 'broken',
-  BROKEN_ROUNDED: 'broken_rounded',
-}
+  BROKEN_ROUNDED: 'broken-rounded',
+} as const
 
 export const ARROW_TYPE = {
   SINGLE_ARROW: 'SINGLE_ARROW',
   DOUBLE_ARROW: 'DOUBLE_ARROW',
-}
+} as const
 
 export const SEGMENT_DIRECTION = {
   VERTICAL: 'VERTICAL',
   HORIZONTAL: 'HORIZONTAL',
-}
+} as const
 
 export const MODE = {
   NORMAL: 'normal',
   ADVANCE: 'advance',
-}
+} as const
 
 export const unexpandWidth = 52
 export const unexpandHeight = 52
@@ -37,3 +36,5 @@ export const expandIconWidth = 14
 export const EDGE_DISTANCE_GAP = 20
 
 export const MovingEdgeAnchorStatusClass = 'move-edge-anchor'
+
+export const extractNumberRegex = /[+-]?\d+(\.\d+)?/g

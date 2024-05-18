@@ -1,5 +1,8 @@
-type EdgeDirection = 'top' | 'right' | 'bottom' | 'left'
-type EdgeType = 'straight' | 'straight-auto' | 'curve-auto' | 'broken' | 'broken-rounded'
+import type { DIRECTION, EDGE_TYPE } from '../src/constant'
+import type { ValueOf } from './global'
+
+type EdgeDirection = ValueOf<typeof DIRECTION>
+type EdgeType = ValueOf<typeof EDGE_TYPE>
 
 export interface EdgeStyle {
   fill?: string
@@ -10,7 +13,8 @@ export interface EdgeStyle {
   strokeColor?: string
   textColor?: string
   fontSize?: number
-  fillColor: string
+  fillColor?: string
+  type?: EdgeType // 连线类型
 }
 
 export interface EdgeLabelConfig extends EdgeStyle {

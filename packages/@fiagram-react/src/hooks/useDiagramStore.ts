@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 import { produce } from 'immer'
 import _ from 'lodash'
-import { checkEffectEdges } from '@fiagram/core/src/utils/edge'
+import { generateEdgePath } from '@fiagram/core/src/utils/edge'
 import type { DiagramState, SvgInfo } from '@fiagram/core/types/diagram'
 import type { Nodes } from '@fiagram/core/types/nodes'
 import type { Edge, Edges } from '@fiagram/core/types/edges'
 import { uuid } from '../utils/uuid.ts'
 import type { Size } from './ahooks/useSize.tsx'
 
-interface IProps {
+export interface DiagramActions {
   state: DiagramState
   setState: (state: DiagramState) => void
   setNodes: (nodes: Nodes) => void
@@ -20,7 +20,7 @@ interface IProps {
   updateNodesAndEdges: (nodes: Nodes, edges: Edges, type: 'all' | 'patch') => void
 }
 
-export const useDiagramStore = create<IProps>(set => ({
+export const useDiagramStore = create<DiagramActions>(set => ({
   state: {
     width: 0,
     height: 0,
@@ -38,11 +38,11 @@ export const useDiagramStore = create<IProps>(set => ({
     uniqId: uuid(),
     edgeProps: {},
   },
-  setState: (props) => {
+  setState: (params) => {
     set(state => ({
       state: {
         ...state,
-        ...props,
+        ...params,
       },
     }))
   },
@@ -58,7 +58,7 @@ export const useDiagramStore = create<IProps>(set => ({
   },
   insertEdge: (edge) => {
     set(produce(({ state }) => {
-      const newEdges = checkEffectEdges([edge], state)
+      const newEdges = generateEdgePath(state.nodes, edge)
       state.edges = state.edges.concat(newEdges)
     }))
   },
@@ -81,7 +81,7 @@ export const useDiagramStore = create<IProps>(set => ({
   updateNodesAndEdges: (nodes, edges, type = 'patch') => {
     set(produce(({ state }) => {
       if (type === 'patch') {
-        state.backupData = state.backupData.concat({
+        state.backupData = state.backupData?.concat({
           nodes: _.cloneDeep(state.nodes),
           edges: _.cloneDeep(state.edges),
         })

@@ -150,6 +150,7 @@ export const ConnectAnchors: FC<IProps> = (props) => {
           target,
           targetDirection,
         }
+        console.log('edge', newEdge)
         insertEdge(newEdge)
         // buildEdgeWithCallback({ newEdge, state, operation: 'insert' })
       }

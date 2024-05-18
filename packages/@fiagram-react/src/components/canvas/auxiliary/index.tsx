@@ -41,7 +41,7 @@ export const Auxiliary = forwardRef<IRef, IProps>((__, ref) => {
           key,
           className,
           'id': `${className}-${uniqId}`,
-          'data-svgKey': key,
+          'data-svg-key': key,
         }))}
     </g>
   )

@@ -1,6 +1,7 @@
-import React, { forwardRef, useEffect, useRef } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react'
 import cls from 'classnames'
 import type { DiagramProps } from '@fiagram/core/types/diagram'
+import type { DiagramActions } from '../../hooks/useDiagramStore'
 import { useDiagramStore } from '../../hooks/useDiagramStore'
 import { useSize } from '../../hooks/ahooks/useSize'
 import { useSvgInfo } from '../../hooks/useSvgInfo'
@@ -14,23 +15,24 @@ export interface CanvasProps extends DiagramProps {
   restChilds?: React.ReactNode[]
 }
 
-interface IRef extends SVGSVGElement {}
+export interface CanvasRef extends DiagramActions {}
 
-const Canvas = forwardRef<IRef, CanvasProps>((props) => {
+const Canvas = forwardRef<CanvasRef, CanvasProps>((props, ref) => {
   const svgRef = useRef<SVGSVGElement>(null)
   const auxiliaryRef = useRef<SVGGElement>(null)
-  const { state, setCanvasSize } = useDiagramStore(state => state)
+  const store = useDiagramStore(state => state)
   const { shapes = [], hideGrid, className } = props
-  const { nodes, edges } = state
+  const { nodes, edges } = store.state
   const size = useSize(svgRef)
 
   useEffect(() => {
-    setCanvasSize(size)
+    store.setCanvasSize(size)
   }, [size])
 
   useSvgInfo(svgRef, auxiliaryRef)
   useCreatDrop(svgRef)
   useUpdateState(props)
+  useImperativeHandle(ref, () => (store))
 
   return (
     <svg

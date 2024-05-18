@@ -30,7 +30,7 @@ export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget:
     }
     // 初始化辅助线
     Array.from(auxiliaryElement?.childNodes || []).forEach((item: any) => {
-      const key = item?.getAttribute('data-svgKey')
+      const key = item?.getAttribute('data-svg-key')
       newSvgInfo[key] = svgD3.select(`#${item.id}`)
     })
     setSvgInfo(newSvgInfo)

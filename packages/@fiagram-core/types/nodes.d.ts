@@ -28,7 +28,7 @@ export interface Node {
   style?: NodeStyle
   children?: Nodes
   connectDisabled?: boolean
-  [key: string]: unknown
+  [key: string]: any
 }
 
 export type Nodes = Node[]
