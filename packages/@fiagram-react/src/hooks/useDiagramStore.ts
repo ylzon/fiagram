@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import { produce } from 'immer'
 import _ from 'lodash'
-import { generateEdgePath } from '@fiagram/core/src/utils/edge'
+import { batchGenerateEdgePath, generateEdgePath } from '@fiagram/core/src/utils/edge'
 import type { DiagramState, SvgInfo } from '@fiagram/core/types/diagram'
-import type { Nodes } from '@fiagram/core/types/nodes'
+import type { Node, Nodes, Rect } from '@fiagram/core/types/nodes'
 import type { Edge, Edges } from '@fiagram/core/types/edges'
+import { findAndUpdateNode, findChainOfNode, minimizeRect } from '@fiagram/core/src/utils/diagram.ts'
 import { uuid } from '../utils/uuid.ts'
 import type { Size } from './ahooks/useSize.tsx'
 
@@ -17,6 +18,7 @@ export interface DiagramActions {
   setSvgInfo: (svgInfo: SvgInfo) => void
   setCanvasSize: (size?: Size) => void
   setSelectedNodes: (nodes: Nodes) => void
+  resizeNode: (node: Node | undefined, rect: Rect) => void
   updateNodesAndEdges: (nodes: Nodes, edges: Edges, type: 'all' | 'patch') => void
 }
 
@@ -37,6 +39,7 @@ export const useDiagramStore = create<DiagramActions>(set => ({
     centroidTick: 0,
     uniqId: uuid(),
     edgeProps: {},
+    nodeProps: {},
   },
   setState: (params) => {
     set(state => ({
@@ -76,6 +79,21 @@ export const useDiagramStore = create<DiagramActions>(set => ({
   setSelectedNodes: (nodes) => {
     set(produce(({ state }) => {
       state.selectedNodes = nodes
+    }))
+  },
+
+  // ============================ Node & Edge Effect ============================
+
+  resizeNode: (node, rect) => {
+    set(produce(({ state }) => {
+      const { nodes, edges } = state
+      const chain = findChainOfNode(nodes, node?.id)
+      const currentNode = chain[chain.length - 1]
+      rect = minimizeRect(rect, currentNode)
+      const newNodes = findAndUpdateNode(nodes, node?.id, rect)
+      const newEdges = batchGenerateEdgePath(newNodes, edges)
+      state.nodes = newNodes
+      state.edges = newEdges
     }))
   },
   updateNodesAndEdges: (nodes, edges, type = 'patch') => {

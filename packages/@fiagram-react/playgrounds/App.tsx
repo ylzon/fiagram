@@ -27,7 +27,7 @@ const App: FC = () => {
       ]}
       edgeProps={{
         defaultNewEdgeStyle: {
-          type: 'curve-auto',
+          type: 'broken-rounded',
         },
       }}
       nodes={[

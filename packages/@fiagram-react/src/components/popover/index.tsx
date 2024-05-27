@@ -16,7 +16,9 @@ export const Popover: FC<PopoverProps> = (props) => {
       motion={{ motionName: 'fiagram-tooltip-fade' }}
       {...rest}
     >
-      {children}
+      <span>
+        {children}
+      </span>
     </Tooltip>
   )
 }

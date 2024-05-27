@@ -12,6 +12,13 @@ export interface NodeStyle {
   strokeColor?: string
 }
 
+export type Rect = {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 export interface Node {
   id?: string
   x?: number
@@ -21,6 +28,8 @@ export interface Node {
   shape?: string
   relativeX?: number
   relativeY?: number
+  translateX?: number
+  translateY?: number
   rotateDeg?: number
   // label?: string | NodeLabelConfig
   label?: string
@@ -28,6 +37,9 @@ export interface Node {
   style?: NodeStyle
   children?: Nodes
   connectDisabled?: boolean
+  resizeDisabled?: boolean
+  rotateDisabled?: boolean
+  dragDisabled?: boolean
   [key: string]: any
 }
 
@@ -44,6 +56,8 @@ export interface NodeConfig {
   beforeInsert?: (newNode: Node) => void // 拖入节点前回调
   beforeConnect?: (newEdge: any, callback: () => void) => void // 建立节点间连线前回调
   afterConnect?: (newEdge: any) => void // 建立节点间连线后回调
+  beforeResize?: (newNode: Node, rect: Rect) => Rect // 节点缩放前回调
+  afterResize?: (newNode: Node, rect: Rect) => Rect // 节点缩放后回调
   onClick?: (node: Node, state: any, dispatch: any) => void // 节点单击时回调
   onDblClick?: (node: Node, state: any, dispatch: any) => void // 节点双击时回调
   onContextMenu?: (node: Node, state: any, dispatch: any, options: any) => void // 节点右击时回调

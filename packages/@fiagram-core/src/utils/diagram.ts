@@ -1,8 +1,9 @@
 import _ from 'lodash'
-import type { Node, Nodes } from '../../types/nodes'
+import type { Node, Nodes, Rect } from '../../types/nodes'
 import { DIRECTION, unexpandHeight, unexpandWidth } from '../constant'
-import type { EdgeDirection } from '../../types/edges'
+import type { EdgeDirection, Edges } from '../../types/edges'
 import type { XYCoord } from '../../types/diagram'
+import { generateEdgePath } from './edge'
 
 /**
  * 角度转弧度
@@ -334,4 +335,199 @@ export function calcOffset(direction: EdgeDirection, node: Node, rotateDeg?: num
   }
 
   return { x: relativeX + offsetX, y: relativeY + offsetY }
+}
+
+/**
+ * 最小化矩形
+ * @param rect
+ * @param currentNode
+ */
+export function minimizeRect(rect: Rect, currentNode: Node) {
+  const list = currentNode?.children || []
+  const hasChildren = !_.isEmpty(list)
+  if (hasChildren) {
+    const topmostNode = _.minBy(list, (node: Node) => node.y)
+    const rightmostNode = _.maxBy(list, (node: Node) => (node?.x || 0) + node.width)
+    const bottommostNode = _.maxBy(list, (node: Node) => (node?.y || 0) + node.height)
+    const leftmostNode = _.minBy(list, (node: Node) => node.x)
+
+    const padding = 4
+    const minWidth = (rightmostNode?.x || 0) + (rightmostNode?.width || 0) - (leftmostNode?.x || 0) + padding * 2
+    const minHeight = (bottommostNode?.y || 0) + (bottommostNode?.height || 0) - (topmostNode?.y || 0) + padding * 2
+
+    if (rect.width < minWidth) {
+      const diff = minWidth - rect.width
+      const offsetX = (leftmostNode?.x || 0) - padding
+      rect.width = minWidth
+      if (currentNode.width === minWidth) {
+        rect.x = currentNode.x || 0
+      } else {
+        if (rect.x !== currentNode.x) {
+          rect.x -= diff - padding
+        }
+        _.map(list, (node: Node) => {
+          let newX = (node?.x || 0)
+          newX -= offsetX
+          return newX
+        })
+      }
+    }
+    if (rect.height < minHeight) {
+      const diff = minHeight - rect.height
+      const offsetY = (leftmostNode?.y || 0) - padding
+      rect.height = minHeight
+      if (currentNode.height === minHeight) {
+        rect.y = currentNode.y || 0
+      } else {
+        if (rect.y !== currentNode.y) {
+          rect.y -= diff - padding
+        }
+        _.map(list, (node: Node) => {
+          let newY = (node?.y || 0)
+          newY -= offsetY
+          return newY
+        })
+      }
+    }
+  }
+  return rect
+}
+
+/**
+ * 找到并更新节点
+ * @param originNodes
+ * @param id
+ * @param options
+ */
+export function findAndUpdateNode(originNodes: Nodes = [], id: Node['id'], options: Node | ((node: Node) => Node)) {
+  const nodes = _.cloneDeep(originNodes)
+  if (nodes && nodes.length > 0) {
+    return _.map(nodes, (node) => {
+      if (node.id === id) {
+        node = typeof options === 'function' ? options(node) : { ...node, ...options }
+      } else {
+        node.children = findAndUpdateNode(node.children, id, options)
+      }
+      return node
+    })
+  }
+  return nodes
+}
+
+/**
+ * 当节点移动时，与其相关的线需要从新计算路径
+ * @param children
+ */
+function findAllChildren(children: Nodes) {
+  if (_.isEmpty(children)) {
+    return []
+  }
+  const result: Nodes[] = _.map(children, (node) => {
+    return [node].concat(findAllChildren(node?.children || []))
+  })
+
+  return _.reduce(result, (a: Nodes, b) => a.concat(b), [])
+}
+
+/**
+ * 检查节点移动后是否影响到连线
+ * @param node
+ * @param nodes
+ * @param edges
+ */
+export function checkEffectEdges(node: Node, nodes: Nodes, edges: Edges) {
+  const targetNodes = [node]
+  const result = _.map(targetNodes, node => findAllChildren(node.children || []))
+  const allChildrenNodes = _.reduce(result, (a: Nodes, b) => a.concat(b || []), [])
+  const nodeIds = _.map(allChildrenNodes.concat(targetNodes), 'id')
+
+  return _.map(edges, (edge) => {
+    const isRelativeEdge = _.includes(nodeIds, edge.source) || _.includes(nodeIds, edge.target)
+    if (isRelativeEdge) {
+      edge = generateEdgePath(nodes, edge)
+    }
+    return edge
+  })
+}
+
+/**
+ * 检查节点是否移动
+ */
+export function checkNodesByMovingNode({ node, nodes, chain }: { node: Node, nodes: Nodes, chain?: Nodes }) {
+  let newNodes = [...nodes]
+  const currentNode = { ...node }
+
+  if (!chain) {
+    chain = findChainOfNode(nodes, node.id)
+  }
+
+  /* 判断是否拖入/拖出某一目标范围 */
+  const prevParent = chain[chain.length - 2]
+  const newParent = checkInsideWhichBox(newNodes, currentNode)
+
+  if (!_.isEqual(newParent, prevParent)) {
+    if (prevParent) {
+      newNodes = findAndUpdateNode(newNodes, prevParent.id, (node) => {
+        node.children = _.filter(node.children, item => item.id !== currentNode.id)
+        return node
+      })
+    } else {
+      newNodes = _.filter(newNodes, item => item.id !== currentNode.id)
+    }
+
+    if (newParent) {
+      newNodes = findAndUpdateNode(newNodes, newParent.id, (node) => {
+        const { relativeX: parentNodeRelativeX, relativeY: parentNodeRelativeY } = findNodeFromTree(
+          newNodes,
+          node?.id || '',
+        ) || { relativeX: 0, relativeY: 0 }
+        node.children = (node.children || []).concat({
+          ...currentNode,
+          x: (currentNode?.relativeX || 0) - (parentNodeRelativeX || 0),
+          y: (currentNode?.relativeY || 0) - (parentNodeRelativeY || 0),
+        })
+        return node
+      })
+    } else {
+      newNodes = newNodes.concat({
+        ...currentNode,
+        x: currentNode.relativeX,
+        y: currentNode.relativeY,
+      })
+    }
+  } else {
+    if (prevParent) {
+      newNodes = findAndUpdateNode(newNodes, prevParent.id, (node) => {
+        const { x: parentNodeRelativeX, y: parentNodeRelativeY } = _.reduce(
+          chain.slice(0, -1),
+          (result, node) => {
+            return { x: result.x + (node?.x || 0), y: (result?.y || 0) + (node?.y || 0) }
+          },
+          { x: 0, y: 0 },
+        )
+        const idx = _.findIndex(node.children, node => node.id === currentNode.id)
+        if (node.children?.[idx]) {
+          node.children[idx].x = (currentNode?.relativeX || 0) - parentNodeRelativeX
+          node.children[idx].y = (currentNode?.relativeY || 0) - parentNodeRelativeY
+        }
+        return node
+      })
+    } else {
+      newNodes = findAndUpdateNode(newNodes, currentNode.id, (node) => {
+        node.x = currentNode.relativeX
+        node.y = currentNode.relativeY
+        return node
+      })
+    }
+  }
+  return newNodes
+}
+
+/**
+ * 查找当前选中的节点
+ * @param selectedNodes
+ * @param nodes
+ */
+export function findCurrentSelectedNodes(selectedNodes: Nodes, nodes: Nodes): Nodes {
+  return _.map(selectedNodes, sNode => findNode(nodes, sNode.id) as Node) || []
 }

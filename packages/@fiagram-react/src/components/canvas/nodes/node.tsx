@@ -6,7 +6,9 @@ import { findNodeFromTree, getNodeTransform } from '@fiagram/core/src/utils/diag
 import type { Shapes } from '@fiagram/core/types/diagram'
 import type { Node, Nodes } from '@fiagram/core/types/nodes'
 import { useDiagramStore } from '../../../hooks/useDiagramStore'
+import { useNodeDragEffect } from '../../../hooks/useNodeDragEffect.ts'
 import { ConnectAnchors } from './anchors/connect'
+import { ResizeAnchors } from './anchors/resize.tsx'
 
 interface IProps {
   data?: Node
@@ -17,9 +19,9 @@ interface IProps {
 export const NodeItem: FC<IProps> = (props) => {
   const dragTargetRef = useRef(null)
   const nodeInfo = props?.data
-  const { connectDisabled } = nodeInfo || {}
+  const { connectDisabled, resizeDisabled, rotateDisabled, dragDisabled } = nodeInfo || {}
   const { state, setSelectedNodes } = useDiagramStore(state => state)
-  const { selectedNodes, nodes } = state
+  const { selectedNodes, nodes, nodeProps } = state
   const isSelected = _.some(selectedNodes, node => node.id === nodeInfo?.id)
 
   let isDblClick = false
@@ -58,6 +60,9 @@ export const NodeItem: FC<IProps> = (props) => {
     event.persist()
     delayDetectClick(event)
   }
+
+  useNodeDragEffect({ props, nodeProps, ref: dragTargetRef, dragDisabled })
+
   return (
     <g
       className={cls('node', nodeInfo?.className, {
@@ -69,8 +74,8 @@ export const NodeItem: FC<IProps> = (props) => {
       <g
         className={cls('node-shape', {
           'node-shape-connect-disabled': connectDisabled,
-          // 'node-shape-resize-disabled': resizeDisabled,
-          // 'node-shape-rotate-disabled': rotateDisabled,
+          'node-shape-resize-disabled': resizeDisabled,
+          'node-shape-rotate-disabled': rotateDisabled,
         })}
         onClick={handleClick}
         // onDoubleClick={handleDblClick}
@@ -86,6 +91,7 @@ export const NodeItem: FC<IProps> = (props) => {
           height={nodeInfo?.height}
         />
         <g ref={dragTargetRef}>{props.children}</g>
+        <ResizeAnchors node={props.data} disabled={resizeDisabled} />
         <ConnectAnchors node={nodeInfo as Node} disabled={connectDisabled || false} />
         {/* <NodeTitle */}
         {/*   defaultTextColor={defaultTextColor} */}

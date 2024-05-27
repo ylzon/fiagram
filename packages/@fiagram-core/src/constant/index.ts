@@ -33,8 +33,9 @@ export const unexpandWidth = 52
 export const unexpandHeight = 52
 export const expandIconWidth = 14
 
-export const EDGE_DISTANCE_GAP = 20
+export const EDGE_DISTANCE_GAP = 10
 
 export const MovingEdgeAnchorStatusClass = 'move-edge-anchor'
 
 export const extractNumberRegex = /[+-]?\d+(\.\d+)?/g
+export const floatOrIntegerReg = /(-\d+(\.\d+)?)|(\d+(\.\d+)?)/g

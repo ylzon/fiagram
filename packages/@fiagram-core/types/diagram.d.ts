@@ -45,7 +45,9 @@ export interface DiagramState {
   gaussianBlur: number
   centroidTick: number // 自动居中图行触发器
   uniqId: string // 用于生成拖拽区域的唯一id
+  nodeProps: NodeConfig // 节点属性
   edgeProps: EdgeConfig // 连线属性
+  copyNodeDisabled?: boolean // 禁止 `ctrl+c/v` 拷贝/复制节点
   zoomConfig?: (zoomAreaEl: Selection<SVGElement, undefined, HTMLElement, any>) => any // 缩放配置
 }
 
