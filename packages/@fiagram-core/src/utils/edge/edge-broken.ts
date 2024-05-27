@@ -37,13 +37,12 @@ export const generateBrokenPath: CalcEdgePathParams = ({ srcNode, tgtNode, edge 
       pathD = `M ${point.position[0]} ${point.position[1]}`
     }
   })
-
   const lastPoint = pathPoints[pathPoints.length - 1]?.position || []
   pathD += `L ${lastPoint[0]} ${lastPoint[1]}`
-
-  const middleIndex = pathPoints.findIndex(p => p.type === 'pathMiddleP') || Math.floor(pathPoints.length / 2)
-  const middlePoint = pathPoints[middleIndex].position
-  const prevMiddlePoint = pathPoints[middleIndex - 1].position
+  const pathMiddleIndex = pathPoints.findIndex(p => p.type === 'pathMiddleP')
+  const middleIndex = pathMiddleIndex !== -1 ? pathMiddleIndex : Math.floor(pathPoints.length / 2)
+  const middlePoint = pathPoints[middleIndex]?.position || []
+  const prevMiddlePoint = pathPoints[middleIndex - 1]?.position
   const centerX = prevMiddlePoint[0] + (middlePoint[0] - prevMiddlePoint[0]) / 2
   const centerY = prevMiddlePoint[1] + (middlePoint[1] - prevMiddlePoint[1]) / 2
 
