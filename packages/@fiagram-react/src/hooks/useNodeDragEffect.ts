@@ -19,12 +19,12 @@ import { useDiagramStore } from './useDiagramStore'
 
 export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
   const { state, setNodes, updateNodesAndEdges } = useDiagramStore(state => state)
-  const { svgInfo, nodes, edges, copyNodeDisabled, selectedNodes: sNodes } = state
+  const { svgInfo, nodes = [], edges = [], copyNodeDisabled, selectedNodes: sNodes } = state
 
   let alignPaths: any = null
   let enterAlignPaths: any = []
   const minGap = 12
-  const absRotateDeg = calcAbsRotateDeg(nodes, props.data)
+  const absRotateDeg = calcAbsRotateDeg(nodes || [], props.data)
 
   function checkSideAlign(nodes: Nodes, currentNode: Node, direction: EdgeDirection, point: number) {
     const isVertical = _.includes(['top', 'bottom'], direction)
@@ -71,7 +71,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
   }
 
   const checkAlign = _.debounce((node, x, y, sameLevelNodes) => {
-    const stillDraging = svgInfo.svg.classed('draging-node')
+    const stillDraging = svgInfo?.svg.classed('draging-node')
     if (!stillDraging) {
       return
     }
@@ -86,7 +86,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
       item => item.gap,
     ).slice(0, 2)
 
-    let currentTransform = svgInfo.dragingNode.attr('transform')
+    let currentTransform = svgInfo?.dragingNode.attr('transform')
     const translateCoord = { x: 1, y: 2 }
     const alignPathsData = _.map(alignItems, (item) => {
       let d = null
@@ -187,7 +187,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
       return d
     })
 
-    alignPaths = svgInfo.svgZoomArea
+    alignPaths = svgInfo?.svgZoomArea
       .selectAll('path.drag-align')
       .data(alignPathsData)
       .attr('d', (d: string) => {
@@ -207,8 +207,8 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
       // .attr('stroke-dasharray', '2px 2px')
 
     const [translateX, translateY] = currentTransform.match(floatOrIntegerReg)
-    svgInfo.dragingNode.attr('transform', currentTransform)
-    svgInfo.dragingNode.datum({
+    svgInfo?.dragingNode.attr('transform', currentTransform)
+    svgInfo?.dragingNode.datum({
       translateX: Math.round(translateX),
       translateY: Math.round(translateY),
     })
@@ -223,7 +223,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
 
     if (type !== 'ctrl' && isMultipleMove) {
       const className = 'multi-draging-node'
-      return svgInfo.auxiliary
+      return svgInfo?.auxiliary
         .selectAll(`.${className}`)
         .data(
           _.map(selectedNodes, (node) => {
@@ -276,7 +276,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
     enterAlignPaths && enterAlignPaths?.remove?.()
 
     if (props.data.expand === false) {
-      svgInfo.dragingNode
+      svgInfo?.dragingNode
         .datum({
           translateX: x + (props.data.width - unexpandWidth) / 2,
           translateY: y + (props.data.height - unexpandHeight) / 2,
@@ -290,7 +290,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
             : translate
         })
     } else {
-      svgInfo.dragingNode
+      svgInfo?.dragingNode
         .datum({ translateX: x, translateY: y })
         .attr('width', props.data.width)
         .attr('height', props.data.height)
@@ -391,7 +391,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
     const isChildNode = chain.length > 1
 
     function getRefX() {
-      const coord = svgInfo.dragingNode.datum()
+      const coord = svgInfo?.dragingNode.datum()
       if (coord) {
         const { translateX: x } = coord
         return props.data.expand === false ? x - (props.data.width - unexpandWidth) / 2 : x
@@ -399,14 +399,14 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
     }
 
     function getRefY() {
-      const coord = svgInfo.dragingNode.datum()
+      const coord = svgInfo?.dragingNode.datum()
       if (coord) {
         const { translateY: y } = coord
         return props.data.expand === false ? y - (props.data.height - unexpandHeight) / 2 : y
       }
     }
 
-    svgInfo.dragingNode
+    svgInfo?.dragingNode
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', 0)
@@ -503,12 +503,12 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
             .drag()
             .on('start', (e) => {
               draged = false
-              svgInfo.svg.classed('draging-node', true)
-              selectedNodes = findCurrentSelectedNodes(sNodes, nodes)
-              mulMoveNodes = checkMultipleMove(selectedNodes, nodes, e.type)
+              svgInfo?.svg.classed('draging-node', true)
+              selectedNodes = findCurrentSelectedNodes(sNodes || [], nodes || [])
+              mulMoveNodes = checkMultipleMove(selectedNodes, nodes || [], e.type)
               if (mulMoveNodes) {
                 _.map(selectedNodes, (sn: Node) => {
-                  const currentNode = findNodeFromTree(nodes, sn?.id || '')
+                  const currentNode = findNodeFromTree(nodes || [], sn?.id || '')
                   const relativeOffsetX = e.x - (currentNode?.relativeX || 0)
                   const relativeOffsetY = e.y - (currentNode?.relativeY || 0)
                   const offsetX = e.x - (currentNode?.x || 0)
@@ -521,7 +521,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
                   }
                 })
               } else {
-                currentNode = findNodeFromTree(nodes, props.data.id) || null
+                currentNode = findNodeFromTree(nodes || [], props.data.id) || null
                 relativeOffsetX = e.x - (currentNode?.relativeX || 0)
                 relativeOffsetY = e.y - (currentNode?.relativeY || 0)
                 offsetX = e.x - (currentNode?.x || 0)
@@ -541,19 +541,19 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
                   )
               } else {
                 !copyNodeDisabled
-                && svgInfo.svg.classed('draging-node-copy', e.type === 'shift')
+                && svgInfo?.svg.classed('draging-node-copy', e.type === 'shift')
                 // 只和同层节点进行对齐
                 sameLevelNodes = chain.length > 1 ? chain[chain.length - 2].children : nodes
                 sameLevelNodes = _.map(sameLevelNodes, (item) => {
-                  return findNodeFromTree(nodes, (item?.id || ''))
+                  return findNodeFromTree(nodes || [], (item?.id || ''))
                 }).filter(item => (item?.id || '') !== props.data.id && !(item?.rotateDeg || 0)) as Nodes
                 readyToDrag = true
               }
             })
             .on('end', (e) => {
               readyToDrag = false
-              svgInfo.svg.classed('draging-node', false)
-              svgInfo.svg.classed('draging-node-copy', false)
+              svgInfo?.svg.classed('draging-node', false)
+              svgInfo?.svg.classed('draging-node-copy', false)
               if (draged) {
                 mulMoveNodes
                   ? onMulDragEnd(mulMoveNodes, mulMoveNodesOffsetInfo, e)
@@ -573,7 +573,7 @@ export function useNodeDragEffect({ props, ref, dragDisabled }: any) {
               */
 
               let parent = this?.parentNode?.parentNode
-              chain = findChainOfNode(nodes, props.data.id)
+              chain = findChainOfNode(nodes || [], props.data.id)
               if (absRotateDeg || props.data.rotateDeg) {
                 parent = _.reduce(
                   chain,

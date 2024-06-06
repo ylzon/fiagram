@@ -23,7 +23,7 @@ export function useUpdateState(props: CanvasProps) {
     if (nodes !== undefined || edges !== undefined) {
       const newNodes: Nodes = [...nodes]
       let newEdges: Edges = [...edges]
-      const { nodes: prevNodes, edges: prevEdges } = state
+      const { nodes: prevNodes, edges: prevEdges = [] } = state
       const purePrevEdges = _.map([...prevEdges], (edge) => {
         return _.omit(edge, ['pathD', 'centerX', 'centerY'])
       })

@@ -14,34 +14,6 @@ interface IProps {
   disabled: boolean
 }
 
-// export function isValidEdge(edge: Edge) {
-//   const validEdgeKeys = ['id', 'type', 'source', 'target']
-//   return _.every(validEdgeKeys, key => _.has(edge, key))
-// }
-
-// export async function buildEdgeWithCallback({ newEdge, state, actions, operation }: any) {
-//   const { nodeProps } = state
-//
-//   const actionType = `${operation}Edges`
-//
-//   if (typeof nodeProps.beforeConnect === 'function') {
-//     const changeEdge = await nodeProps.beforeConnect(newEdge, state, actions)
-//     if (isValidEdge(changeEdge)) {
-//       newEdge = changeEdge
-//       actions[actionType](newEdge)
-//     }
-//
-//     if (typeof nodeProps.afterConnect === 'function') {
-//       nodeProps.afterConnect(newEdge, state, actions)
-//     }
-//   } else {
-//     actions[actionType](newEdge)
-//     if (typeof nodeProps.afterConnect === 'function') {
-//       nodeProps.afterConnect(newEdge, state, actions)
-//     }
-//   }
-// }
-
 const setTargetInfoClassName = (node: Node, direct: string) => `linking-target~@~${node.id}~|~${direct}`
 
 export const ConnectAnchors: FC<IProps> = (props) => {
@@ -74,7 +46,7 @@ export const ConnectAnchors: FC<IProps> = (props) => {
     let activeAnchorSource: any = null
 
     function setSvgDrawing(status: boolean) {
-      svgInfo.svg?.classed('linking', status)
+      svgInfo?.svg?.classed('linking', status)
       currentNodeDom.classed('linking-source-node', status)
       anchorEl.classed('connect-anchors-source', status)
     }
@@ -103,7 +75,7 @@ export const ConnectAnchors: FC<IProps> = (props) => {
         (currentNode?.relativeY || 0) + endY,
       ]
       const pathD = calculateRedunDistance(x0, y0, x1, y1)
-      svgInfo.newLine.attr('d', pathD)
+      svgInfo?.newLine.attr('d', pathD)
     }
 
     function removeDrawLine(anchorDom: any) {
@@ -115,7 +87,7 @@ export const ConnectAnchors: FC<IProps> = (props) => {
       dragged = false
       readyToDrawing = false
 
-      svgInfo.newLine.attr('d', `M 0 0`).attr('opacity', 0)
+      svgInfo?.newLine.attr('d', `M 0 0`).attr('opacity', 0)
 
       activeAnchorSource = activeAnchorSource || d3.select(anchorDom)
       if (!activeAnchorSource.empty()) {
@@ -125,9 +97,9 @@ export const ConnectAnchors: FC<IProps> = (props) => {
 
     function createLink(d: any) {
       const {
-        edgeProps: { defaultNewEdgeStyle },
+        edgeProps: { defaultNewEdgeStyle } = { defaultNewEdgeStyle: {} },
       } = state
-      const classNames = svgInfo.svg.attr('class').split(' ')
+      const classNames = svgInfo?.svg.attr('class').split(' ')
       const targetClassName = _.find(classNames, className => _.includes(className, 'linking-target'))
       if (targetClassName) {
         const [, targetInfoString] = targetClassName.split('~@~')
@@ -150,7 +122,6 @@ export const ConnectAnchors: FC<IProps> = (props) => {
           target,
           targetDirection,
         }
-        console.log('edge', newEdge)
         insertEdge(newEdge)
         // buildEdgeWithCallback({ newEdge, state, operation: 'insert' })
       }
@@ -183,11 +154,11 @@ export const ConnectAnchors: FC<IProps> = (props) => {
         activeAnchorSource.classed('connect-anchors-pointer-source', true)
         // begin drawing new line
         readyToDrawing = true
-        svgInfo.newLine.attr('opacity', 1).attr('marker-end', `url(#arrow)`)
+        svgInfo?.newLine.attr('opacity', 1).attr('marker-end', `url(#arrow)`)
 
-        currentNode = findNodeFromTree(nodes, node?.id || '')
+        currentNode = findNodeFromTree(nodes || [], node?.id || '')
         // 需要判断节点是否旋转
-        absRotateDeg = calcAbsRotateDeg(nodes, node)
+        absRotateDeg = calcAbsRotateDeg(nodes || [], node)
         const coord = transformRotateCoord(startX, startY)
         startX = coord.x
         startY = coord.y
@@ -231,15 +202,15 @@ export const ConnectAnchors: FC<IProps> = (props) => {
 
     anchors
       .on('mouseenter', (_, d) => {
-        const isBrokenDrawing = svgInfo.svg?.classed('linking')
+        const isBrokenDrawing = svgInfo?.svg?.classed('linking')
         // 允许自连建关系
         // svgInfo.svg.classed('linking') && !currentNodeDom.classed('linking-source-node')
         if (isBrokenDrawing) {
-          svgInfo.svg.classed(setTargetInfoClassName(node, d.direct), true)
+          svgInfo?.svg?.classed(setTargetInfoClassName(node, d.direct), true)
         }
       })
       .on('mouseleave', (_, d) => {
-        svgInfo.svg.classed(setTargetInfoClassName(node, d.direct), false)
+        svgInfo?.svg?.classed(setTargetInfoClassName(node, d.direct), false)
       })
 
     return () => {

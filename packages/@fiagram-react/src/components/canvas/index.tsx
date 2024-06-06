@@ -41,8 +41,8 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>((props, ref) => {
       style={{ ...props.canvasStyle }}
     >
       <g className="zoom-area">
-        <Nodes data={nodes} shapes={shapes} />
-        <Edges data={edges} />
+        <Nodes data={nodes || []} shapes={shapes} />
+        <Edges data={edges || []} />
         <Auxiliary ref={auxiliaryRef} />
         {/* <HighLightEdge selectedEdges={selectedEdges} uniqId={uniqId} /> */}
       </g>

@@ -160,7 +160,7 @@ export const ResizeAnchors: FC<IProps> = ({ node, disabled }) => {
         // svg.style('cursor', d.cursor)
         svg.style('cursor', 'crosshair')
         // 找出该节点, 并计算出其绝对坐标
-        currentNode = findNodeFromTree(nodes, node?.id || '') || { width: 0, height: 0, x: 0, y: 0 }
+        currentNode = findNodeFromTree(nodes || [], node?.id || '') || { width: 0, height: 0, x: 0, y: 0 }
       })
       .on('drag', (e, d) => {
         dragged = true
