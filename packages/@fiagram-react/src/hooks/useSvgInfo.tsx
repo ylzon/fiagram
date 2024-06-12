@@ -36,6 +36,10 @@ export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget:
       const key = item?.getAttribute('data-svg-key')
       newSvgInfo[key] = svgD3.select(`#${item.id}`)
     })
+    // 禁用右键菜单
+    svgD3.on('contextmenu', (e) => {
+      e.preventDefault()
+    })
     setSvgInfo(newSvgInfo)
   }, [auxiliaryElement, svgElement])
 
