@@ -6,7 +6,7 @@ import { useDiagramStore } from './useDiagramStore.ts'
 
 export function useCreatDrop(svgRef: RefObject<SVGSVGElement>) {
   const { state, setNodes } = useDiagramStore(state => state)
-  const { nodes, svgInfo, uniqId } = state
+  const { nodes = [], svgInfo, uniqId } = state
   const [, drop] = useDrop({
     accept: `${DRAG_DROP_KEY}-${uniqId}`,
     drop: (item, monitor) => {

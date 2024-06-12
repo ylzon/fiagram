@@ -63,7 +63,8 @@ export interface DiagramProps {
   hideDragBox?: boolean // 隐藏拖动栏
   hideTools?: boolean // 隐藏工具栏
   wheelZoomDisabled?: boolean // 禁止鼠标滚轮缩放
-  dragZoomDisabled?: boolean // 禁止鼠标拖动缩放
+  dragZoomDisabled?: boolean // 禁止鼠标拖动
+  scaleExtent?: [number, number] // 滚轮最大和最小范围: 0.1 - 10
   copyNodeDisabled?: boolean // 禁止 `ctrl+c/v` 拷贝/复制节点
   hideGrid?: boolean // 不显示网格
   withoutCenter?: boolean // 不自动居中图形

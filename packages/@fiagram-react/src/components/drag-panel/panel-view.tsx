@@ -17,7 +17,7 @@ export const PanelView: FC<IProps> = (props) => {
     title,
     dragList = [],
   } = props
-  const { state: { height } } = useDiagramStore(state => state)
+  const { state: { height = 0 } } = useDiagramStore(state => state)
   const maxHeight = height > 0 ? height - 120 : 'auto'
 
   return (

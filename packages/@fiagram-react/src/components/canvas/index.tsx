@@ -29,7 +29,7 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>((props, ref) => {
     store.setCanvasSize(size)
   }, [size])
 
-  useSvgInfo(svgRef, auxiliaryRef)
+  useSvgInfo(svgRef, auxiliaryRef, props)
   useCreatDrop(svgRef)
   useUpdateState(props)
   useImperativeHandle(ref, () => (store))

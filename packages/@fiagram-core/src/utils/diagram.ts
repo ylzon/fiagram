@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import type { Node, Nodes, Rect } from '../../types/nodes'
-import { DIRECTION, unexpandHeight, unexpandWidth } from '../constant'
+import { DIRECTION, MAX_SCALE, MIN_SCALE, unexpandHeight, unexpandWidth } from '../constant'
 import type { EdgeDirection, Edges } from '../../types/edges'
 import type { XYCoord } from '../../types/diagram'
 import { generateEdgePath } from './edge'
@@ -530,4 +530,13 @@ export function checkNodesByMovingNode({ node, nodes, chain }: { node: Node, nod
  */
 export function findCurrentSelectedNodes(selectedNodes: Nodes, nodes: Nodes): Nodes {
   return _.map(selectedNodes, sNode => findNode(nodes, sNode.id) as Node) || []
+}
+
+/**
+ * 是否符合 d3.ScaleExtent 类型并满足数值范围限制
+ * @param extent
+ */
+export function isValidScaleExtent(extent: [number, number]): boolean {
+  const [min, max] = extent
+  return (min >= MIN_SCALE) && (max <= MAX_SCALE) && (min < max)
 }
