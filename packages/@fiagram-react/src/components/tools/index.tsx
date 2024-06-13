@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
-import { DirectionAlign } from './direction-align.tsx'
-import { Align } from './align.tsx'
-import { FullScreen } from './full-screen.tsx'
-import { Scale } from './scale.tsx'
-import { Marquee } from './marquee.tsx'
+import { DirectionAlign } from './direction-align'
+import { Align } from './align'
+import { FullScreen } from './full-screen'
+import { Scale } from './scale'
+import { Marquee } from './marquee'
+import { Zoom } from './zoom'
 
 interface IProps {
   children?: ReactNode[]
@@ -16,6 +17,7 @@ interface ITools extends React.FC<IProps> {
   FullScreen: typeof FullScreen
   Scale: typeof Scale
   Marquee: typeof Marquee
+  Zoom: typeof Zoom
 }
 
 const Tools: ITools = ({ children }) => {
@@ -26,6 +28,7 @@ const Tools: ITools = ({ children }) => {
       <FullScreen />
       <Scale />
       <Marquee />
+      <Zoom />
     </Fragment>
   )
   return (
@@ -40,6 +43,7 @@ Tools.DirectionAlign = DirectionAlign
 Tools.FullScreen = FullScreen
 Tools.Scale = Scale
 Tools.Marquee = Marquee
+Tools.Zoom = Zoom
 
 Tools.displayName = 'Tools'
 
