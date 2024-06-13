@@ -44,3 +44,5 @@ export const MIN_SCALE = 0.1
 export const MAX_SCALE = 10
 
 export const DURATION = 1000
+
+export const maxTitleWidth = 120

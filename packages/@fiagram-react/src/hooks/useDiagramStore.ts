@@ -15,6 +15,7 @@ export interface DiagramActions {
   setNodes: (nodes: Nodes) => void
   setEdges: (edges: Edges) => void
   insertEdge: (edge: Edge) => void
+  updateEdge: (edge: Edge | Edges) => void
   setSvgInfo: (svgInfo: SvgInfo) => void
   setCanvasSize: (size?: Size) => void
   setSelectedNodes: (nodes: Nodes) => void
@@ -65,6 +66,21 @@ export const useDiagramStore = create<DiagramActions>(set => ({
       state.edges = state.edges.concat(newEdges)
     }))
   },
+  updateEdge: (edge) => {
+    let updateEdges = Array.isArray(edge) ? edge : [edge]
+    set(produce(({ state }) => {
+      updateEdges = _.map(updateEdges, (updateEdge) => {
+        if (!updateEdge.pathD) {
+          updateEdge = generateEdgePath(state.nodes, updateEdge)
+        }
+        return updateEdge
+      })
+      state.edges = _.map(state.edges, (edge) => {
+        const idx = _.findIndex(updateEdges, updateEdge => updateEdge.id === edge.id)
+        return idx > -1 ? updateEdges[idx] : edge
+      })
+    }))
+  },
   setSvgInfo: (svgInfo) => {
     set(produce(({ state }) => {
       state.svgInfo = svgInfo
@@ -83,7 +99,6 @@ export const useDiagramStore = create<DiagramActions>(set => ({
   },
 
   // ============================ Node & Edge Effect ============================
-
   resizeNode: (node, rect) => {
     set(produce(({ state }) => {
       const { nodes, edges } = state

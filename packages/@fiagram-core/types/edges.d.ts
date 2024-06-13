@@ -28,6 +28,9 @@ export interface EdgeLabelConfig extends EdgeStyle {
   onClick?: (edge: Edge, state: any, dispatch: any) => void // 连线标签单击时回调
   onDblClick?: (edge: Edge, state: any, dispatch: any) => void // 连线标签双击时回调
   onContextMenu?: (edge: Edge, state: any, dispatch: any, options: any) => void // 连线标签右击时回调
+  padding?: number // 标签内边距
+  paddingHorizon?: number // 标签水平内边距
+  paddingVertical?: number // 标签垂直内边距
 }
 
 export interface Edge {
@@ -48,6 +51,7 @@ export type Edges = Edge[]
 
 export interface EdgeConfig {
   style?: EdgeStyle // 连线样式
+  labelProps?: EdgeLabelConfig // 连线标签样式
   defaultEdgeStyle?: EdgeStyle // 建立连线时默认的连线样式
   defaultNewEdgeStyle?: EdgeStyle // 建立连线时默认的连线样式
   renderEdgeBase?: ({ edge, path }: any, edgeParams) => any // 自定义连线实现
