@@ -4,6 +4,7 @@ import type { SvgInfo } from '@fiagram/core/types/diagram'
 import _ from 'lodash'
 import { isValidScaleExtent } from '@fiagram/core/src/utils/diagram'
 import type { CanvasProps } from '../components/canvas'
+import { zoomCentroid } from '../utils/animation.ts'
 import { useDiagramStore } from './useDiagramStore'
 
 export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget: RefObject<SVGGElement>, props: CanvasProps) {
@@ -19,15 +20,9 @@ export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget:
       zoomAreaEl.attr('transform', e.transform)
     })
   const setSvgTranslateScale = (svg: SvgInfo['svg'], zoom: SvgInfo['zoom']) => {
-    svg.call(zoom).on('dblclick.zoom', null)
-
-    if (wheelZoomDisabled) {
-      svg.on('wheel.zoom', null)
-    }
-
-    if (dragZoomDisabled) {
-      svg.on('mousedown.zoom', null)
-    }
+    svg.call(zoom).on('dblclick.zoom', null) // 利用d3实现画布的平移缩放
+    if (wheelZoomDisabled) svg.on('wheel.zoom', null)
+    if (dragZoomDisabled) svg.on('mousedown.zoom', null)
   }
 
   // 处理svg信息
@@ -41,10 +36,11 @@ export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget:
       svgDOM: svgElement,
       svgZoomArea: zoomAreaD3,
       auxiliary: svgD3.select('.auxiliary'),
-      zoom: (zoomConfig || defaultZoomConfig)(zoomAreaD3),
+      zoom: (zoomConfig || defaultZoomConfig)(zoomAreaD3), // 可以自定义画布缩放平移的逻辑
       marqueeSelect: marqueeWrapD3.select('.marquee-select'),
       marqueeSelectCopy: marqueeWrapD3.select('.marquee-select-copy'),
     }
+
     // 配置画布的平移和缩放
     setSvgTranslateScale(svgD3, newSvgInfo.zoom)
     // 初始化辅助线
@@ -56,6 +52,8 @@ export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget:
     svgD3.on('contextmenu', (e) => {
       e.preventDefault()
     })
+    // 居中画布
+    zoomCentroid({ ...newSvgInfo })
     setSvgInfo(newSvgInfo)
   }, [auxiliaryElement, svgElement])
 
