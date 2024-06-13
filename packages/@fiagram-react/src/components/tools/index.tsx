@@ -4,6 +4,7 @@ import { DirectionAlign } from './direction-align.tsx'
 import { Align } from './align.tsx'
 import { FullScreen } from './full-screen.tsx'
 import { Scale } from './scale.tsx'
+import { Marquee } from './marquee.tsx'
 
 interface IProps {
   children?: ReactNode[]
@@ -14,15 +15,17 @@ interface ITools extends React.FC<IProps> {
   DirectionAlign: typeof DirectionAlign
   FullScreen: typeof FullScreen
   Scale: typeof Scale
+  Marquee: typeof Marquee
 }
 
 const Tools: ITools = ({ children }) => {
   const defaultTools = (
     <Fragment>
-      <DirectionAlign />
+      {/* <DirectionAlign /> */}
+      {/* <Align /> */}
       <FullScreen />
-      <Align />
       <Scale />
+      <Marquee />
     </Fragment>
   )
   return (
@@ -36,6 +39,7 @@ Tools.Align = Align
 Tools.DirectionAlign = DirectionAlign
 Tools.FullScreen = FullScreen
 Tools.Scale = Scale
+Tools.Marquee = Marquee
 
 Tools.displayName = 'Tools'
 

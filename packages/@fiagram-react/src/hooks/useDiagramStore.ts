@@ -12,18 +12,21 @@ import type { Size } from './ahooks/useSize.tsx'
 export interface DiagramActions {
   state: DiagramState
   setState: (state: DiagramState) => void
+  getState: () => DiagramState
   setNodes: (nodes: Nodes) => void
   setEdges: (edges: Edges) => void
   insertEdge: (edge: Edge) => void
-  updateEdge: (edge: Edge | Edges) => void
   setSvgInfo: (svgInfo: SvgInfo) => void
   setCanvasSize: (size?: Size) => void
   setSelectedNodes: (nodes: Nodes) => void
+  setMarqueeNodes: (nodes: Nodes) => void
+  updateEdge: (edge: Edge | Edges) => void
   resizeNode: (node: Node | undefined, rect: Rect) => void
   updateNodesAndEdges: (nodes: Nodes, edges: Edges, type: 'all' | 'patch') => void
+  updateNodes: (nodes: Nodes) => void
 }
 
-export const useDiagramStore = create<DiagramActions>(set => ({
+export const useDiagramStore = create<DiagramActions>((set, get) => ({
   state: {
     width: 0,
     height: 0,
@@ -50,6 +53,9 @@ export const useDiagramStore = create<DiagramActions>(set => ({
       },
     }))
   },
+  getState: () => {
+    return get().state
+  },
   setNodes: (nodes) => {
     set(produce(({ state }) => {
       state.nodes = nodes
@@ -64,21 +70,6 @@ export const useDiagramStore = create<DiagramActions>(set => ({
     set(produce(({ state }) => {
       const newEdges = generateEdgePath(state.nodes, edge)
       state.edges = state.edges.concat(newEdges)
-    }))
-  },
-  updateEdge: (edge) => {
-    let updateEdges = Array.isArray(edge) ? edge : [edge]
-    set(produce(({ state }) => {
-      updateEdges = _.map(updateEdges, (updateEdge) => {
-        if (!updateEdge.pathD) {
-          updateEdge = generateEdgePath(state.nodes, updateEdge)
-        }
-        return updateEdge
-      })
-      state.edges = _.map(state.edges, (edge) => {
-        const idx = _.findIndex(updateEdges, updateEdge => updateEdge.id === edge.id)
-        return idx > -1 ? updateEdges[idx] : edge
-      })
     }))
   },
   setSvgInfo: (svgInfo) => {
@@ -97,8 +88,27 @@ export const useDiagramStore = create<DiagramActions>(set => ({
       state.selectedNodes = nodes
     }))
   },
-
+  setMarqueeNodes: (nodes) => {
+    set(produce(({ state }) => {
+      state.marqueeNodes = nodes
+    }))
+  },
   // ============================ Node & Edge Effect ============================
+  updateEdge: (edge) => {
+    let updateEdges = Array.isArray(edge) ? edge : [edge]
+    set(produce(({ state }) => {
+      updateEdges = _.map(updateEdges, (updateEdge) => {
+        if (!updateEdge.pathD) {
+          updateEdge = generateEdgePath(state.nodes, updateEdge)
+        }
+        return updateEdge
+      })
+      state.edges = _.map(state.edges, (edge) => {
+        const idx = _.findIndex(updateEdges, updateEdge => updateEdge.id === edge.id)
+        return idx > -1 ? updateEdges[idx] : edge
+      })
+    }))
+  },
   resizeNode: (node, rect) => {
     set(produce(({ state }) => {
       const { nodes, edges } = state
@@ -121,6 +131,13 @@ export const useDiagramStore = create<DiagramActions>(set => ({
       }
       state.nodes = nodes
       state.edges = edges
+    }))
+  },
+  updateNodes: (newNodes) => {
+    set(produce(({ state }) => {
+      const newEdges = _.map(state.edges, edge => generateEdgePath(newNodes, edge))
+      state.nodes = newNodes
+      state.edges = newEdges
     }))
   },
 }))

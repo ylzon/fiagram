@@ -31,6 +31,10 @@
       transition: all .3s;
       cursor: pointer;
       border-radius: var(--border-radius);
+      &.active{
+        color: var(--tools-font-active-color);
+        background-color: red;
+      }
       &:hover {
         color: var(--tools-font-hover-color);
         background-color: var(--tools-item-hover-bg-color);

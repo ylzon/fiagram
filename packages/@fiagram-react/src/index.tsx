@@ -35,7 +35,7 @@ const Diagram: FC<IProps> = forwardRef<CanvasRef, IProps>((props, ref) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={style} className={cls('fiagram', className, { hideTools })}>
+      <div tabIndex={-1} style={style} className={cls('fiagram', className, { hideTools })}>
         <ConditionTools />
         <ConditionDragPanel />
         <Canvas

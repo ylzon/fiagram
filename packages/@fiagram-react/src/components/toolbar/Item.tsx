@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import type { IconFontType } from '@fiagram/core/types/icon'
+import { KeyBindEvent } from '@fiagram/core/src/utils/KeyBindEvent.ts'
+import cls from 'classnames'
 import { Icon } from '../icon'
 import type { PopoverProps } from '../popover'
 import { Popover } from '../popover'
+import { useDiagramStore } from '../../hooks/useDiagramStore.ts'
 
 const alignMap = {
   rightTop: { offset: [14, 0], targetOffset: [0, 7] },
@@ -16,6 +20,11 @@ export interface ToolBarItemProps {
   trigger?: PopoverProps['trigger']
   overlay?: PopoverProps['overlay']
   onClick?: (e: React.MouseEvent<HTMLElement>) => void
+  keyCodes?: number
+  onKeyDown?: (e: KeyboardEvent) => void
+  onKeyUp?: (e: KeyboardEvent) => void
+  disabled?: boolean
+  active?: boolean
 }
 
 export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
@@ -26,7 +35,25 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
     onClick,
     overlay,
     placement = 'bottom',
+    active = false,
   } = props
+  const { state } = useDiagramStore(state => state)
+  const { svgInfo } = state
+
+  useEffect(() => {
+    let keyEventHandle = null
+    if (svgInfo?.svgDOM && props.keyCodes) {
+      keyEventHandle = new KeyBindEvent({
+        keyCode: props.keyCodes,
+        keydown: props.onKeyDown,
+        keyup: props.onKeyUp,
+        dom: svgInfo?.svgDOM?.parentNode,
+      })
+    }
+    return () => {
+      keyEventHandle && keyEventHandle.removeEvent()
+    }
+  }, [svgInfo?.svgDOM, props.disabled, props.active])
 
   return (
     <Popover
@@ -39,7 +66,7 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
       <Icon
         type={icon}
         onClick={onClick}
-        className="fiagram-tools-item"
+        className={cls('fiagram-tools-item', { active })}
       />
     </Popover>
   )

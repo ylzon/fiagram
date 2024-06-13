@@ -29,6 +29,12 @@ export const MODE = {
   ADVANCE: 'advance',
 } as const
 
+export const KEY_CODES = {
+  Shift: 16,
+  Ctrl: 17,
+  Alt: 18,
+} as const
+
 export const unexpandWidth = 52
 export const unexpandHeight = 52
 export const expandIconWidth = 14

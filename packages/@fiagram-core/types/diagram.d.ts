@@ -26,6 +26,7 @@ export interface SvgInfo {
 }
 
 export type XYCoord = { x: number, y: number }
+export type XY2Coord = { x1: number, y1: number, x2: number, y2: number }
 
 /**
  * 本地存储的画布内部全局状态

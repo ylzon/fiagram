@@ -47,7 +47,7 @@ export type IconFontType =
   | 'xingxingfenbu'
   | 'icon-exit-fullscreen'
   | 'icon-topology'
-  | 'kuangxuan'
+  | 'icon-marquee'
   | 'fangda1'
   | 'suoxiao'
   | 'icon-fullscreen'

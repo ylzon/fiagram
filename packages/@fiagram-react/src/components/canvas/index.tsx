@@ -10,6 +10,7 @@ import { useUpdateState } from '../../hooks/useUpdateState.tsx'
 import { Nodes } from './nodes'
 import { Auxiliary } from './auxiliary'
 import { Edges } from './edges'
+import { MarqueeSelect } from './marquee'
 
 export interface CanvasProps extends DiagramProps {
   restChilds?: React.ReactNode[]
@@ -46,7 +47,7 @@ const Canvas = forwardRef<CanvasRef, CanvasProps>((props, ref) => {
         <Auxiliary ref={auxiliaryRef} />
         {/* <HighLightEdge selectedEdges={selectedEdges} uniqId={uniqId} /> */}
       </g>
-      {/* <MarqueeSelect /> */}
+      <MarqueeSelect />
     </svg>
   )
 })
