@@ -27,9 +27,11 @@ export const FullScreen: FC<IProps> = () => {
       svgInfo?.svgDOM?.setAttribute('style', beforeStyle)
       exitFullScreen()
     } else {
-      setBeforeStyle(svgInfo?.svgDOM?.getAttribute('style') || '')
+      const style = svgInfo?.svgDOM?.getAttribute('style') || ''
+      setBeforeStyle(style)
       svgInfo?.svgDOM?.setAttribute('style', `${beforeStyle}width: 100%; height: 100%;`)
       requestFullScreen(svgInfo?.svgDOM?.parentNode).on('esc', () => {
+        svgInfo?.svgDOM?.setAttribute('style', style)
         setIsFullscreen(false)
         moveCentroid()
       })
