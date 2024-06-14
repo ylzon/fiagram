@@ -62,11 +62,12 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
       overlay={overlay || title || ''}
       align={alignMap[placement]}
       placement={placement}
+      className={cls('fiagram-tools-item', { active })}
     >
       <Icon
         type={icon}
         onClick={onClick}
-        className={cls('fiagram-tools-item', { active })}
+        style={icon === 'icon-marquee' ? { position: 'relative', left: '2px', top: '1px' } : {}}
       />
     </Popover>
   )

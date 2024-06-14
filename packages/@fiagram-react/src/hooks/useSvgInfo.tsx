@@ -1,15 +1,16 @@
 import * as d3 from 'd3'
 import { type RefObject, useEffect } from 'react'
-import type { SvgInfo } from '@fiagram/core/types/diagram'
-import _ from 'lodash'
+import type { DiagramState, SvgInfo } from '@fiagram/core/types/diagram'
 import { isValidScaleExtent } from '@fiagram/core/src/utils/diagram'
+import _ from 'lodash'
 import type { CanvasProps } from '../components/canvas'
 import { zoomCentroid } from '../utils/animation.ts'
+import { closeMarquee } from '../components/tools/marquee.tsx'
 import { useDiagramStore } from './useDiagramStore'
 
 export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget: RefObject<SVGGElement>, props: CanvasProps) {
   const { state, setSvgInfo, setState } = useDiagramStore(state => state)
-  const { svgInfo, zoomConfig, selectedNodes, selectedEdges, marqueeNodes } = state
+  const { svgInfo, zoomConfig, selectedNodes, selectedEdges } = state
   const { wheelZoomDisabled, dragZoomDisabled, scaleExtent } = props
   const auxiliaryElement = auxiliaryTarget.current
   const svgElement = svgTarget.current
@@ -57,23 +58,26 @@ export function useSvgInfo(svgTarget: RefObject<SVGSVGElement>, auxiliaryTarget:
     setSvgInfo(newSvgInfo)
   }, [auxiliaryElement, svgElement])
 
-  // 实时监控画布状态
+  // 画布点击后取消选中
   useEffect(() => {
     const { svg } = state.svgInfo || {}
-    // 画布点击后取消选中
     if (svg) {
       svg.on('click', (e: any) => {
         e.preventDefault()
         if (e?.srcElement?.tagName === 'svg') {
-          const newState = _.cloneDeep(state)
+          const newState: DiagramState = _.cloneDeep(state)
+          // 清除框选数据
+          if (svg.classed('marquee-finished') || svg.classed('marquee')) {
+            closeMarquee(svgInfo)
+            newState.marqueeNodes = []
+          }
+          // 清除选中节点
           if (selectedNodes && selectedNodes.length > 0) {
             newState.selectedNodes = []
           }
+          // 清除选中边
           if (selectedEdges && selectedEdges.length > 0) {
             newState.selectedEdges = []
-          }
-          if (marqueeNodes && marqueeNodes.length > 0) {
-            newState.marqueeNodes = []
           }
           setState(newState)
         }

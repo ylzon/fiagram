@@ -45,11 +45,11 @@ export const useDiagramStore = create<DiagramActions>((set, get) => ({
     edgeProps: {},
     nodeProps: {},
   },
-  setState: (params) => {
+  setState: (newState) => {
     set(state => ({
       state: {
         ...state,
-        ...params,
+        ...newState,
       },
     }))
   },

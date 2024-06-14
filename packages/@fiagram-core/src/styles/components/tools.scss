@@ -24,16 +24,16 @@
         border-right: none;
       }
     }
-
     &-item {
-      padding: 4px;
+      padding: 2px 4px;
       margin-right: 4px;
       transition: all .3s;
       cursor: pointer;
       border-radius: var(--border-radius);
+
       &.active{
         color: var(--tools-font-active-color);
-        background-color: red;
+        background-color: var(--tools-item-active-bg-color);
       }
       &:hover {
         color: var(--tools-font-hover-color);
