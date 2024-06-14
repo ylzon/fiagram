@@ -14,7 +14,7 @@ import { generateDefaultPath } from './edge-default.ts'
  * @param edges
  */
 export function batchGenerateEdgePath(nodes: DiagramState['nodes'], edges: Edge) {
-  return _.map(edges, edge => generateEdgePath(nodes, edge))
+  return _.map(edges, edge => generateEdgePath(nodes || [], edge))
 }
 
 /**

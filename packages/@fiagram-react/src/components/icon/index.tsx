@@ -1,5 +1,6 @@
 import React from 'react'
 import cls from 'classnames'
+import type { IconFontType } from '@fiagram/core/types/icon'
 
 interface IProps extends React.HTMLAttributes<HTMLElement> {
   type: IconFontType

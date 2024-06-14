@@ -21,7 +21,7 @@ export const NodeItem: FC<IProps> = (props) => {
   const nodeInfo = props?.data
   const { connectDisabled, resizeDisabled, rotateDisabled, dragDisabled } = nodeInfo || {}
   const { state, setSelectedNodes } = useDiagramStore(state => state)
-  const { selectedNodes, nodes, nodeProps } = state
+  const { selectedNodes = [], nodes = [], nodeProps } = state
   const isSelected = _.some(selectedNodes, node => node.id === nodeInfo?.id)
 
   let isDblClick = false

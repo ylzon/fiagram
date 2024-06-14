@@ -282,7 +282,7 @@ export function findNode(nodes: Nodes, nodeId: Node['id']): Node | null | undefi
  * @param node
  * @param rotateDeg
  */
-export function calcOffset(direction: EdgeDirection, node: Node, rotateDeg?: number): XYCoord {
+export function calcOffset(direction: EdgeDirection | undefined, node: Node, rotateDeg?: number): XYCoord {
   const [direct, offset] = direction?.split('|') || []
   let directOffset = +offset
 
