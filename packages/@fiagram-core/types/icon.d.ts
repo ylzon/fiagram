@@ -40,7 +40,7 @@ export type IconFontType =
   | 'icon-adaptive'
   | 'moban'
   | 'xiaz'
-  | 'shanchu'
+  | 'icon-delete'
   | 'icon-distributions-centered'
   | 'icon-horizontal-centered'
   | 'icon-vertically-centered'

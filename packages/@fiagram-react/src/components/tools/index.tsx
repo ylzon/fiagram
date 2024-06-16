@@ -6,6 +6,7 @@ import { FullScreen } from './full-screen'
 import { Scale } from './scale'
 import { Marquee } from './marquee'
 import { Zoom } from './zoom'
+import { Delete } from './delete.tsx'
 
 interface IProps {
   children?: ReactNode[]
@@ -18,6 +19,7 @@ interface ITools extends React.FC<IProps> {
   Scale: typeof Scale
   Marquee: typeof Marquee
   Zoom: typeof Zoom
+  Delete: typeof Delete
 }
 
 const Tools: ITools = ({ children }) => {
@@ -29,6 +31,7 @@ const Tools: ITools = ({ children }) => {
       <Scale />
       <Marquee />
       <Zoom />
+      <Delete />
     </Fragment>
   )
   return (
@@ -44,6 +47,7 @@ Tools.FullScreen = FullScreen
 Tools.Scale = Scale
 Tools.Marquee = Marquee
 Tools.Zoom = Zoom
+Tools.Delete = Delete
 
 Tools.displayName = 'Tools'
 

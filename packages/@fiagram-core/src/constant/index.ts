@@ -33,6 +33,8 @@ export const KEY_CODES = {
   Shift: 16,
   Ctrl: 17,
   Alt: 18,
+  Delete: 46,
+  Backspace: 8,
 } as const
 
 export const unexpandWidth = 52

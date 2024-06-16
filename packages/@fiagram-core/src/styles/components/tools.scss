@@ -35,7 +35,12 @@
         color: var(--tools-font-active-color);
         background-color: var(--tools-item-active-bg-color);
       }
-      &:hover {
+      &.disabled{
+        color: var(--tools-font-disabled-color);
+        background-color: var(--tools-item-disabled-bg-color);
+        cursor: not-allowed;
+      }
+      &:hover:not(.active):not(.disabled) {
         color: var(--tools-font-hover-color);
         background-color: var(--tools-item-hover-bg-color);
       }

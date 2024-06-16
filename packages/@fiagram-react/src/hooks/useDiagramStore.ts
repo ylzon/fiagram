@@ -16,10 +16,13 @@ export interface DiagramActions {
   setNodes: (nodes: Nodes) => void
   setEdges: (edges: Edges) => void
   insertEdge: (edge: Edge) => void
+  deleteNodeByIds: (ids: string[]) => void
+  deleteEdgeByIds: (ids: string[]) => void
   setSvgInfo: (svgInfo: SvgInfo) => void
   setCanvasSize: (size?: Size) => void
   setSelectedNodes: (nodes: Nodes) => void
   setMarqueeNodes: (nodes: Nodes) => void
+  setSelectedEdges: (edges: Edges) => void
   updateEdge: (edge: Edge | Edges) => void
   resizeNode: (node: Node | undefined, rect: Rect) => void
   updateNodesAndEdges: (nodes: Nodes, edges: Edges, type: 'all' | 'patch') => void
@@ -72,6 +75,17 @@ export const useDiagramStore = create<DiagramActions>((set, get) => ({
       state.edges = state.edges.concat(newEdges)
     }))
   },
+  deleteNodeByIds: (ids) => {
+    set(produce(({ state }) => {
+      state.nodes = _.filter(state.nodes, node => !_.includes(ids, node.id))
+      state.edges = _.filter(state.edges, edge => !_.includes(ids, edge.source) && !_.includes(ids, edge.target))
+    }))
+  },
+  deleteEdgeByIds: (ids) => {
+    set(produce(({ state }) => {
+      state.edges = _.filter(state.edges, edge => !_.includes(ids, edge.id))
+    }))
+  },
   setSvgInfo: (svgInfo) => {
     set(produce(({ state }) => {
       state.svgInfo = svgInfo
@@ -91,6 +105,11 @@ export const useDiagramStore = create<DiagramActions>((set, get) => ({
   setMarqueeNodes: (nodes) => {
     set(produce(({ state }) => {
       state.marqueeNodes = nodes
+    }))
+  },
+  setSelectedEdges: (edges) => {
+    set(produce(({ state }) => {
+      state.selectedEdges = edges
     }))
   },
   // ============================ Node & Edge Effect ============================

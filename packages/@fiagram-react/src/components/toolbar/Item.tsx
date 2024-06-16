@@ -20,7 +20,7 @@ export interface ToolBarItemProps {
   trigger?: PopoverProps['trigger']
   overlay?: PopoverProps['overlay']
   onClick?: (e: React.MouseEvent<HTMLElement>) => void
-  keyCodes?: number
+  keyCodes?: number | number[]
   onKeyDown?: (e: KeyboardEvent) => void
   onKeyUp?: (e: KeyboardEvent) => void
   disabled?: boolean
@@ -36,6 +36,7 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
     overlay,
     placement = 'bottom',
     active = false,
+    disabled = false,
   } = props
   const { state } = useDiagramStore(state => state)
   const { svgInfo } = state
@@ -62,7 +63,7 @@ export const ToolbarItem: React.FC<ToolBarItemProps> = (props) => {
       overlay={overlay || title || ''}
       align={alignMap[placement]}
       placement={placement}
-      className={cls('fiagram-tools-item', { active })}
+      className={cls('fiagram-tools-item', { active, disabled })}
     >
       <Icon
         type={icon}
