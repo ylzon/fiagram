@@ -14,7 +14,10 @@ interface IProps {}
 
 export const Align: FC<IProps> = () => {
   const { t } = useTranslation()
-  const { getState, updateNodes } = useDiagramStore(state => state)
+  const { state, getState, updateNodes } = useDiagramStore(state => state)
+  const { selectedNodes = [], marqueeNodes = [] } = state
+  const totalSelected = selectedNodes?.length + marqueeNodes?.length
+  const disabled = totalSelected < 2
 
   const handleAlign = (direction: Direction) => {
     const { nodes = [], selectedNodes = [], marqueeNodes = [] } = getState()
@@ -38,14 +41,19 @@ export const Align: FC<IProps> = () => {
     }
   }
 
-  const toolsGroup: ToolBarItemProps[] = [
-    { key: '1', title: t('translation:topAlign'), icon: 'icon-top-aligned', onClick: () => handleAlign(ALIGN_DIRECT.TOP) },
-    { key: '2', title: t('translation:bottomAlign'), icon: 'icon-bottom-aligned', onClick: () => handleAlign(ALIGN_DIRECT.BOTTOM) },
-    { key: '3', title: t('translation:leftAlign'), icon: 'icon-left-aligned', onClick: () => handleAlign(ALIGN_DIRECT.LEFT) },
-    { key: '4', title: t('translation:rightAlign'), icon: 'icon-right-aligned', onClick: () => handleAlign(ALIGN_DIRECT.RIGHT) },
-    { key: '5', title: t('translation:verticalAlign'), icon: 'icon-vertical-aligned', onClick: () => handleAlign(ALIGN_DIRECT.VERTICAL) },
-    { key: '6', title: t('translation:horizonAlign'), icon: 'icon-horizontal-aligned', onClick: () => handleAlign(ALIGN_DIRECT.HORIZON) },
-  ]
+  const toolsGroup = [
+    { key: 'TOP', title: t('translation:topAlign'), icon: 'icon-top-aligned' },
+    { key: 'BOTTOM', title: t('translation:bottomAlign'), icon: 'icon-bottom-aligned' },
+    { key: 'LEFT', title: t('translation:leftAlign'), icon: 'icon-left-aligned' },
+    { key: 'RIGHT', title: t('translation:rightAlign'), icon: 'icon-right-aligned' },
+    { key: 'VERTICAL', title: t('translation:verticalAlign'), icon: 'icon-vertical-aligned' },
+    { key: 'HORIZON', title: t('translation:horizonAlign'), icon: 'icon-horizontal-aligned' },
+  ].map(v => ({
+    ...v,
+    disabled,
+    title: disabled ? `${v.title}(${t('translation:pleaseSelectAtLeastTwoNodes')})` : v.title,
+    onClick: () => handleAlign(ALIGN_DIRECT[v.key as keyof typeof ALIGN_DIRECT]),
+  })) as ToolBarItemProps[]
 
   return (
     <ToolbarGroup group={toolsGroup} />

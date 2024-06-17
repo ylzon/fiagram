@@ -19,6 +19,7 @@ export const Delete: FC<IProps> = () => {
     setMarqueeNodes,
     setSelectedEdges,
   } = useDiagramStore(state => state)
+  const title = t('translation:delete')
   const {
     svgInfo,
     selectedEdges = [],
@@ -54,7 +55,7 @@ export const Delete: FC<IProps> = () => {
       group={[
         {
           key: 'delete',
-          title: t('translation:delete'),
+          title: disabled ? `${title}(${t('translation:pleaseSelectAtLeastOneNode')})` : title,
           icon: 'icon-delete',
           keyCodes: [
             KEY_CODES.Delete,

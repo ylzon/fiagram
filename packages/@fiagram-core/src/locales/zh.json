@@ -28,6 +28,8 @@
     "withdrawn": "撤回(ctrl+z)",
     "zoomIn": "放大",
     "zoomOut": "缩小",
+    "pleaseSelectAtLeastTwoNodes": "请至少选择两个节点",
+    "pleaseSelectAtLeastOneNode": "请至少选择一个节点",
     "resource": "资源"
   }
 }

@@ -28,6 +28,8 @@
     "withdrawn": "withdrawn(ctrl+z)",
     "zoomIn": "zoom in",
     "zoomOut": "zoom out",
+    "pleaseSelectAtLeastTwoNodes": "Please select at least two nodes",
+    "pleaseSelectAtLeastOneNode": "Please select at least one nodes",
     "resource": "resource"
   }
 }
