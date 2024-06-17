@@ -10,8 +10,21 @@ interface IProps {}
 
 export const Delete: FC<IProps> = () => {
   const { t } = useTranslation()
-  const { state, getState, deleteNodeByIds, deleteEdgeByIds, setSelectedNodes, setMarqueeNodes, setSelectedEdges } = useDiagramStore(state => state)
-  const { svgInfo, selectedEdges = [], selectedNodes = [], marqueeNodes = [] } = state
+  const {
+    state,
+    getState,
+    deleteNodeByIds,
+    deleteEdgeByIds,
+    setSelectedNodes,
+    setMarqueeNodes,
+    setSelectedEdges,
+  } = useDiagramStore(state => state)
+  const {
+    svgInfo,
+    selectedEdges = [],
+    selectedNodes = [],
+    marqueeNodes = [],
+  } = state
   const disabled = !selectedEdges?.length && !selectedNodes?.length && !marqueeNodes?.length
 
   const handleDelete = () => {

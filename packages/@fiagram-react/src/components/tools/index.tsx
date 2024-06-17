@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import type { ReactNode } from 'react'
-import { DirectionAlign } from './direction-align'
+import { AutoLayout } from './auto-layout.tsx'
 import { Align } from './align'
 import { FullScreen } from './full-screen'
 import { Scale } from './scale'
@@ -14,7 +14,7 @@ interface IProps {
 
 interface ITools extends React.FC<IProps> {
   Align: typeof Align
-  DirectionAlign: typeof DirectionAlign
+  AutoLayout: typeof AutoLayout
   FullScreen: typeof FullScreen
   Scale: typeof Scale
   Marquee: typeof Marquee
@@ -26,12 +26,12 @@ const Tools: ITools = ({ children }) => {
   const defaultTools = (
     <Fragment>
       {/* <DirectionAlign /> */}
-      {/* <Align /> */}
       <FullScreen />
       <Scale />
       <Marquee />
       <Zoom />
       <Delete />
+      <Align />
     </Fragment>
   )
   return (
@@ -42,7 +42,7 @@ const Tools: ITools = ({ children }) => {
 }
 
 Tools.Align = Align
-Tools.DirectionAlign = DirectionAlign
+Tools.AutoLayout = AutoLayout
 Tools.FullScreen = FullScreen
 Tools.Scale = Scale
 Tools.Marquee = Marquee

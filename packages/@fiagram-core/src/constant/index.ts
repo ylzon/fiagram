@@ -7,6 +7,15 @@ export const DIRECTION = {
   RIGHT: 'right',
 } as const
 
+export const ALIGN_DIRECT = {
+  TOP: 'top',
+  LEFT: 'left',
+  RIGHT: 'right',
+  BOTTOM: 'bottom',
+  HORIZON: 'horizon',
+  VERTICAL: 'vertical',
+} as const
+
 export const EDGE_TYPE = {
   STRAIGHT: 'straight',
   CURVE_AUTO: 'curve-auto',
