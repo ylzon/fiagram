@@ -42,5 +42,5 @@ export function generateEdgePath(nodes: Nodes, edge: Edge) {
     [EDGE_TYPE.BROKEN]: generateBrokenPath,
     [EDGE_TYPE.BROKEN_ROUNDED]: generateBrokenPath,
   }
-  return { ...edge, ...edgeInfo[edgeType]({ srcNode, tgtNode, edge }) }
+  return { ...edge, ...edgeInfo?.[edgeType]?.({ srcNode, tgtNode, edge }) }
 }
