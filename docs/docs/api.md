@@ -135,32 +135,47 @@ nav:
 
 ## Tools 工具栏
 
-`<Tools>` 组件提供 7 个内置工具，可按需组合使用：
+需要自定义配置工具栏内容时使用。`<Tools>` 组件提供多种内置工具，同时支持自定义工具和按需组合。
+
+### Tools Props
+
+| 属性 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| `appendMenu` | `array` | — | 在默认工具末尾追加新工具 |
+| `prependMenu` | `array` | — | 在默认工具前插入新工具 |
+| `children` | `ReactNode` | — | 完全覆盖默认工具，自定义工具栏内容 |
+
+### 内置工具组件
+
+可以单独使用，也可以自由组合：
 
 | 组件 | 说明 |
 |---|---|
 | `<Tools.FullScreen />` | 全屏切换 |
-| `<Tools.Scale />` | 缩放控制 |
-| `<Tools.Marquee />` | 框选模式 |
-| `<Tools.Zoom />` | 画布居中/适应 |
+| `<Tools.Scale />` | 缩放适配画布 |
+| `<Tools.Marquee />` | 框选模式（Shift + 拖动） |
+| `<Tools.Zoom />` | 缩放控制 |
 | `<Tools.Delete />` | 删除选中元素 |
-| `<Tools.Align />` | 节点对齐（上/下/左/右/水平居中/垂直居中） |
+| `<Tools.Align />` | 对子节点进行对齐调整 |
 | `<Tools.AutoLayout />` | 自动布局 |
 
+### 使用示例
+
 ```tsx | pure
-import { Diagram, Tools } from '@fiagram/react';
+import { Diagram, Tools } from '@fiagram/react'
 
 // 使用默认工具栏（包含全部工具）
 <Diagram nodes={nodes} edges={edges} shapes={shapes} />
 
-// 自定义工具栏（仅保留对齐和全屏）
+// 按需使用内置工具
 <Diagram nodes={nodes} edges={edges} shapes={shapes}>
   <Tools>
-    <Tools.Align />
-    <Tools.FullScreen />
+    <Tools.Delete />
+    <Tools.Zoom />
   </Tools>
 </Diagram>
 
 // 隐藏工具栏
 <Diagram hideTools nodes={nodes} edges={edges} shapes={shapes} />
 ```
+
