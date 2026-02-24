@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_fiagram_docs=self.webpackChunk_fiagram_docs||[]).push([[430],{59494:function(t,u,n){n.r(u),n.d(u,{demos:function(){return d}});var s=n(92379),d={}},73740:function(t,u,n){n.r(u),n.d(u,{texts:function(){return s}});const s=[]}}]);

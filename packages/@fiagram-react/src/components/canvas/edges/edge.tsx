@@ -116,17 +116,16 @@ export const EdgeItem: FC<IProps> = (props) => {
       state,
     ]
 
-    switch (true) {
-      case _.has(edgeProps, 'renderEdge'):
-        return typeof edgeProps?.renderEdge === 'function' && edgeProps.renderEdge(edgeParams)
-      case _.has(edgeProps, 'renderEdgeBase'):
-        return (
-          typeof edgeProps?.renderEdgeBase === 'function'
-          && edgeProps.renderEdgeBase(EdgeContent, edgeParams)
-        )
-      default:
-        return EdgeContent
+    const renderEdgeFn = edgeProps?.renderEdge
+    const renderEdgeBaseFn = edgeProps?.renderEdgeBase
+
+    if (typeof renderEdgeFn === 'function') {
+      return renderEdgeFn(edgeParams)
     }
+    if (typeof renderEdgeBaseFn === 'function') {
+      return renderEdgeBaseFn(EdgeContent, edgeParams)
+    }
+    return EdgeContent
   }
 
   return (
