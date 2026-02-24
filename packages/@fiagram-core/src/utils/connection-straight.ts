@@ -1,32 +1,50 @@
 import type { Vector } from './vectorUtil.ts'
 import { add, dot, getUnitVector, isParallel, multiply, vectorFromPoints } from './vectorUtil.ts'
 
-// 中线智能 避让
-
-// let turnRatio = 0.5
-
-// 描述方向 使用svg 平面轴 上：[0,-1] 右：[1,0] 下 [0,1] 左 [-1,0]
-
-export interface PointsParams {
-  entryPoint?: Vector
-  entryDirection?: Vector
-  exitPoint?: Vector
-  exitDirection?: Vector
-  entryExt?: number
-  exitExt?: number
-}
 /**
- * path 指除了延申线之外的连接线
- * @param entryPoint 起点坐标
- * @param entryDirection 起点方向（单位向量）
- * @param entryExt 起点延申线长度
- * @param exitPoint 终点坐标
- * @param exitDirection 终点方向
- * @param exitExt 终点延伸线
- * @param turnRatio ? 折弯处比例
- * @returns {*[]}  [起点，正交线的起点，...正交线的转弯点，正交线的终点，终点]
+ * 正交折线连接算法（Orthogonal Connector Routing）
+ *
+ * 本模块用于在两个节点之间生成正交（仅水平/垂直线段）的折线连接路径。
+ * 算法会根据起点/终点的位置和方向，智能计算中间转折点，实现自动避让和美观布线。
+ *
+ * 坐标系说明（SVG 平面坐标系）：
+ *   - 上：[0, -1]
+ *   - 右：[1, 0]
+ *   - 下：[0, 1]
+ *   - 左：[-1, 0]
  */
 
+/** 连接点参数接口 */
+export interface PointsParams {
+  /** 起点坐标 */
+  entryPoint?: Vector
+  /** 起点连接方向（单位向量，表示从节点向外延伸的方向） */
+  entryDirection?: Vector
+  /** 终点坐标 */
+  exitPoint?: Vector
+  /** 终点连接方向（单位向量，表示从节点向外延伸的方向） */
+  exitDirection?: Vector
+  /** 起点延伸线长度（从节点表面到正交路径起点的间距） */
+  entryExt?: number
+  /** 终点延伸线长度（从节点表面到正交路径终点的间距） */
+  exitExt?: number
+}
+
+/**
+ * 生成两节点间的正交折线连接点序列。
+ *
+ * 连接线结构：起点 → 延伸段 → 正交路径（含若干转折点）→ 延伸段 → 终点
+ *
+ * @param params - 连接参数
+ * @param params.entryPoint - 起点坐标，默认 [0, 0]
+ * @param params.entryDirection - 起点连接方向（单位向量），默认 [0, 1]
+ * @param params.exitPoint - 终点坐标，默认 [10, 10]
+ * @param params.exitDirection - 终点连接方向（单位向量），默认 [1, 0]
+ * @param params.entryExt - 起点延伸线长度，默认 10
+ * @param params.exitExt - 终点延伸线长度，默认 10
+ * @param turnRatio - 折弯位置比例（0~1），控制同向路径时的转折偏移量，默认 0.5 表示中点转折
+ * @returns 有序的连接点数组，每个元素包含 { position: 坐标, direction: 该段方向的单位向量 }
+ */
 function generateConnectionPoints(
   {
     entryPoint = [0, 0],
@@ -38,7 +56,9 @@ function generateConnectionPoints(
   }: PointsParams = {},
   turnRatio = 0.5,
 ): any[] {
-  // 1. 获得入方向和出方向 ——参数中已获得; 当exitDirection 未定义时
+  // Step 1: 处理终点方向未定义的情况
+  // 当 exitDirection 为 null 或零向量时，根据起终点的相对位置自动推断终点方向
+  // 选取水平/垂直分量中较大的一个作为主方向
   if (exitDirection === null || exitDirection.join() === '0,0') {
     const entryToExit = vectorFromPoints(exitPoint, entryPoint)
     if (Math.abs(entryToExit[0]) > Math.abs(entryToExit[1])) {
@@ -48,21 +68,24 @@ function generateConnectionPoints(
     }
   }
 
-  // 2. 获得直接 path 的水平和竖直方向
+  // Step 2: 计算正交路径的起止点
+  // pathStartP：从起点沿 entryDirection 延伸 entryExt 后的位置（正交路径起点）
+  // pathEndP：从终点沿 exitDirection 延伸 exitExt 后的位置（正交路径终点）
   const pathStartP = add(entryPoint, multiply(entryDirection, entryExt))
   const pathEndP = add(exitPoint, multiply(exitDirection, exitExt))
 
-  // 出口方向需要取反
+  // 将终点方向取反：exitDirection 原本表示"从节点向外"的方向，
+  // 取反后表示"从路径进入节点"的方向，用于后续路径末段方向匹配
   exitDirection = multiply(exitDirection, -1)
 
-  // 直接path的向量
-  // let pathVec = vectorFromPoints(pathEndP,pathStartP);
-  // path的水平向量
+  // 将正交路径向量分解为水平分量和垂直分量
   const pathHorizonVec: Vector = [pathEndP[0] - pathStartP[0], 0]
-  // path 的竖直向量
   const pathVerticalVec: Vector = [0, pathEndP[1] - pathStartP[1]]
 
-  // 3.计算path 的起始方向： 两方向与入方向平行的一项，如果是同向则取之，反之则取非平行的一项
+  // Step 3: 确定正交路径的起始段方向
+  // 在水平分量和垂直分量中，找到与入口方向平行的分量：
+  //   - 若该分量与入口方向同向（点积 > 0），则作为起始段方向
+  //   - 若反向，则选另一个分量（保证路径不回折）
   const comp = [pathHorizonVec, pathVerticalVec]
   let pathStart: Vector
   const startParallelVec: Vector = comp.find(vec => isParallel(vec, entryDirection)) || [0, 0]
@@ -73,7 +96,7 @@ function generateConnectionPoints(
     pathStart = anotherOne(comp, startParallelVec)
   }
 
-  // 4.计算path 的末方向： 两方向与末方向平行的一项，如果是同向则取之，反之则取非平行的一项
+  // Step 4: 确定正交路径的末段方向（逻辑同 Step 3，基于出口方向匹配）
   let pathEnd: Vector
   const endParallelVec = comp.find(vec => isParallel(vec, exitDirection)) || [0, 0]
 
@@ -83,13 +106,18 @@ function generateConnectionPoints(
     pathEnd = anotherOne(comp, endParallelVec)
   }
 
-  // 5.如果path的起末为同方向，则分为两段，否则为1段
+  // Step 5: 判断路径是否需要额外分段
+  // 若起始段和末段同向（点积 > 0），需要拆成 2 段 + 中间过渡段（共 3 段折线）
+  // 若不同向，则只需 1 次转折（共 2 段折线）
   const splitNum = dot(pathStart, pathEnd) > 0 ? 2 : 1
 
+  // 中间段方向 = 与末段方向垂直的那个分量
   const pathMiddle = anotherOne(comp, pathEnd)
 
-  // 6.计算path中的转折点 返回数据中加入了单位向量
+  // Step 6: 构建完整的连接点序列
   const points = []
+
+  // 添加起点和延伸段终点
   points.push(
     {
       position: entryPoint,
@@ -100,7 +128,9 @@ function generateConnectionPoints(
       direction: entryDirection,
     },
   )
+
   if (splitNum === 1) {
+    // 单次转折：pathStartP → (沿 pathStart 方向) → 转折点 → (沿 pathEnd 方向) → pathEndP
     const point1 = add(pathStartP, pathStart)
     const dir1 = getUnitVecByStraight(pathStart)
     const point2 = add(point1, pathEnd)
@@ -116,8 +146,12 @@ function generateConnectionPoints(
       },
     )
   } else {
+    // 双次转折：通过 turnRatio 控制折弯位置
+    // 路径形态：pathStartP → point1 → point2 → point3 → pathEndP
+    //   point1 = pathStartP 沿起始方向偏移 turnRatio 比例
+    //   point2 = point1 沿中间段方向偏移（完整跨越）
+    //   point3 = point2 沿末段方向偏移 (1 - turnRatio) 比例
     const point1 = add(pathStartP, multiply(pathStart, turnRatio))
-
     const dir1 = getUnitVecByStraight(pathStart)
 
     const point2 = add(point1, pathMiddle)
@@ -141,68 +175,87 @@ function generateConnectionPoints(
       },
     )
   }
+
+  // 添加终点
   points.push({
     position: exitPoint,
     direction: exitDirection,
   })
 
+  // 过滤掉方向为 false 的无效点（由零向量产生）
   const newPoints = points.filter(v => v.direction !== false)
 
-  // 长度为3时，可能时算法计算出的错误结果，没有加上终点的偏移量，需要手动的加上
+  // ===== 边界情况修正 =====
+
+  // 修正 1：当结果仅 3 个点时，说明算法退化（起终点过近或特殊对齐情况）
+  // 此时缺少终点延伸偏移，需手动补充，并插入额外控制点以支持拖拽交互
   if (newPoints.length === 3) {
     const lastPoint = JSON.parse(JSON.stringify(newPoints[2]))
     lastPoint.position = [lastPoint.position[0] + exitExt, lastPoint.position[1]]
-    // 加上终点的偏移量
     newPoints.splice(2, 0, lastPoint)
-    // 添加可正确被拖拽的点
+    // 插入重复点，确保 PathHandler 可正确识别并拖拽线段
     newPoints.splice(2, 0, newPoints[1], newPoints[2])
   }
+
+  // 修正 2：当结果为 5 个点时，处理特殊布局场景
   if (newPoints.length === 5) {
-    // 五个点在同一水平或垂直的直线上
-    // index为2的点在线的中心，替换成线的两端的点，这样就可以使PathHandler正确的拖拽线条
+    // 情况 A：所有点共线（全在同一水平线或垂直线上）
+    // 将中心点替换为两端点的副本，以支持 PathHandler 拖拽交互
     if (
       newPoints.every(item => item.position[0] === newPoints[0].position[0])
       || newPoints.every(item => item.position[1] === newPoints[0].position[1])
     ) {
       newPoints.splice(2, 1, newPoints[1], newPoints[3])
     } else {
-      /*
-      存在以下四种情况
-      一   二   三    四
-      *4   0*   10*  210
-      03   14   234  34*
-      12   23
-      */
-      // 一，二
+      // 情况 B：非共线的四种 L 形/Z 形布局
+      // 根据起点与第二点的对齐轴（X轴或Y轴），以及第三点的位置关系，
+      // 插入额外点以确保 PathHandler 可正确拖拽每段线条
+      //
+      // 四种布局示意（数字为点序号，* 为节点）：
+      //   一     二     三      四
+      //   *4    0*    10*    210
+      //   03    14    234    34*
+      //   12    23
+
       if (newPoints[0].position[0] === newPoints[1].position[0]) {
-        // 二
+        // 起点与第二点在同一垂直线上（情况一 或 情况二）
         if (newPoints[2].position[0] === newPoints[0].position[0]) {
+          // 情况二：第三点也在同一垂直线上
           newPoints.splice(3, 0, newPoints[3])
         } else {
-          //  一
+          // 情况一：第三点不在同一垂直线上
           newPoints.splice(2, 0, newPoints[1])
         }
-        //  三，四
       } else if (newPoints[0].position[1] === newPoints[1].position[1]) {
-        // 四
+        // 起点与第二点在同一水平线上（情况三 或 情况四）
         if (newPoints[2].position[1] === newPoints[0].position[1]) {
+          // 情况四：第三点也在同一水平线上
           newPoints.splice(3, 0, newPoints[3])
         } else {
-          //  三
+          // 情况三：第三点不在同一水平线上
           newPoints.splice(2, 0, newPoints[1])
         }
       }
     }
   }
+
   return newPoints
 }
 
-// 两个元素的数组中的另一个
+/**
+ * 从二元组中获取另一个元素。
+ * 用于在 [水平分量, 垂直分量] 中选取与当前分量不同的那个。
+ */
 function anotherOne(comp: Vector[], a: Vector): Vector {
   return comp.find((v: any) => v !== a) || [0, 0]
 }
 
-// 获取竖直和水平向量的单位向量
+/**
+ * 获取轴对齐向量的单位向量。
+ * - 零向量 → 返回 false（标记为无效方向，后续会被过滤）
+ * - 纯水平/纯垂直向量 → 直接归一化为 ±1
+ * - 非轴对齐向量 → 回退到通用的单位向量计算
+ */
 function getUnitVecByStraight(vector: Vector) {
   if (vector[0] === 0 && vector[1] === 0) {
     return false
