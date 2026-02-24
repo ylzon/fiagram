@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "scripts": {},
   "dependencies": {
+    "lodash": "^4.17.21",
     "mathjs": "^12.4.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.21"
   }
 }
